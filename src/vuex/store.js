@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     ajaxUrl: 'http://148.70.2.46:7001',
+    routerPathC: [], // 路由缓存
     platform: {
       isApicloud: navigator.userAgent.toLowerCase().includes('apicloud'),
       isWx: navigator.userAgent.toLowerCase().includes('micromessenger'),
@@ -17,7 +18,18 @@ export default new Vuex.Store({
         !navigator.userAgent.toLowerCase().includes('apicloud')
     }
   },
-  mutations: {},
+  mutations: {
+    setRouterCache(state, {
+      isback,
+      val
+    }) {
+      if(isback) {
+        state.routerPathC.pop()
+      } else {
+        state.routerPathC.push(val)
+      }
+    }
+  },
   getters: {},
   actions: {},
   modules: {

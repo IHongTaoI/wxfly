@@ -1,5 +1,8 @@
 <template>
-  <div id="home">这是发布页面</div>
+  <div id="home">
+    <header>这是发布页面</header>
+    <h1>sdadasdasd</h1>
+  </div>
 </template>
 <script>
 export default {}
