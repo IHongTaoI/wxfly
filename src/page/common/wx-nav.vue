@@ -1,55 +1,142 @@
 <template>
   <div id="wx-nav">
-    <nav class="wx-nav-box">
-      <router-link to="/" tag="dl" exact replace>
-        <!-- <dt class="iconfont icon-weixin-hongbaohome">
-          <i class="new-msg-count" v-show="$store.state.newMsgCount">{{$store.state.newMsgCount}}</i>
-        </dt>-->
-        <dd>广场</dd>
-      </router-link>
-    </nav>
+    <router-link to="/" tag="div" replace class="item">
+      <div class="flexBox">
+        <div class="imgbox">
+          <img class="svg" src="./../../assets/images/icon/index.png" v-show="index !== '/'">
+          <img class="svg" src="./../../assets/images/icon/indexSelect.png" v-show="index === '/'">
+        </div>
+        <p class="txt">广场</p>
+      </div>
+    </router-link>
+    <router-link to="/read" tag="div" class="item">
+      <div class="flexBox">
+        <div class="imgbox">
+          <img
+            class="svg"
+            src="./../../assets/images/icon/shehui_new.png"
+            v-show="index !== '/read'"
+          >
+          <img
+            class="svg"
+            src="./../../assets/images/icon/activitySelect.png"
+            v-show="index === '/read'"
+          >
+        </div>
+        <p class="txt">阅读</p>
+      </div>
+    </router-link>
+    <router-link to="/other/publish" tag="div" class="item">
+      <div class="flexBox addS">
+        <div class="imgbox addS">
+          <img class="svg" src="./../../assets/images/icon/newadd.png">
+        </div>
+      </div>
+    </router-link>
+    <router-link to="/message" tag="div" class="item">
+      <div class="flexBox">
+        <div class="imgbox">
+          <img
+            class="svg"
+            src="./../../assets/images/icon/message.png"
+            v-show="index !== '/message'"
+          >
+          <img
+            class="svg"
+            src="./../../assets/images/icon/messageSelect.png"
+            v-show="index === '/message'"
+          >
+        </div>
+        <p class="txt">消息</p>
+      </div>
+    </router-link>
+    <router-link to="/self" tag="div" class="item">
+      <div class="flexBox">
+        <div class="imgbox">
+          <img class="svg" src="./../../assets/images/icon/mine.png" v-show="index !== '/self'">
+          <img
+            class="svg"
+            src="./../../assets/images/icon/mineSelect.png"
+            v-show="index === '/self'"
+          >
+        </div>
+        <p class="txt">我的</p>
+      </div>
+    </router-link>
   </div>
 </template>
 <script>
-export default {}
-</script>
-<style lang="less" scoped>
-#wx-nav {
-  nav {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    height: 50px;
-    padding-top: 5px;
-    background: #f9f9f9;
-    font-size: 12px;
-    dl {
-      cursor: pointer;
-      user-select: none;
-      flex-grow: 1;
-      text-align: center;
-      line-height: 1;
-      &.router-link-active {
-        dd,
-        dt {
-          color: #0bb908;
-        }
-      }
+export default {
+  props: ['acIndex'],
+  data() {
+    return {
+      index: '/'
     }
-    dt {
-      position: relative;
-      width: 28px;
-      height: 28px;
-      margin: 0 auto;
-      font-size: 28px;
-      color: #797979;
-      margin-bottom: 2px;
+  },
+
+  watch: {
+    $route(to, from) {
+      this.index = to.path
     }
   }
-  dd {
-    color: #929292;
-    transform-origin: 50% 0;
-    transform: scale(0.9);
+}
+</script>
+
+<style lang="less" scoped>
+#wx-nav {
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 66px;
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  .item {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .flexBox {
+      &.addS {
+        position: absolute;
+        left: 50%;
+        top: -40px;
+        transform: translateX(-50%);
+      }
+    }
+    .imgbox {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto 4px;
+
+      &.addS {
+        width: 70px;
+        height: 70px;
+      }
+      .svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .txt {
+      font-size: 14px;
+    }
+    &.active {
+      color: #333;
+    }
+  }
+
+  .tabbar_icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
   }
 }
 </style>
