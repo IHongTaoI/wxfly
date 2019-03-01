@@ -12,5 +12,3 @@ if (store.state.platform.isApicloud) {
 } else {
   vueInit();
 }
-
-
