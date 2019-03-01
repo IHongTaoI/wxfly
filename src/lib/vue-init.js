@@ -5,14 +5,16 @@ import store from './../vuex/store';
 import axios from './http';
 import VueAxios from 'vue-axios';
 
-export default function() {
+export default function () {
   Vue.use(VueAxios, axios);
   Vue.config.productionTip = false;
 
   new Vue({
     el: '#app',
     router,
-    components: { App },
+    components: {
+      App
+    },
     store,
     template: '<App/>'
   });
