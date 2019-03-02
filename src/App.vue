@@ -25,6 +25,7 @@ export default {
   },
   watch: {
     $route(to, from) {
+      this.$store.commit('setRoutePath', to.path)
       let isHome = ['/', '/read', '/message', 'self'].includes(to.path) //如果是主页
       let hasPath = this.routerPathC.indexOf(to.path)
       let isBack = ~hasPath && to.path === this.routerPathC[this.routerPathC.length - 2] //是返回

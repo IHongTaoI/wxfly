@@ -1,6 +1,5 @@
 export default [{
   path: '/',
-  name: 'home',
   component: () => import('../page/wrap.vue'),
   children: [{
       path: '/',
@@ -24,6 +23,16 @@ export default [{
   ]
 }, {
   path: '/other/publish',
-  name: 'home',
+  name: 'publish',
   component: () => import('../page/other/publish.vue'),
+}, {
+  path: '/login',
+  name: 'login',
+  component: () => import('../page/other/login.vue'),
+},{
+  path: '/register',
+  name: 'register',
+  component: () => import('../page/other/register.vue'),
 }]
+
+

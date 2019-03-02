@@ -6,8 +6,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    ajaxUrl: 'http://148.70.2.46:7001',
+    ajaxUrl: 'http://134.175.16.212:2019',
     routerPathC: [], // 路由缓存
+    curRoutePath: '/',
     platform: {
       isApicloud: navigator.userAgent.toLowerCase().includes('apicloud'),
       isWx: navigator.userAgent.toLowerCase().includes('micromessenger'),
@@ -28,6 +29,9 @@ export default new Vuex.Store({
       } else {
         state.routerPathC.push(val)
       }
+    },
+    setRoutePath(state, path) {
+      state.curRoutePath = path
     }
   },
   getters: {},
