@@ -6,14 +6,15 @@ axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
 axios.defaults.showErr = true;
 axios.defaults.timeout = 10000;
-const onerror = error => {
+const onerror = (error, config) => {
+  console.log(config)
   if (
     error.code === 'ECONNABORTED' &&
     error.message.indexOf('timeout') !== -1
   ) {
-    return (config.showErr && Vue.prototype.$notify('请求超时'));
+    return (config && config.showErr && Vue.prototype.$notify('请求超时'));
   }
-  config.showErr && Vue.prototype.$notify('请求失败');
+  config && config.showErr && Vue.prototype.$notify('请求失败');
 };
 axios.interceptors.request.use(function(config) {
   config.showLoading &&
