@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import common from './common/index';
+import user from './modules/user'
 
 Vue.use(Vuex);
 
@@ -20,23 +20,20 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setRouterCache(state, {
-      isback,
-      val
-    }) {
-      if(isback) {
-        state.routerPathC.pop()
+    setRouterCache(state, { isback, val }) {
+      if (isback) {
+        state.routerPathC.pop();
       } else {
-        state.routerPathC.push(val)
+        state.routerPathC.push(val);
       }
     },
     setRoutePath(state, path) {
-      state.curRoutePath = path
+      state.curRoutePath = path;
     }
   },
   getters: {},
   actions: {},
   modules: {
-    common
+    user
   }
 });

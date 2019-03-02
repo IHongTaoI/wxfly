@@ -3,16 +3,8 @@
     <router-link to="/" tag="div" replace class="item">
       <div class="flexBox">
         <div class="imgbox">
-          <img
-            class="svg"
-            src="./../../assets/images/icon/index.png"
-            v-show="index !== '/'"
-          />
-          <img
-            class="svg"
-            src="./../../assets/images/icon/indexSelect.png"
-            v-show="index === '/'"
-          />
+          <img class="svg" src="./../../assets/images/icon/index.png" v-show="index !== '/'">
+          <img class="svg" src="./../../assets/images/icon/indexSelect.png" v-show="index === '/'">
         </div>
         <p class="txt">广场</p>
       </div>
@@ -24,12 +16,12 @@
             class="svg"
             src="./../../assets/images/icon/shehui_new.png"
             v-show="index !== '/read'"
-          />
+          >
           <img
             class="svg"
-            src="./../../assets/images/icon/activitySelect.png"
+            src="./../../assets/images/icon/shehuihover.png"
             v-show="index === '/read'"
-          />
+          >
         </div>
         <p class="txt">阅读</p>
       </div>
@@ -37,7 +29,7 @@
     <router-link to="/other/publish" tag="div" class="item">
       <div class="flexBox addS">
         <div class="imgbox addS">
-          <img class="svg" src="./../../assets/images/icon/newadd.png" />
+          <img class="svg" src="./../../assets/images/icon/newadd.png">
         </div>
       </div>
     </router-link>
@@ -48,12 +40,12 @@
             class="svg"
             src="./../../assets/images/icon/message.png"
             v-show="index !== '/message'"
-          />
+          >
           <img
             class="svg"
             src="./../../assets/images/icon/messageSelect.png"
             v-show="index === '/message'"
-          />
+          >
         </div>
         <p class="txt">消息</p>
       </div>
@@ -61,16 +53,12 @@
     <router-link to="/self" tag="div" class="item">
       <div class="flexBox">
         <div class="imgbox">
-          <img
-            class="svg"
-            src="./../../assets/images/icon/mine.png"
-            v-show="index !== '/self'"
-          />
+          <img class="svg" src="./../../assets/images/icon/mine.png" v-show="index !== '/self'">
           <img
             class="svg"
             src="./../../assets/images/icon/mineSelect.png"
             v-show="index === '/self'"
-          />
+          >
         </div>
         <p class="txt">我的</p>
       </div>
@@ -79,17 +67,16 @@
 </template>
 <script>
 export default {
-  props: ['acIndex'],
+  props: ["acIndex"],
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
     index() {
-      return this.$store.state.curRoutePath
+      return this.$store.state.curRoutePath;
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
