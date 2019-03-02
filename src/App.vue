@@ -11,6 +11,9 @@
 
 <script>
 export default {
+  created() {
+    this.$utils.getlocation()
+  },
   name: 'App',
   data() {
     return {

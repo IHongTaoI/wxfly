@@ -1,7 +1,14 @@
+import axios from 'axios';
 import apiHelper from './api-helper';
 
 // 微信获取地理位置
-function getlocation() {}
+function getlocation() {
+  axios.get('http://api.map.baidu.com/location/ip', {
+    params: {
+      ak: 's3shUqe1WePedQxYTGEt30zdwa4GoavM'
+    }
+  });
+}
 
 function dateFromat(date, text = '') {
   let artDate = new Date(date);

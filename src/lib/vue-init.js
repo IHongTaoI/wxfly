@@ -4,13 +4,14 @@ import router from './../router';
 import store from './../vuex/store';
 import axios from './http';
 import VueAxios from 'vue-axios';
-import { Field, Cell, CellGroup, Button } from 'vant';
+import utils from '../utils/index';
+import Vant from 'vant';
+import 'vant/lib/index.css';
 
 export default function() {
   Vue.use(VueAxios, axios);
-  Vue.use(Cell).use(CellGroup);
-  Vue.use(Field);
-  Vue.use(Button);
+  Vue.use(Vant);
+  Vue.prototype.$utils = utils;
   Vue.config.productionTip = false;
 
   new Vue({

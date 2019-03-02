@@ -11,17 +11,5 @@
     ],
     "stage-2"
   ],
-  "plugins": [
-    "transform-vue-jsx",
-    "transform-runtime",
-    [
-      "import",
-      {
-        "libraryName": "vant",
-        "libraryDirectory": "es",
-        "style": true
-      },
-      "vant"
-    ]
-  ]
+  "plugins": ["transform-vue-jsx", "transform-runtime"]
 }
