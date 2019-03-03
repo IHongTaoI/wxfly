@@ -12,7 +12,7 @@
 <script>
 export default {
   created() {
-    this.$utils.getlocation()
+    this.$utils.getPosition()
   },
   name: 'App',
   data() {
