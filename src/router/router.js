@@ -1,38 +1,63 @@
 export default [{
-  path: '/',
-  component: () => import('../page/wrap.vue'),
-  children: [{
-      path: '/',
-      name: 'home',
-      component: () => import('../page/home/index.vue'),
-    }, {
-      path: '/read',
-      name: 'read',
-      component: () => import('../page/read/index.vue'),
+    path: '/',
+    name: 'homeindex',
+    redirect: '/home',
+    component: () => import('../page/wrap.vue'),
+    meta: {
+      keepAlive: true
     },
-    {
-      path: '/message',
-      name: 'message',
-      component: () => import('../page/message/index.vue'),
-    },
-    {
-      path: '/self',
-      name: 'self',
-      component: () => import('../page/self/index.vue'),
-    }
-  ]
-}, {
-  path: '/other/publish',
-  name: 'publish',
-  component: () => import('../page/other/publish.vue'),
-}, {
-  path: '/login',
-  name: 'login',
-  component: () => import('../page/other/login.vue'),
-},{
-  path: '/register',
-  name: 'register',
-  component: () => import('../page/other/register.vue'),
-}]
-
-
+    children: [{
+        path: '/home',
+        name: 'home',
+        meta: {
+          keepAlive: true
+        },
+        component: () => import('../page/home/index.vue'),
+      },
+      {
+        path: '/read',
+        name: 'read',
+        meta: {
+          keepAlive: true
+        },
+        component: () => import('../page/read/index.vue'),
+      },
+      {
+        path: '/message',
+        name: 'message',
+        meta: {
+          keepAlive: true
+        },
+        component: () => import('../page/message/index.vue'),
+      },
+      {
+        path: '/self',
+        name: 'self',
+        meta: {
+          keepAlive: true
+        },
+        component: () => import('../page/self/index.vue'),
+      }
+    ]
+  },
+  {
+    path: '/home/shardDetail',
+    name: '分享详情',
+    component: () => import('../page/home/child/shardDetail.vue'),
+  },
+  {
+    path: '/other/publish',
+    name: 'publish',
+    component: () => import('../page/other/publish.vue'),
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../page/other/login.vue'),
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../page/other/register.vue'),
+  }
+]

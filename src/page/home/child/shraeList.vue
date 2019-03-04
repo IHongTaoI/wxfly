@@ -59,8 +59,11 @@ export default {
       this.$utils.imagePreview(imgs)
     },
     gotoDetail() {
-      wx.navigateTo({
-        url: `/pages/shardDetail/main?id=${this.item.id}`
+      this.$router.push({
+        path: '/home/shardDetail',
+        query: {
+          id: this.itemObj.id
+        }
       })
     },
     caozuo() {

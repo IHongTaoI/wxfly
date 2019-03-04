@@ -1,10 +1,10 @@
 <template>
   <div id="wx-nav">
-    <router-link to="/" tag="div" replace class="item">
+    <router-link to="/home" tag="div" replace class="item">
       <div class="flexBox">
         <div class="imgbox">
-          <img class="svg" src="./../../assets/images/icon/index.png" v-show="index !== '/'">
-          <img class="svg" src="./../../assets/images/icon/indexSelect.png" v-show="index === '/'">
+          <img class="svg" src="./../../assets/images/icon/index.png" v-show="index !== '/home'">
+          <img class="svg" src="./../../assets/images/icon/indexSelect.png" v-show="index === '/home'">
         </div>
         <p class="txt">广场</p>
       </div>

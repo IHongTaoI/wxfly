@@ -30,7 +30,7 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   Vue.prototype.$toast.clear();
   let res = response.data
-  if(res.status === '200000') {
+  if (res.status === '200000') {
     return {
       h: res.data.serviceHeader,
       d: res.data.serviceBody
@@ -40,5 +40,29 @@ axios.interceptors.response.use(function (response) {
     return false
   }
 }, onerror);
+
+async function post({
+  url,
+  data,
+  config = {},
+  qheader = {}
+}) {
+
+  let serviceHeader = {
+    "token": store.state.user.token,
+    "userId": store.state.user.userId
+  }
+  serviceHeader = Object.assign(serviceHeader, qheader)
+  data = {
+    serviceHeader,
+    serviceBody: data
+  }
+  let ret = await axios.post(url, data, config)
+  return ret
+}
+
+export {
+  post
+}
 
 export default axios;
