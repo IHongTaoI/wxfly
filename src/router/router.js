@@ -1,7 +1,7 @@
 export default [{
     path: '/',
-    name: 'homeindex',
     redirect: '/home',
+    name: 'homeWrap',
     component: () => import('../page/wrap.vue'),
     meta: {
       keepAlive: true

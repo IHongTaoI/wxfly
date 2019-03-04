@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <keep-alive include="homeindex">
+      <keep-alive include="homeWrap">
         <router-view class="app-content"></router-view>
       </keep-alive>
     </transition>

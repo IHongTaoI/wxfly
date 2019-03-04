@@ -15,6 +15,7 @@
 import shreaBox from './child/shraeList'
 
 export default {
+  name: 'home',
   components: {
     shreaBox
   },

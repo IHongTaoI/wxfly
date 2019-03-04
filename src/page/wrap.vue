@@ -11,6 +11,7 @@
 import wxNav from './common/wx-nav'
 
 export default {
+  name: 'homeWrap',
   components: {
     wxNav
   },
