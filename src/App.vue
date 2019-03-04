@@ -8,10 +8,6 @@
 
 <script>
 export default {
-  async created() {
-    let ret = await this.$utils.apiHelper['getShearList']()
-    console.log(ret)
-  },
   name: 'App',
   data() {
     return {

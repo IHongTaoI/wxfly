@@ -1,11 +1,12 @@
 import axios from 'axios'
+import store from './../vuex/store'
 
 export default {
   async getShearList() {
     return await axios.post("/search/share/list", {
       "serviceHeader": {
-        "token": "155114907865244",
-        "userId": "155082254078440"
+        "token": store.state.user.token,
+        "userId": store.state.user.userId
       },
       "serviceBody": {
         "lng": "23.21463",

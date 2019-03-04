@@ -1,5 +1,8 @@
 import http from '../lib/http';
 import apiHelper from './api-helper';
+import {
+  ImagePreview
+} from 'vant';
 
 // 微信获取地理位置
 function getlocation() {}
@@ -31,10 +34,11 @@ function dateFromat(date, text = '') {
       1}-${artDate.getDate()}`;
   }
 }
+
 function getPosition() {
   return new Promise(resolve => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
         let latitude = position.coords.latitude; // 获取纬度
         let longitude = position.coords.longitude; // 获取经度
         //alert(latitude + " " + longitude)
@@ -46,8 +50,14 @@ function getPosition() {
   });
 }
 
+// 图片预览
+function imagePreview(urlList) {
+  ImagePreview(urlList);
+}
+
 export default {
   dateFromat,
   getPosition,
-  apiHelper
+  apiHelper,
+  imagePreview
 };

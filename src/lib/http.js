@@ -29,18 +29,16 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (response) {
   Vue.prototype.$toast.clear();
-  return response;
-}, onerror);
-
-Vue.prototype.$post = async function (config) {
-  let res = await axios.post(config.url, config.data, {
-    showLoading: config.showLoading || false
-  });
-  if (res.data.code === 10000) {
-    config.success(res.data);
+  let res = response.data
+  if(res.status === '200000') {
+    return {
+      h: res.data.serviceHeader,
+      d: res.data.serviceBody
+    }
   } else {
-    config.error(res.msg);
+    response.config.showErr && Vue.prototype.$notify(res.msg);
+    return false
   }
-};
+}, onerror);
 
 export default axios;
