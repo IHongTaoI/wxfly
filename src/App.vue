@@ -1,9 +1,22 @@
 <template>
   <div id="app">
-    <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <keep-alive include="homeWrap">
-        <router-view class="app-content"></router-view>
+    <transition
+      :enter-active-class="'animated fadeInLeft'"
+      :leave-active-class="'animated fadeOutLeft'"
+    >
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" class="app-content"></router-view>
       </keep-alive>
+    </transition>
+    <transition
+      :enter-active-class="'animated fadeInRight'"
+      :leave-active-class="'animated fadeOutRight'"
+    >
+      <div v-if="!$route.meta.keepAlive" class="app-content">
+        <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
+          <router-view></router-view>
+        </transition>
+      </div>
     </transition>
   </div>
 </template>
@@ -29,7 +42,8 @@ export default {
       let hasPath = this.routerPathC.indexOf(to.path)
       let isBack =
         ~hasPath && to.path === this.routerPathC[this.routerPathC.length - 2] //是返回
-      if (isHome || isBack) {
+
+      if (isBack || isHome) {
         // 如果有历史记录，则是返回
         this.enterAnimate = 'animated fadeInLeft'
         this.leaveAnimate = 'animated fadeOutRight'
@@ -52,6 +66,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: #fff;
 }
 .app-content {
   position: fixed;

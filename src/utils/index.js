@@ -51,8 +51,11 @@ function getPosition() {
 }
 
 // 图片预览
-function imagePreview(urlList) {
-  ImagePreview(urlList);
+function imagePreview(urlList, index) {
+  ImagePreview({
+    images: urlList,
+    startPosition: index
+  });
 }
 
 export default {

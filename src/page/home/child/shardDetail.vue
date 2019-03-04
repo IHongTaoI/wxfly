@@ -23,7 +23,7 @@
             :src="imgsrc"
             v-for="(imgsrc, index) in shardData.shareImg"
             :key="index"
-            @click.stop="previewImage(shardData.shareImg)"
+            @click.stop="previewImage(shardData.shareImg, index)"
           >
         </div>
       </div>
@@ -121,8 +121,8 @@ export default {
         this.replyList.push(...ret.d.replies)
       }
     },
-    previewImage(imgs) {
-      this.$utils.imagePreview(imgs)
+    previewImage(imgs, index) {
+      this.$utils.imagePreview(imgs, index)
     },
     // 评论输入框失去焦点
     textareaBlur() {
@@ -189,8 +189,11 @@ export default {
 <style lang="less" scoped>
 #shard-detail {
   padding: 46px 4px 50px;
+  width: 100%;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  background: #fff;
   .wrap {
     padding: 6px 10px;
     .header {

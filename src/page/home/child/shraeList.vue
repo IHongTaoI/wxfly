@@ -24,7 +24,7 @@
             class="pic"
             mode="aspectFill"
             :src="picItem"
-            @click.stop="previewImage(item.shareImg)"
+            @click.stop="previewImage(item.shareImg, indx)"
           >
         </div>
       </div>
@@ -55,8 +55,8 @@ export default {
   props: ['itemObj'],
   methods: {
     // 预览图片
-    previewImage(imgs) {
-      this.$utils.imagePreview(imgs)
+    previewImage(imgs, index) {
+      this.$utils.imagePreview(imgs, index)
     },
     gotoDetail() {
       this.$router.push({
