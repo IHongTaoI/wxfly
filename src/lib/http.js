@@ -16,7 +16,8 @@ const onerror = error => {
   }
   error.config.showErr && Vue.prototype.$notify('请求失败');
 };
-axios.interceptors.request.use(function(config) {
+axios.interceptors.request.use(function (config) {
+  // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
   config.showLoading &&
     Vue.prototype.$toast.loading({
       mask: false,
@@ -26,12 +27,12 @@ axios.interceptors.request.use(function(config) {
   return config;
 }, onerror);
 
-axios.interceptors.response.use(function(response) {
+axios.interceptors.response.use(function (response) {
   Vue.prototype.$toast.clear();
   return response;
 }, onerror);
 
-Vue.prototype.$post = async function(config) {
+Vue.prototype.$post = async function (config) {
   let res = await axios.post(config.url, config.data, {
     showLoading: config.showLoading || false
   });

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    ajaxUrl: 'http://134.175.16.212:2019',
+    ajaxUrl: 'http://www.wuxfly.com:2019',
     routerPathC: [], // 路由缓存
     curRoutePath: '/',
     platform: {
