@@ -13,12 +13,18 @@ export default {
         "searchType": "2",
         "page": "",
         "pageSize": "1"
+      },
+      config: {
+        showLoading: false
       }
     })
   },
   async getShardDetail(id) {
     return await post({
       url: "/user/share/init",
+      config: {
+        showLoading: false
+      },
       data: {
         "shareId": id
       }
@@ -27,7 +33,10 @@ export default {
   async shareReplyAll(data) {
     return await post({
       url: "/user/share/reply/all",
-      data
+      data,
+      config: {
+        showLoading: false
+      }
     })
   }
 }

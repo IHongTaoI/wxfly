@@ -52,7 +52,7 @@
       <!-- 评论列表 -->
       <replyList :replyList="replyList" :shareId="shareId" @btnClick="replyChildBtn"></replyList>
     </div>
-    <loadinganite v-if="loading"></loadinganite>
+    <loadinganite></loadinganite>
     <replyEditBox
       v-model="showReplyBox"
       :tearPlaTxt="tearPlaTxt"

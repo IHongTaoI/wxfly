@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <header>
-      <img src="./../../assets/images/logo108.png" class="login" />
+      <img src="./../../assets/images/logo108.png" class="login">
     </header>
     <van-cell-group>
       <van-field
@@ -14,27 +14,14 @@
         @click-right-icon="$toast('question')"
       />
 
-      <van-field
-        v-model="password"
-        type="password"
-        label="密码"
-        placeholder="请输入密码"
-        required
-      />
-      <van-field
-        v-model="sms"
-        center
-        clearable
-        label="验证码"
-        placeholder="请输入邮箱验证码"
-      >
+      <van-field v-model="password" type="password" label="密码" placeholder="请输入密码" required/>
+      <van-field v-model="sms" center clearable label="验证码" placeholder="请输入邮箱验证码">
         <van-button
           slot="button"
           size="small"
           type="primary"
           @click="sendSms"
-          >{{ smsCount ? `${smsCount}秒` : "发送验证码" }}</van-button
-        >
+        >{{ smsCount ? `${smsCount}秒` : "发送验证码" }}</van-button>
       </van-field>
     </van-cell-group>
   </div>
@@ -53,13 +40,13 @@ export default {
   methods: {
     async sendSms() {
       await this.$post('/user/share/mail/activate', {
-        "serviceHeader": {
-          "token": "155108797078187",
-          "userId": "155080081322129"
+        serviceHeader: {
+          token: '155108797078187',
+          userId: '155080081322129'
         },
-        "serviceBody": {
-          "userName": "",
-          "userMail": "836717428@qq.com"
+        serviceBody: {
+          userName: '',
+          userMail: '836717428@qq.com'
         }
       })
       this.smsCount = 60
@@ -68,7 +55,7 @@ export default {
         this.smsCount--
       }, 1000)
     }
-  },
+  }
 }
 </script>
 <style lang="less" scoped>

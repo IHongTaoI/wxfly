@@ -18,10 +18,10 @@ export default {}
 
 <style lang="less" scoped>
 #loading-adminte {
-  width: 60rpx;
-  height: 60rpx;
+  width: 20px;
+  height: 20px;
   margin: 0 auto;
-  margin-top: 100rpx;
+  margin-top: 100px;
   position: relative;
   animation: loadani 3s linear infinite;
   .d {
@@ -31,14 +31,14 @@ export default {}
   }
   .s {
     display: inline-block;
-    width: 20rpx;
-    height: 20rpx;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: #99cc66;
     position: absolute;
     left: 50%;
-    margin-top: -10rpx;
-    margin-left: -10rpx;
+    margin-top: -10px;
+    margin-left: -10px;
     animation: changeBgColor 3s ease infinite;
   }
   & .d:nth-child(2) {
