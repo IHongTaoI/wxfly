@@ -14,7 +14,8 @@ const onerror = error => {
   ) {
     return (error.config.showErr && Vue.prototype.$notify('请求超时'));
   }
-  error.config.showErr && Vue.prototype.$notify('请求失败');
+  let msg = error.response.data.msg || '请求失败';
+  error.config.showErr && Vue.prototype.$notify(msg);
 };
 axios.interceptors.request.use(function (config) {
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
@@ -31,9 +32,11 @@ axios.interceptors.response.use(function (response) {
   Vue.prototype.$toast.clear();
   let res = response.data
   if (res.status === '200000') {
-    return {
-      h: res.data.serviceHeader,
-      d: res.data.serviceBody
+    if(res.data && res.data.serviceHeader) {
+      return {
+        h: res.data.serviceHeader,
+        d: res.data.serviceBody
+      }
     }
   } else {
     response.config.showErr && Vue.prototype.$notify(res.msg);

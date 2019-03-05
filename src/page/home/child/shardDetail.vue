@@ -52,7 +52,7 @@
       <!-- 评论列表 -->
       <replyList :replyList="replyList" :shareId="shareId" @btnClick="replyChildBtn"></replyList>
     </div>
-    <loadinganite></loadinganite>
+    <loadinganite v-if="loading"></loadinganite>
     <replyEditBox
       v-model="showReplyBox"
       :tearPlaTxt="tearPlaTxt"
@@ -153,14 +153,14 @@ export default {
       this.cacheObj.content = replyCont
       if (this.isReplayChild) {
         // 二级评论
-        let ret = await this.$utils.httpApi.shareReplyArticleChild(
+        let ret = await this.$utils.apiHelper.shareReplyArticleChild(
           this.cacheObj
         )
         console.log('回复二级评论', ret)
         this.hidereplyBox()
         this.getDetil()
       } else {
-        let ret = await this.$utils.httpApi.shareReplyArticle(this.cacheObj)
+        let ret = await this.$utils.apiHelper.shareReplyArticle(this.cacheObj)
         console.log('回复楼主', ret)
         this.hidereplyBox()
         this.getDetil()

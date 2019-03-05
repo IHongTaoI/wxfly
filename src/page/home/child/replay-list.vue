@@ -1,34 +1,36 @@
 <template>
   <div class="replay-list">
     <h3 class="rep-w-h">评论</h3>
-    <div class="re-item" v-for="(reItem, ind) in replyList" :key="ind">
-      <div class="re-wrap">
-        <div class="left">
-          <img :src="reItem.userAvatar" class="ava">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="re-item" v-for="reItem in replyList" :key="reItem.id">
+        <div class="re-wrap">
+          <div class="left">
+            <img :src="reItem.userAvatar" class="ava">
+          </div>
+          <div class="content">
+            <div class="re-h">
+              <span class="uname">{{reItem.userName}}</span>
+            </div>
+            <div class="recont">{{reItem.content}}</div>
+            <div class="rechild" v-if="reItem.replies.length">
+              <p class="rechild-item" v-for="(reChild, recind) in reItem.replies" :key="recind">
+                <span>
+                  <span class="color_user">{{reChild.userName}}</span> 回复
+                  <span class="color_user">{{reChild.repltUserName}}</span>
+                  : {{reChild.content}}
+                </span>
+              </p>
+              <p v-if="reItem.replyCount > 2" class="more">共{{reItem.replyCount}}条回复&gt;&gt;</p>
+            </div>
+            <div class="bottom">
+              <span class="time">{{reItem.replyTime}}</span>
+              <span class="btn" @click="showReplyBox(reItem)">回复</span>
+            </div>
+          </div>
         </div>
-        <div class="content">
-          <div class="re-h">
-            <span class="uname">{{reItem.userName}}</span>
-          </div>
-          <div class="recont">{{reItem.content}}</div>
-          <div class="rechild" v-if="reItem.replies.length">
-            <p class="rechild-item" v-for="(reChild, recind) in reItem.replies" :key="recind">
-              <span>
-                <span class="color_user">{{reChild.userName}}</span> 回复
-                <span class="color_user">{{reChild.repltUserName}}</span>
-                : {{reChild.content}}
-              </span>
-            </p>
-            <p v-if="reItem.replyCount > 2" class="more">共{{reItem.replyCount}}条回复&gt;&gt;</p>
-          </div>
-          <div class="bottom">
-            <span class="time">{{reItem.replyTime}}</span>
-            <span class="btn" @click="showReplyBox(reItem)">回复</span>
-          </div>
-        </div>
+        <div class="line"></div>
       </div>
-      <div class="line"></div>
-    </div>
+    </van-list>
   </div>
 </template>
 
@@ -37,7 +39,9 @@ export default {
   props: ['replyList', 'shareId'],
   data() {
     return {
-      sendObj: null
+      sendObj: null,
+      loading: false,
+      finished: false,
     }
   },
   methods: {

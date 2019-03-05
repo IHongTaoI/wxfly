@@ -1,8 +1,15 @@
 <template>
   <div id="home">
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <shreaBox :itemObj="item" v-for="(item, index) in list" :key="index" @action="actionHandler"></shreaBox>
-    </van-list>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refresh">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <shreaBox
+          :itemObj="item"
+          v-for="(item, index) in list"
+          :key="index"
+          @action="actionHandler"
+        ></shreaBox>
+      </van-list>
+    </van-pull-refresh>
     <van-actionsheet
       v-model="showActionsheetL"
       :actions="actions"
@@ -19,25 +26,23 @@ export default {
   components: {
     shreaBox
   },
-  async created() {
-    let ret = await this.$utils.apiHelper.getShearList()
-    let list = ret.d.shareList
-    if (list.length < 10) {
-      this.finished = true
-    }
-    this.list = list
-    this.loading = false
+  created() {
+    this.getList()
   },
   data() {
     return {
       list: [],
+      isLoading: false,
+      selObj: null, // 正在操作的数据
       showActionsheetL: false,
       actions: [
         {
-          name: '关注'
+          name: '关注',
+          type: 1
         },
         {
-          name: '收藏'
+          name: '收藏',
+          type: 2
         }
       ],
       loading: true,
@@ -45,11 +50,40 @@ export default {
     }
   },
   methods: {
-    onLoad() {},
-    actionHandler() {
+    onLoad() {
+      this.getList()
+    },
+    onRefresh() {
+      this.getList(true)
+    },
+    async getList(isreload) {
+      let ret = await this.$utils.apiHelper.getShearList()
+      let list = ret.d.shareList
+
+      if (isreload) {
+        this.list = list
+        this.finished = false
+      } else {
+        this.list.push(...list)
+      }
+
+      if (list.length < 10) {
+        this.finished = true
+      }
+      this.isLoading = false
+      this.loading = false
+    },
+    actionHandler(selObj) {
+      this.selObj = selObj
       this.showActionsheetL = true
     },
-    onSelect(msg) {
+    async onSelect(msg, item) {
+      console.log(msg, item)
+      if (msg.type === 2) {
+        // 收藏
+        let ret = await this.$utils.apiHelper.userCollect(this.selObj.id)
+        if (ret) this.$toast.success('收藏成功')
+      }
       this.showActionsheetL = false
     }
   }
@@ -58,5 +92,10 @@ export default {
 <style lang="less" scoped>
 #home {
   background: #fff;
+  width: 100%;
+  height: 100%;
+  .refresh {
+    height: 100%;
+  }
 }
 </style>

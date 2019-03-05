@@ -33,19 +33,19 @@
     <div class="footer">
       <p>
         <span class="iconfont icon-liulan"></span>
-        <span class="count">1</span>
+        <span class="count">{{item.shareBrowseCount | countFromat}}</span>
       </p>
       <p>
         <span class="iconfont icon-xihuancon"></span>
-        <span class="count">1</span>
+        <span class="count">{{item.shareLikeCount | countFromat}}</span>
       </p>
       <p>
         <span class="iconfont icon-pinglun"></span>
-        <span class="count">1</span>
+        <span class="count">{{item.shareReplyCount | countFromat}}</span>
       </p>
       <p>
         <span class="iconfont icon-zhuanfa"></span>
-        <span class="count">1</span>
+        <span class="count">{{item.shareTransmitCount | countFromat}}</span>
       </p>
     </div>
   </div>
@@ -67,7 +67,7 @@ export default {
       })
     },
     caozuo() {
-      this.$emit('action')
+      this.$emit('action', this.itemObj)
     }
   },
   computed: {
