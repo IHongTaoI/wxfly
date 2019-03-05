@@ -5,7 +5,7 @@ import store from './../vuex/store';
 axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
 axios.defaults.showErr = true;
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 30000;
 const onerror = error => {
   Vue.prototype.$toast.clear();
   if (
@@ -18,6 +18,7 @@ const onerror = error => {
   error.config.showErr && Vue.prototype.$notify(msg);
 };
 axios.interceptors.request.use(function (config) {
+  console.log(config)
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
   config.showLoading &&
     Vue.prototype.$toast.loading({
@@ -48,14 +49,14 @@ async function post({
   url,
   data,
   config = {},
-  qheader = {}
+  sheader = {}
 }) {
 
   let serviceHeader = {
     "token": store.state.user.token,
     "userId": store.state.user.userId
   }
-  serviceHeader = Object.assign(serviceHeader, qheader)
+  serviceHeader = Object.assign(serviceHeader, sheader)
   data = {
     serviceHeader,
     serviceBody: data

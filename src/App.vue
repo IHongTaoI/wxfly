@@ -14,7 +14,7 @@
     >
       <div v-if="!$route.meta.keepAlive" class="app-content">
         <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-          <router-view></router-view>
+          <router-view class="app-content"></router-view>
         </transition>
       </div>
     </transition>
