@@ -2,8 +2,8 @@ export default {
   namespaced: true,
   state: {
     islogin: false, // 是否登录
-    token: '155114907865244', // 请求用的token 
-    userId: '155082254078440', // 请求头的userId  
+    token: '', // 请求用的token 155114907865244
+    userId: '', // 请求头的userId  155082254078440
     userInfo: {
       // 用户信息
       country: '中国',

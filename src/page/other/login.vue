@@ -19,7 +19,7 @@
       </van-cell-group>
     </div>
     <div class="btn">
-      <van-button type="warning" class="btnvant" @click="">注册</van-button>
+      <van-button type="warning" class="btnvant" @click="">登录</van-button>
     </div>
     <p class="bottom-tips">
       <span>忘记密码?</span>
