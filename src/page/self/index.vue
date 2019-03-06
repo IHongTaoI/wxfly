@@ -25,6 +25,13 @@
         </div>
         <div class="weui-cell__ft"></div>
       </div>
+      <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__bd">
+          <span class="iconfont icon-dongtai" style="color:#0078D7;"></span>
+          <p class="iconfrt">我的动态</p>
+        </div>
+        <div class="weui-cell__ft"></div>
+      </div>
     </div>
     <div class="weui-cells">
       <div class="weui-cell weui-cell_access">
