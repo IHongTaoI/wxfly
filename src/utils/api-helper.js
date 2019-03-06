@@ -78,7 +78,12 @@ export default {
   async mailRegister(data) {
     return await post({
       url: '/user/share/mail/register',
-      data
+      data,
+      config: {
+        headers: {
+          login: 'login'
+        }
+      }
     });
   }
 };

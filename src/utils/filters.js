@@ -3,10 +3,10 @@ const filters = {
   countFromat(val) {
     if (val < 1000) return val
     if (val > 1000) {
-      return val / 1000 + 'k'
+      return (val / 1000).toFixed(1) + 'k'
     }
     if(val > 1000000) {
-      return val / 1000000 + 'm'
+      return (val / 1000000).toFixed(1) + 'm'
     }
   }
 };

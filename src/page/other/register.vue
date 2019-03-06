@@ -60,7 +60,16 @@ export default {
         this.smsCount--;
       }, 1000);
     },
-    register() {}
+    async register() {
+      let ret = await this.$utils.apiHelper.mailRegister({
+        mail: this.email,
+        nickName: "",
+        password: this.password,
+        code: this.sms
+      });
+      if (!ret) return;
+      console.log(ret)
+    }
   }
 };
 </script>

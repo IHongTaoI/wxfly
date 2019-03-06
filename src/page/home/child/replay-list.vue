@@ -64,6 +64,7 @@ export default {
       };
     },
     onLoad() {
+      console.log('执行了loding')
       this.shareReplyAll();
     },
     async shareReplyAll(shareId) {

@@ -39,6 +39,7 @@ axios.interceptors.response.use(function (response) {
         d: res.data.serviceBody
       }
     }
+    return true
   } else {
     response.config.showErr && Vue.prototype.$notify(res.msg);
     return false
