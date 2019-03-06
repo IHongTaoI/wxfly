@@ -51,6 +51,11 @@ export default [{
     component: () => import('../page/other/publish.vue'),
   },
   {
+    path: '/self/userinfo',
+    name: '个人详情',
+    component: () => import('../page/self/child/userinfo.vue'),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../page/other/login.vue'),

@@ -83,5 +83,7 @@ export default {
 @import 'assets/css/lib/animate.css';
 /*iconfont 字体*/
 @import './assets/css/lib/iconfont/iconfont.css';
+/*weui 样式库 非常适合高仿微信*/
+@import "./assets/css/lib/weui.min.css";
 </style>
 
