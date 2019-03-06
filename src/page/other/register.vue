@@ -65,10 +65,11 @@ export default {
         mail: this.email,
         nickName: "",
         password: this.password,
-        code: this.sms
+        code: this.sms,
+        registType: "N"
       });
       if (!ret) return;
-      console.log(ret)
+      console.log(ret);
     }
   }
 };

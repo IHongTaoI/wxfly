@@ -17,12 +17,22 @@
     </div>
     <div class="weui-cells">
       <div class="weui-cell weui-cell_access">
-        <div class="weui-cell__hd">
-          <!-- <i class="new-msg-dot"></i> -->
-        </div>
         <div class="weui-cell__bd">
-          <span class="iconfont icon-icon_save" style="color:#0078D7;"></span>
+          <span class="iconfont icon-icon_save" style="color:#0078D7;">
+            <i class="new-msg-dot"></i>
+          </span>
           <p class="iconfrt">我的收藏</p>
+        </div>
+        <div class="weui-cell__ft"></div>
+      </div>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__bd">
+          <span class="iconfont icon-shezhi" style="color:#666666;">
+            <!-- <i class="new-msg-dot"></i> -->
+          </span>
+          <p class="iconfrt">设置</p>
         </div>
         <div class="weui-cell__ft"></div>
       </div>
@@ -60,6 +70,7 @@ export default {
     display: inline-block;
   }
   .iconfont {
+    position: relative;
     display: inline-block;
     vertical-align: middle;
     font-size: 24px;
