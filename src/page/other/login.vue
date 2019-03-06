@@ -19,7 +19,7 @@
       </van-cell-group>
     </div>
     <div class="btn">
-      <van-button type="warning" class="btnvant" @click="">登录</van-button>
+      <van-button type="warning" class="btnvant" @click="login">登录</van-button>
     </div>
     <p class="bottom-tips">
       <span>忘记密码?</span>
@@ -34,6 +34,20 @@ export default {
       username: "",
       password: ""
     };
+  },
+  methods: {
+    async login() {
+      let ret = await this.$utils.apiHelper.mailLogin({
+        mail: this.username,
+        password: this.password,
+        code: ""
+      });
+      if (!ret) return this.$toast.fail("登录失败");
+      this.$store.commit("user/LOGIN_SUCCESS", ret);
+      this.$router.replace({
+        path: "/home"
+      });
+    }
   }
 };
 </script>

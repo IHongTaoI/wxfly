@@ -85,5 +85,16 @@ export default {
         }
       }
     });
+  },
+  async mailLogin(data) {
+    return await post({
+      url: '/user/share/mail/login',
+      data,
+      config: {
+        headers: {
+          login: 'login'
+        }
+      }
+    });
   }
 };

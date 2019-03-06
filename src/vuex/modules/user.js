@@ -9,10 +9,10 @@ export default {
       country: '中国',
       province: '广东',
       city: '深圳',
-      avatarUrl:
-        'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKuBsgNelD8zG3oIyEm9icHp8xyDW3WYaAtABUHT02mmnlq9CeWDicNl4686PeDicTjG5sImHE0iakAvw/132',
-      openId: 'oMWA347ZHjlRQ1KOKtTSKYQMo_gU',
-      nickName: '洪涛'
+      userMail: '',
+      userAvatar:
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551893841562&di=345411edc20bb9c87203881672904900&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F31%2F87%2F96573b585a7c9c4.jpg',
+      userName: '洪涛'
     }
   },
   mutations: {
@@ -20,7 +20,7 @@ export default {
       state.islogin = true;
       state.token = msg.h.token;
       state.userId = msg.h.userId;
-      let userInfo = msg.d.userInfo;
+      let userInfo = msg.d;
       // 需要每一个对象进行遍历
       for (let i in userInfo) {
         state.userInfo[i] = userInfo[i];
