@@ -19,15 +19,20 @@
   </div>
 </template>
 <script>
-import shreaBox from './child/shraeList'
+import shreaBox from "./child/shraeList";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
     shreaBox
   },
   created() {
-    this.getList()
+    this.getList();
+  },
+  activated() {
+    if (!this.list.length) {
+      this.getList();
+    }
   },
   data() {
     return {
@@ -37,57 +42,57 @@ export default {
       showActionsheetL: false,
       actions: [
         {
-          name: '关注',
+          name: "关注",
           type: 1
         },
         {
-          name: '收藏',
+          name: "收藏",
           type: 2
         }
       ],
       loading: true,
       finished: false // 是否已加载完成
-    }
+    };
   },
   methods: {
     onLoad() {
-      this.getList()
+      this.getList();
     },
     onRefresh() {
-      this.getList(true)
+      this.getList(true);
     },
     async getList(isreload) {
-      let ret = await this.$utils.apiHelper.getShearList()
-      let list = ret.d.shareList
+      let ret = await this.$utils.apiHelper.getShearList();
+      let list = ret.d.shareList;
 
       if (isreload) {
-        this.list = list
-        this.finished = false
+        this.list = list;
+        this.finished = false;
       } else {
-        this.list.push(...list)
+        this.list.push(...list);
       }
 
       if (list.length < 10) {
-        this.finished = true
+        this.finished = true;
       }
-      this.isLoading = false
-      this.loading = false
+      this.isLoading = false;
+      this.loading = false;
     },
     actionHandler(selObj) {
-      this.selObj = selObj
-      this.showActionsheetL = true
+      this.selObj = selObj;
+      this.showActionsheetL = true;
     },
     async onSelect(msg, item) {
-      console.log(msg, item)
+      console.log(msg, item);
       if (msg.type === 2) {
         // 收藏
-        let ret = await this.$utils.apiHelper.userCollect(this.selObj.id)
-        if (ret) this.$toast.success('收藏成功')
+        let ret = await this.$utils.apiHelper.userCollect(this.selObj.id);
+        if (ret) this.$toast.success("收藏成功");
       }
-      this.showActionsheetL = false
+      this.showActionsheetL = false;
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 #home {

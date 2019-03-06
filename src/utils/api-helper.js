@@ -13,7 +13,8 @@ export default {
         pageSize: '1'
       },
       config: {
-        showLoading: false
+        showLoading: false,
+        showErr: false
       }
     });
   },
