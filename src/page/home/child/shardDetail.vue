@@ -50,7 +50,7 @@
         </div>
       </div>
       <!-- 评论列表 -->
-      <replyList :replyList="replyList" :shareId="shareId" @btnClick="replyChildBtn"></replyList>
+      <replyList :shareId="shareId" @btnClick="replyChildBtn"></replyList>
     </div>
     <loadinganite v-if="loading"></loadinganite>
     <replyEditBox
@@ -83,10 +83,7 @@ export default {
       shardData: undefined,
       shareId: '',
       replyCont: '',
-      replyList: [],
       showReplyBox: false,
-      page: 0,
-      pageSize: 20,
       tearPlaTxt: '发表评论',
       cacheObj: null // 缓存一些东西
     }
@@ -103,23 +100,8 @@ export default {
       ret.d.share.createTime = this.$utils.dateFromat(ret.d.share.createTime)
       ret.d.share.shareImg = ret.d.share.shareImg.split(',')
       this.shardData = ret.d.share
-      this.shareReplyAll(this.shareId)
+      
       this.loading = false
-    },
-    async shareReplyAll(shareId, isreload = true) {
-      let ret = await this.$utils.apiHelper.shareReplyAll({
-        shareId,
-        page: this.page,
-        pageSize: this.pageSize
-      })
-      for (let v of ret.d.replies) {
-        v.replyTime = this.$utils.dateFromat(v.replyTime)
-      }
-      if (isreload) {
-        this.replyList = ret.d.replies
-      } else {
-        this.replyList.push(...ret.d.replies)
-      }
     },
     previewImage(imgs, index) {
       this.$utils.imagePreview(imgs, index)

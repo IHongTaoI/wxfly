@@ -36,13 +36,19 @@
 
 <script>
 export default {
-  props: ['replyList', 'shareId'],
+  props: ["shareId"],
+  created() {
+    this.shareReplyAll(this.shareId);
+  },
   data() {
     return {
       sendObj: null,
       loading: false,
       finished: false,
-    }
+      page: 0,
+      pageSize: 20,
+      replyList: []
+    };
   },
   methods: {
     // 设置发送参数
@@ -55,14 +61,32 @@ export default {
         replyUserId: arvg.userId,
         replyUserName: arvg.userName,
         replyUserAvatar: arvg.userAvatar
+      };
+    },
+    onLoad() {
+      this.shareReplyAll();
+    },
+    async shareReplyAll(shareId) {
+      let ret = await this.$utils.apiHelper.shareReplyAll({
+        shareId,
+        page: this.page,
+        pageSize: this.pageSize
+      });
+      for (let v of ret.d.replies) {
+        v.replyTime = this.$utils.dateFromat(v.replyTime);
       }
+      if (ret.d.replies.length < this.pageSize) {
+        this.finished = true;
+      }
+      this.loading = false;
+      this.replyList.push(...ret.d.replies);
     },
     showReplyBox(reItem) {
-      this.setSendObj(reItem)
-      this.$emit('btnClick', reItem)
+      this.setSendObj(reItem);
+      this.$emit("btnClick", reItem);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

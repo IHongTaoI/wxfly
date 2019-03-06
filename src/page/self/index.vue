@@ -1,8 +1,30 @@
 <template>
-  <div id="home">这是self页面</div>
+  <div id="self">
+    <header></header>
+  </div>
 </template>
 <script>
-export default {}
+import { mapState } from "vuex";
+
+export default {
+  components: {
+    Cell,
+    Group
+  },
+  computed: {
+    ...mapState("user", ["userInfo"])
+  }
+};
 </script>
 <style lang="less" scoped>
+#self {
+  .userava {
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+    img {
+      margin-right: 0 !important;
+    }
+  }
+}
 </style>

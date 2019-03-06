@@ -6,7 +6,9 @@ import vueInit from './lib/vue-init';
 import NativeInit from './lib/jsBridge/init';
 import Vconsole from 'vconsole';
 import filters from './utils/filters'
+import FastClick from 'fastclick'
 
+FastClick.attach(document.body)
 filters(Vue);
 
 if (store.state.platform.isApicloud) {
