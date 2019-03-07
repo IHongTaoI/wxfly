@@ -56,6 +56,11 @@ export default [{
     component: () => import('../page/self/child/userinfo.vue'),
   },
   {
+    path: '/self/setting',
+    name: '设置',
+    component: () => import('../page/self/child/setting.vue'),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../page/other/login.vue'),

@@ -9,15 +9,13 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import lazyImg from './../page/common/blazy-img.vue';
 
-
 export default function() {
   Vue.use(VueAxios, axios);
   Vue.use(Vant);
   Vue.prototype.$utils = utils;
   Vue.config.productionTip = false;
-  Vue.component('lazy-img', lazyImg)
-
-  new Vue({
+  Vue.component('lazy-img', lazyImg);
+  window.vueObj = new Vue({
     el: '#app',
     router,
     components: { App },

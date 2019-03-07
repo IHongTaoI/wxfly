@@ -4,13 +4,13 @@
       <router-link to="/self/userinfo" class="weui-cell weui-cell_access">
         <div class="weui-cell__hd">
           <div class="self-header userava">
-            <lazy-img :src="userInfo.userAvatar || ava" class="self-header"></lazy-img>
+            <lazy-img :src="userInfo.d.userAvatar || ava" class="self-header"></lazy-img>
           </div>
         </div>
         <div class="weui-cell__bd">
-          <h4 class="self-nickname">{{userInfo.userName || '未设置用户名'}}</h4>
+          <h4 class="self-nickname">{{userInfo.d.userName || '未设置用户名'}}</h4>
 
-          <p class="self-wxid">用户id: {{userId}}</p>
+          <p class="self-wxid">用户id: {{userInfo.h.userId}}</p>
         </div>
         <div class="weui-cell__ft"></div>
       </router-link>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access">
+      <router-link to="/self/setting" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">
           <span class="iconfont icon-shezhi" style="color:#666666;">
             <!-- <i class="new-msg-dot"></i> -->
@@ -42,7 +42,7 @@
           <p class="iconfrt">设置</p>
         </div>
         <div class="weui-cell__ft"></div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -51,7 +51,9 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("user", ["userInfo", "userId"])
+    userInfo() {
+      return this.$utils.getCookiesUserinfo();
+    }
   },
   data() {
     return {

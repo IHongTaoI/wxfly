@@ -38,7 +38,7 @@ export default {
   watch: {
     $route(to, from) {
       if (
-        !this.$utils.cookie.get('token') &&
+        !this.$utils.cookie.get('seesionuser') &&
         to.name !== "login" &&
         to.name !== "register"
       ) {
@@ -48,7 +48,7 @@ export default {
         return;
       }
       if (
-        this.$utils.cookie.get('token') &&
+        this.$utils.cookie.get('seesionuser') &&
         (to.name === "login" || to.name === "register")
       ) {
         this.$router.push({
@@ -84,7 +84,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fff;
+  background: #f2f2f2;
 }
 .app-content {
   position: fixed;

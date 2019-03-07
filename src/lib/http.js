@@ -19,7 +19,6 @@ const onerror = error => {
   error.config.showErr && Vue.prototype.$notify(msg);
 };
 axios.interceptors.request.use(function(config) {
-  console.log(config);
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
   config.showLoading &&
     Vue.prototype.$toast.loading({
@@ -48,9 +47,12 @@ axios.interceptors.response.use(function(response) {
 }, onerror);
 
 async function post({ url, data, config = {}, sheader = {} }) {
+  let seesionH = utils.getCookiesUserinfo(),
+    token = seesionH.h ? seesionH.h.token : '',
+    userId = seesionH.h ? seesionH.h.userId : '';
   let serviceHeader = {
-    token: utils.cookie.get('token'),
-    userId: utils.cookie.get('userId')
+    token,
+    userId
   };
   serviceHeader = Object.assign(serviceHeader, sheader);
   data = {

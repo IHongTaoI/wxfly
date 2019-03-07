@@ -86,10 +86,16 @@ const cookie = {
   }
 };
 
+function getCookiesUserinfo() {
+  let ret = cookie.get('seesionuser');
+  return ret ? JSON.parse(ret) : {};
+}
+
 export default {
   dateFromat,
   getPosition,
   apiHelper,
   imagePreview,
-  cookie
+  cookie,
+  getCookiesUserinfo
 };

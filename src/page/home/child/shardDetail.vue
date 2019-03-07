@@ -1,6 +1,6 @@
 <template>
   <div id="shard-detail">
-    <van-nav-bar title="详情页" left-text="返回" left-arrow @click-left="onClickLeft" id="NavBar"/>
+    <van-nav-bar title="详情页" left-text="返回" left-arrow @click-left="onClickLeft" class="topNavBar"/>
     <div class="wrap" v-if="shardData">
       <div class="header">
         <div class="info">
