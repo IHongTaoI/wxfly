@@ -4,7 +4,7 @@
       <router-link to="/self/userinfo" class="weui-cell weui-cell_access">
         <div class="weui-cell__hd">
           <div class="self-header userava">
-            <lazy-img :src="userInfo.d.userAvatar || ava" class="self-header"></lazy-img>
+            <img class="self-header"  v-lazy="userInfo.d.userAvatar || ava">
           </div>
         </div>
         <div class="weui-cell__bd">

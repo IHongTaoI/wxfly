@@ -88,7 +88,7 @@ const cookie = {
 
 function getCookiesUserinfo() {
   let ret = cookie.get('seesionuser');
-  return ret ? JSON.parse(ret) : {};
+  return ret ? JSON.parse(ret) : false;
 }
 
 export default {
