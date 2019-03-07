@@ -27,8 +27,8 @@ export default {
     shreaBox
   },
   activated() {
-    if (!this.list.length) {
-      this.getList();
+    if (!this.list.length || this.$route.params.reload) {
+      this.getList(true);
     }
   },
   data() {

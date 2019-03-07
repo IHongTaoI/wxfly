@@ -24,6 +24,15 @@
 <script>
 export default {
   name: "App",
+  created() {
+    if (this.$utils.cookie.get("seesionuser")) {
+      // 手动设置登录成功
+      this.$store.commit(
+        "user/LOGIN_SUCCESS",
+        JSON.parse(this.$utils.cookie.get("seesionuser"))
+      );
+    }
+  },
   data() {
     return {
       enterAnimate: "",
@@ -38,7 +47,7 @@ export default {
   watch: {
     $route(to, from) {
       if (
-        !this.$utils.cookie.get('seesionuser') &&
+        !this.$utils.cookie.get("seesionuser") &&
         to.name !== "login" &&
         to.name !== "register"
       ) {
@@ -48,7 +57,7 @@ export default {
         return;
       }
       if (
-        this.$utils.cookie.get('seesionuser') &&
+        this.$utils.cookie.get("seesionuser") &&
         (to.name === "login" || to.name === "register")
       ) {
         this.$router.push({

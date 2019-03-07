@@ -15,35 +15,19 @@
         <div class="weui-cell__ft"></div>
       </router-link>
     </div>
-    <div class="weui-cells">
-      <div class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">
-          <span class="iconfont icon-icon_save" style="color:#0078D7;">
-            <i class="new-msg-dot"></i>
-          </span>
-          <p class="iconfrt">我的收藏</p>
-        </div>
-        <div class="weui-cell__ft"></div>
-      </div>
-      <div class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">
-          <span class="iconfont icon-dongtai" style="color:#0078D7;"></span>
-          <p class="iconfrt">我的动态</p>
-        </div>
-        <div class="weui-cell__ft"></div>
-      </div>
-    </div>
-    <div class="weui-cells">
-      <router-link to="/self/setting" class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">
-          <span class="iconfont icon-shezhi" style="color:#666666;">
-            <!-- <i class="new-msg-dot"></i> -->
-          </span>
-          <p class="iconfrt">设置</p>
-        </div>
-        <div class="weui-cell__ft"></div>
-      </router-link>
-    </div>
+    <van-cell-group class="mt20">
+      <van-cell title="我的收藏" is-link>
+        <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
+      </van-cell>
+      <van-cell title="我的动态" is-link>
+        <span slot="icon" class="iconfont iconfont icon-dongtai" style="color:#0078D7;"></span>
+      </van-cell>
+    </van-cell-group>
+    <van-cell-group class="mt20">
+      <van-cell title="设置" is-link to="/self/setting">
+        <span slot="icon" class="iconfont iconfont icon-shezhi" style="color:#666666;"></span>
+      </van-cell>
+    </van-cell-group>
   </div>
 </template>
 <script>

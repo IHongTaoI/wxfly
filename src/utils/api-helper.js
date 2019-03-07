@@ -97,5 +97,29 @@ export default {
         }
       }
     });
+  },
+  // 发布分享
+  async sendShare(data) {
+    return await post({
+      url: '/user/share/send',
+      data
+    });
+  },
+  // 上传图片
+  async uploadImg(data) {
+    return await post({
+      url: '/admin/upload/img/',
+      data,
+      config: {
+        showLoading: false,
+        files: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          login: 'login',
+          token: store.state.user.token,
+          userId: store.state.user.userId
+        }
+      }
+    });
   }
 };
