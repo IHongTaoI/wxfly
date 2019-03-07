@@ -56,6 +56,7 @@ export default {
 </script>
 <style lang="less" scoped>
 #login {
+  background: #fff;
   header {
     text-align: center;
     padding: 20px 0;
