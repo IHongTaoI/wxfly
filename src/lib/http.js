@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import store from './../vuex/store';
+import utils from './../utils/index';
 // 默认值配置
 axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
@@ -12,13 +13,13 @@ const onerror = error => {
     error.code === 'ECONNABORTED' &&
     error.message.indexOf('timeout') !== -1
   ) {
-    return (error.config.showErr && Vue.prototype.$notify('请求超时'));
+    return error.config.showErr && Vue.prototype.$notify('请求超时');
   }
   let msg = error.response.data.msg || '请求失败';
   error.config.showErr && Vue.prototype.$notify(msg);
 };
-axios.interceptors.request.use(function (config) {
-  console.log(config)
+axios.interceptors.request.use(function(config) {
+  console.log(config);
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
   config.showLoading &&
     Vue.prototype.$toast.loading({
@@ -29,45 +30,37 @@ axios.interceptors.request.use(function (config) {
   return config;
 }, onerror);
 
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function(response) {
   Vue.prototype.$toast.clear();
-  let res = response.data
+  let res = response.data;
   if (res.status === '200000') {
-    if(res.data && res.data.serviceHeader) {
+    if (res.data && res.data.serviceHeader) {
       return {
         h: res.data.serviceHeader,
         d: res.data.serviceBody
-      }
+      };
     }
-    return true
+    return true;
   } else {
     response.config.showErr && Vue.prototype.$notify(res.msg);
-    return false
+    return false;
   }
 }, onerror);
 
-async function post({
-  url,
-  data,
-  config = {},
-  sheader = {}
-}) {
-
+async function post({ url, data, config = {}, sheader = {} }) {
   let serviceHeader = {
-    "token": store.state.user.token,
-    "userId": store.state.user.userId
-  }
-  serviceHeader = Object.assign(serviceHeader, sheader)
+    token: utils.cookie.get('token'),
+    userId: utils.cookie.get('userId')
+  };
+  serviceHeader = Object.assign(serviceHeader, sheader);
   data = {
     serviceHeader,
     serviceBody: data
-  }
-  let ret = await axios.post(url, data, config)
-  return ret
+  };
+  let ret = await axios.post(url, data, config);
+  return ret;
 }
 
-export {
-  post
-}
+export { post };
 
 export default axios;

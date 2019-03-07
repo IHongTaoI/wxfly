@@ -38,7 +38,7 @@ export default {
   watch: {
     $route(to, from) {
       if (
-        !this.$store.state.user.token &&
+        !this.$utils.cookie.get('token') &&
         to.name !== "login" &&
         to.name !== "register"
       ) {
@@ -48,7 +48,7 @@ export default {
         return;
       }
       if (
-        this.$store.state.user.token &&
+        this.$utils.cookie.get('token') &&
         (to.name === "login" || to.name === "register")
       ) {
         this.$router.push({

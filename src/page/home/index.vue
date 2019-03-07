@@ -26,9 +26,6 @@ export default {
   components: {
     shreaBox
   },
-  created() {
-    this.getList();
-  },
   activated() {
     if (!this.list.length) {
       this.getList();
