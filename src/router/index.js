@@ -2,6 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import routes from './router';
 import store from './../vuex/store';
+import {
+  exitApp,
+  listenerKeyback,
+  removeListenKeyback
+} from './../lib/jsBridge/EVENT';
 Vue.use(Router);
 
 function scrollBehavior(to, from, savedPosition) {
@@ -19,10 +24,13 @@ const vuerouter = new Router({
 });
 
 vuerouter.beforeEach((to, from, next) => {
-  let rules = ['/', '/self', '/read', '/message'];
+  let rules = ['/', '/home', '/self', '/read', '/message'];
   if (rules.includes(to.path)) {
     // 如果是主页上，不能按返回,并且监听返回键
     if (store.state.platform.isApicloud) {
+      listenerKeyback(() => {
+        exitApp();
+      });
     } else {
       window.history.pushState('forward', null, document.URL);
       window.onpopstate = () => {
@@ -33,6 +41,7 @@ vuerouter.beforeEach((to, from, next) => {
   } else {
     // 取消监听返回
     if (store.state.platform.isApicloud) {
+      removeListenKeyback();
     } else {
       window.onpopstate = null;
     }

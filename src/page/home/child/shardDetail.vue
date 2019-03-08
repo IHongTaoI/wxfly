@@ -60,8 +60,8 @@
       @on-submit="sumbitReplay"
     ></replyEditBox>
     <transition
-      :enter-active-class="'animated fadeInRight'"
-      :leave-active-class="'animated fadeOutRight'"
+      :enter-active-class="'animated zoomInRight'"
+      :leave-active-class="'animated zoomOutLeft'"
     >
       <router-view class="app-content" style="z-index: 99"></router-view>
     </transition>
@@ -174,6 +174,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.animated {
+  animation-duration: 0.8s;
+}
 #shard-detail {
   padding: 46px 4px 50px;
   width: 100%;
