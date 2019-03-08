@@ -15,13 +15,11 @@ const listenerKeyback = function(cb) {
 };
 
 const onPause = function() {
-  console.log('进入后台');
   pauseFn && pauseFn();
   pauseFn = null;
 };
 
 const onResume = function() {
-  console.log('进入前台');
   resumeFn && resumeFn();
   resumeFn = null;
 };

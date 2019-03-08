@@ -117,6 +117,7 @@ export default {
 </script>
 <style lang="less" scoped>
 #publish {
+  overflow-y: auto;
   .iconfrt {
     vertical-align: middle;
     display: inline-block;

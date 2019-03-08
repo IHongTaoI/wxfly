@@ -2,6 +2,7 @@ import axios from 'axios';
 import Vue from 'vue';
 import store from './../vuex/store';
 import utils from './../utils/index';
+import router from './../router/index';
 // 默认值配置
 axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
@@ -46,7 +47,9 @@ axios.interceptors.response.use(function(response) {
       utils.cookie.delete('seesionuser');
       Vue.prototype.$notify('登录过期，请重新登录');
       setTimeout(() => {
-        window.location.reload();
+        router.replace({
+          path: 'login'
+        });
       }, 200);
       return;
     }

@@ -80,7 +80,7 @@ export default {
     },
     onLoad() {
       console.log("执行了loding");
-      this.shareReplyAll();
+      this.shareReplyAll(this.shareId);
     },
     async shareReplyAll(shareId) {
       let ret = await this.$utils.apiHelper.shareReplyAll({
