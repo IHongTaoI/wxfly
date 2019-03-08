@@ -46,7 +46,7 @@ export default {
       if (!ret) return this.$toast.fail("登录失败");
       this.$utils.cookie.set("seesionuser", JSON.stringify(ret), 1);
       this.$store.commit("user/LOGIN_SUCCESS", ret);
-      socketInit();
+      // socketInit();
       this.$router.replace({
         path: "/home"
       });

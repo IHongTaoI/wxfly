@@ -1,4 +1,5 @@
-export default [{
+export default [
+  {
     path: '/',
     redirect: '/home',
     name: 'homeWrap',
@@ -6,13 +7,14 @@ export default [{
     meta: {
       keepAlive: true
     },
-    children: [{
+    children: [
+      {
         path: '/home',
         name: 'home',
         meta: {
           keepAlive: true
         },
-        component: () => import('../page/home/index.vue'),
+        component: () => import('../page/home/index.vue')
       },
       {
         path: '/read',
@@ -20,7 +22,7 @@ export default [{
         meta: {
           keepAlive: true
         },
-        component: () => import('../page/read/index.vue'),
+        component: () => import('../page/read/index.vue')
       },
       {
         path: '/message',
@@ -28,7 +30,7 @@ export default [{
         meta: {
           keepAlive: true
         },
-        component: () => import('../page/message/index.vue'),
+        component: () => import('../page/message/index.vue')
       },
       {
         path: '/self',
@@ -36,38 +38,43 @@ export default [{
         meta: {
           keepAlive: true
         },
-        component: () => import('../page/self/index.vue'),
+        component: () => import('../page/self/index.vue')
       }
     ]
   },
   {
     path: '/home/shardDetail',
     name: '分享详情',
-    component: () => import('../page/home/child/shardDetail.vue'),
+    component: () => import('../page/home/child/shardDetail.vue')
   },
   {
     path: '/other/publish',
     name: 'publish',
-    component: () => import('../page/other/publish.vue'),
+    component: () => import('../page/other/publish.vue')
   },
   {
     path: '/self/userinfo',
     name: '个人详情',
-    component: () => import('../page/self/child/userinfo.vue'),
+    component: () => import('../page/self/child/userinfo.vue')
   },
   {
     path: '/self/setting',
     name: '设置',
-    component: () => import('../page/self/child/setting.vue'),
+    component: () => import('../page/self/child/setting.vue')
+  },
+  {
+    path: '/self/collection',
+    name: '收藏列表',
+    component: () => import('../page/self/child/my-collection.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../page/other/login.vue'),
+    component: () => import('../page/other/login.vue')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('../page/other/register.vue'),
+    component: () => import('../page/other/register.vue')
   }
-]
+];

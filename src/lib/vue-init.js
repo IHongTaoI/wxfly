@@ -25,7 +25,7 @@ export default function() {
     async beforeCreate() {
       let cookies = utils.getCookiesUserinfo();
       if (cookies) {
-        socketInit();
+        // socketInit();
       }
     }
   });

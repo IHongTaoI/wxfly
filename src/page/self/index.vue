@@ -4,7 +4,7 @@
       <router-link to="/self/userinfo" class="weui-cell weui-cell_access">
         <div class="weui-cell__hd">
           <div class="self-header userava">
-            <img class="self-header"  v-lazy="userInfo.d.userAvatar || ava">
+            <img class="self-header" v-lazy="userInfo.d.userAvatar || ava">
           </div>
         </div>
         <div class="weui-cell__bd">
@@ -16,7 +16,7 @@
       </router-link>
     </div>
     <van-cell-group class="mt20">
-      <van-cell title="我的收藏" is-link>
+      <van-cell title="我的收藏" is-link to="/self/collection">
         <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
       </van-cell>
       <van-cell title="我的动态" is-link>

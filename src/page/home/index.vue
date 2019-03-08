@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refresh">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <shreaBox
           :itemObj="item"
@@ -96,7 +96,7 @@ export default {
   background: #fff;
   width: 100%;
   height: 100%;
-  .refresh {
+  .refreshBox {
     height: 100%;
   }
 }

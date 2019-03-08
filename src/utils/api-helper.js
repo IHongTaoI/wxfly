@@ -121,5 +121,12 @@ export default {
         }
       }
     });
-  }
+  },
+  // 获取收藏列表
+  async getCollectionList(data) {
+    return await post({
+      url: '/user/collect/list',
+      data
+    });
+  },
 };

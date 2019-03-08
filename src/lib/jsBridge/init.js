@@ -1,3 +1,6 @@
 export default function(Vueinit) {
-  Vueinit();
+  return function() {
+    alert(api)
+    Vueinit();
+  };
 }
