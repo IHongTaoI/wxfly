@@ -45,7 +45,14 @@ export default [
   {
     path: '/home/shardDetail',
     name: '分享详情',
-    component: () => import('../page/home/child/shardDetail.vue')
+    component: () => import('../page/home/child/shardDetail.vue'),
+    children: [
+      {
+        path: 'replayDetail',
+        name: '回复详情',
+        component: () => import('../page/home/child/replay-detail.vue')
+      }
+    ]
   },
   {
     path: '/other/publish',

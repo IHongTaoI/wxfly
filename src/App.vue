@@ -95,13 +95,6 @@ export default {
   overflow: hidden;
   background: #f2f2f2;
 }
-.app-content {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 /*基础样式*/
 @import "assets/css/base.css";
 /*全局样式*/

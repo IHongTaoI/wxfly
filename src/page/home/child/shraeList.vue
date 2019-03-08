@@ -73,7 +73,6 @@ export default {
   computed: {
     item() {
       let shareImg = []
-      console.log(this.itemObj)
       if (this.itemObj.shareImg) {
         shareImg = this.itemObj.shareImg.split(',')
       }

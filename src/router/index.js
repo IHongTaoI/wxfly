@@ -13,6 +13,7 @@ function scrollBehavior(to, from, savedPosition) {
 }
 
 const vuerouter = new Router({
+  mode: 'history',
   scrollBehavior,
   routes
 });

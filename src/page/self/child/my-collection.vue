@@ -1,6 +1,6 @@
 <template>
   <div class="my-collection-wrap paddingTopNav">
-    <van-nav-bar title="我的收藏" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
+    <van-nav-bar title="我的收藏" left-text="返回" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div
@@ -17,6 +17,9 @@
                 <!--发布时间-->
                 <p class="time">{{item.createTime}}</p>
               </div>
+            </div>
+            <div class="opt" @click.stop="caozuo(item.id, index)">
+              <span class="iconfont icon-caozuo"></span>
             </div>
           </div>
           <div class="content" v-if="item.shareImg && item.shareImg.length">
@@ -39,6 +42,12 @@
         </div>
       </van-list>
     </van-pull-refresh>
+    <van-actionsheet
+      v-model="showActionsheetL"
+      :actions="actions"
+      @select="onSelect"
+      cancel-text="取消"
+    />
   </div>
 </template>
 <script>
@@ -46,11 +55,19 @@ export default {
   data() {
     return {
       list: [],
+      showActionsheetL: false,
       loading: false,
       isLoading: false,
       finished: false,
       page: 0,
-      pageSize: 10
+      pageSize: 10,
+      cacheCollectId: -1,
+      actions: [
+        {
+          name: "取消收藏"
+        }
+      ],
+      caozuoIndex: -1 // 操作的数组索引
     };
   },
   methods: {
@@ -63,6 +80,21 @@ export default {
     },
     onRefresh() {
       this.getList();
+    },
+    caozuo(id, index) {
+      this.caozuoIndex = index;
+      this.cacheCollectId = id;
+      this.showActionsheetL = true;
+    },
+    // 取消收藏
+    async onSelect() {
+      let ret = await this.$utils.apiHelper.delectCollection({
+        collectId: this.cacheCollectId
+      });
+      if (!ret) return;
+      this.list.splice(this.caozuoIndex, 1);
+      this.$toast.success("取消收藏成功");
+      this.showActionsheetL = false;
     },
     async getList(isreload = true) {
       let ret = await this.$utils.apiHelper.getCollectionList({

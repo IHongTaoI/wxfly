@@ -56,6 +56,13 @@ export default {
       data
     });
   },
+  // 二级回复详情
+  async getReplyDetail(data) {
+    return await post({
+      url: '/user/share/reply/desc',
+      data
+    });
+  },
   // 回复二级评论
   async shareReplyArticleChild(data) {
     return await post({
@@ -129,4 +136,11 @@ export default {
       data
     });
   },
+  // 取消收藏
+  async delectCollection(data) {
+    return await post({
+      url: '/user/collect/delect',
+      data
+    });
+  }
 };

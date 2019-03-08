@@ -20,7 +20,11 @@
                   : {{reChild.content}}
                 </span>
               </p>
-              <p v-if="reItem.replyCount > 2" class="more">共{{reItem.replyCount}}条回复&gt;&gt;</p>
+              <p
+                v-if="reItem.replyCount > 2"
+                class="more"
+                @click="gotoDetail(reItem)"
+              >共{{reItem.replyCount}}条回复&gt;&gt;</p>
             </div>
             <div class="bottom">
               <span class="time">{{reItem.replyTime}}</span>
@@ -56,15 +60,26 @@ export default {
       this.sendObj = {
         commentId: arvg.id,
         shareId: this.shareId,
-        uname: this.$store.state.user.userInfo.nickName,
-        uavatar: this.$store.state.user.userInfo.avatarUrl,
+        uname: this.$store.state.user.userInfo.nickName || "",
+        uavatar:
+          this.$store.state.user.userInfo.avatarUrl ||
+          "http://img.hhooke.cn/wxfly/defualt-avar.png",
         replyUserId: arvg.userId,
         replyUserName: arvg.userName,
         replyUserAvatar: arvg.userAvatar
       };
     },
+    gotoDetail(item) {
+      this.$router.push({
+        path: "/home/shardDetail/replayDetail",
+        query: {
+          shareId: this.shareId,
+          replyId: item.id
+        }
+      });
+    },
     onLoad() {
-      console.log('执行了loding')
+      console.log("执行了loding");
       this.shareReplyAll();
     },
     async shareReplyAll(shareId) {

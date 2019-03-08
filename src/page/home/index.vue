@@ -39,10 +39,6 @@ export default {
       showActionsheetL: false,
       actions: [
         {
-          name: "关注",
-          type: 1
-        },
-        {
           name: "收藏",
           type: 2
         }

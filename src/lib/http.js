@@ -19,7 +19,6 @@ const onerror = error => {
   error.config.showErr && Vue.prototype.$notify(msg);
 };
 axios.interceptors.request.use(function(config) {
-  console.log(config);
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
   config.showLoading &&
     Vue.prototype.$toast.loading({
@@ -79,8 +78,6 @@ async function post({
       serviceBody: data
     };
   }
-  console.log(data)
-
   let ret = await axios.post(url, data, config);
   return ret;
 }
