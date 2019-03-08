@@ -57,7 +57,9 @@
           v-for="(item, index) in replyList"
           :key="index"
         ></replyList>
-        <p class="more-replay">查看更多评论</p>
+        <p class="more-replay" v-show="replyList.length && replyList.length >= 10">查看更多评论</p>
+        <p class="no-more" v-show="replyList.length && replyList.length < 10">暂无更多评论</p>
+        <p class="no-more" v-show="!replyList.length">来做第一个沙发吧</p>
       </div>
       <!-- 评论列表 -->
     </div>
@@ -230,6 +232,7 @@ export default {
     }
     .conent {
       .share-content {
+        font-size: 18px;
         padding: 12px 0;
       }
       .imgs {

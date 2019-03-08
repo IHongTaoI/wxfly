@@ -174,11 +174,11 @@ export default {
         .pic_item {
           display: inline-block;
           width: 320px;
-          height: 200px;
+          height: 100px;
           overflow: hidden;
           &.pic1 {
             width: 100%;
-            height: 300px;
+            height: 100px;
             border-radius: 20px;
           }
           &.pic3 {
@@ -189,7 +189,6 @@ export default {
           }
           .pic {
             width: 100%;
-            height: 100%;
             border-radius: 10px;
           }
         }

@@ -37,6 +37,8 @@ export default {
       isLoading: false,
       selObj: null, // 正在操作的数据
       showActionsheetL: false,
+      page: 0,
+      pageSize: 10,
       actions: [
         {
           name: "收藏",
@@ -55,12 +57,19 @@ export default {
       this.getList(true);
     },
     async getList(isreload) {
-      let ret = await this.$utils.apiHelper.getShearList();
+      let ret = await this.$utils.apiHelper.getShearList({
+        lng: "0",
+        lat: "0",
+        searchType: "2",
+        page: this.page + "",
+        pageSize: this.pageSize + ""
+      });
       let list = ret.d.shareList;
-
+      this.page++;
       if (isreload) {
         this.list = list;
         this.finished = false;
+        this.page = 0;
       } else {
         this.list.push(...list);
       }
@@ -91,9 +100,7 @@ export default {
 #home {
   background: #fff;
   width: 100%;
-  height: 100%;
-  .refreshBox {
-    height: 100%;
-  }
+  min-height: 100%;
+  padding-bottom: 100px;
 }
 </style>

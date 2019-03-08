@@ -22,6 +22,9 @@
       <van-cell title="我的动态" is-link>
         <span slot="icon" class="iconfont iconfont icon-dongtai" style="color:#0078D7;"></span>
       </van-cell>
+      <van-cell title="测试页面" is-link to="/self/test">
+        <span slot="icon" class="iconfont iconfont icon-dongtai" style="color:#0078D7;"></span>
+      </van-cell>
     </van-cell-group>
     <van-cell-group class="mt20">
       <van-cell title="设置" is-link to="/self/setting">

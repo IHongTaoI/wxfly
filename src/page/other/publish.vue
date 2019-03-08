@@ -60,13 +60,6 @@ export default {
   },
   methods: {
     async submit() {
-      this.$router.replace({
-        name: "home",
-        params: {
-          reload: true
-        }
-      });
-      return;
       let ImgRet = await this.uploadImg();
       if (!ImgRet) this.$toast.fail("图片上传失败");
       // 上传图片

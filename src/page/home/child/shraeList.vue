@@ -126,12 +126,12 @@ export default {
       overflow-x: auto;
       .pic_item {
         display: inline-block;
-        width: 320px;
-        height: 200px;
+        width: 45%;
+        height: 150px;
         overflow: hidden;
         &.pic1 {
           width: 100%;
-          height: 300px;
+          height: 200px;
           border-radius: 20px;
         }
         &.pic3 {
@@ -142,7 +142,6 @@ export default {
         }
         .pic {
           width: 100%;
-          height: 100%;
           border-radius: 10px;
         }
       }

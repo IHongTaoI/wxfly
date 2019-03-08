@@ -60,6 +60,11 @@ export default [
     component: () => import('../page/other/publish.vue')
   },
   {
+    path: '/self/test',
+    name: 'publish',
+    component: () => import('../page/self/child/test.vue')
+  },
+  {
     path: '/self/userinfo',
     name: '个人详情',
     component: () => import('../page/self/child/userinfo.vue')
