@@ -49,16 +49,20 @@
           <p class="txt">1</p>
         </div>
       </div>
+      <div class="replay-list">
+        <h3 class="rep-w-h">评论</h3>
+        <replyList
+          :reItem="item"
+          @btnClick="replyChildBtn"
+          v-for="(item, index) in replyList"
+          :key="index"
+        ></replyList>
+        <p class="more-replay">查看更多评论</p>
+      </div>
       <!-- 评论列表 -->
-      <replyList :shareId="shareId" @btnClick="replyChildBtn"></replyList>
     </div>
     <loadinganite v-if="loading"></loadinganite>
-    <replyEditBox
-      v-model="showReplyBox"
-      :tearPlaTxt="tearPlaTxt"
-      @on-blur="textareaBlur"
-      @on-submit="sumbitReplay"
-    ></replyEditBox>
+    <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
     <transition
       :enter-active-class="'animated zoomInRight'"
       :leave-active-class="'animated zoomOutLeft'"
@@ -91,7 +95,9 @@ export default {
       replyCont: "",
       showReplyBox: false,
       tearPlaTxt: "发表评论",
-      cacheObj: null // 缓存一些东西
+      cacheObj: null, // 缓存一些东西
+      sendObj: null,
+      replyList: []
     };
   },
 
@@ -99,14 +105,24 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
+    async shareReplyAll(shareId) {
+      let ret = await this.$utils.apiHelper.shareReplyAll({
+        shareId,
+        page: 0,
+        pageSize: 10
+      });
+      for (let v of ret.d.replies) {
+        v.replyTime = this.$utils.dateFromat(v.replyTime);
+      }
+      this.replyList = ret.d.replies;
+    },
     async getDetil() {
       let ret = await this.$utils.apiHelper.getShardDetail(this.shareId);
       if (!ret) return;
+      this.shareReplyAll(this.shareId);
       ret.d.share.createTime = this.$utils.dateFromat(ret.d.share.createTime);
       ret.d.share.shareImg = ret.d.share.shareImg.split(",");
       this.shardData = ret.d.share;
-
-      this.loading = false;
     },
     previewImage(imgs, index) {
       this.$utils.imagePreview(imgs, index);
@@ -129,8 +145,10 @@ export default {
       this.cacheObj = {
         commentId: arvg.id,
         shareId: this.shareId,
-        uname: this.$store.state.user.userInfo.nickName,
-        uavatar: this.$store.state.user.userInfo.avatarUrl,
+        uname: this.$store.state.user.userInfo.nickName || "",
+        uavatar:
+          this.$store.state.user.userInfo.avatarUrl ||
+          "http://img.hhooke.cn/wxfly/defualt-avar.png",
         replyUserId: arvg.userId,
         replyUserName: arvg.userName,
         replyUserAvatar: arvg.userAvatar
@@ -153,12 +171,11 @@ export default {
         this.getDetil();
       }
     },
-    handlerClick(type, arvg) {
+    handlerClick(type) {
       return {
         // 一级回复
         replyBtn: () => {
           this.showReplyBox = true;
-          console.log(this.$store.state.user.userInfo);
           this.cacheObj = {
             shareId: this.shareId,
             uname: this.$store.state.user.userInfo.nickName,
@@ -258,6 +275,19 @@ export default {
         vertical-align: middle;
         color: #7d7d7d;
       }
+    }
+    .replay-list {
+      .rep-w-h {
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 60px;
+      }
+    }
+    .more-replay {
+      font-size: 16px;
+      padding: 12px 0;
+      text-align: center;
+      color: cornflowerblue;
     }
   }
 }

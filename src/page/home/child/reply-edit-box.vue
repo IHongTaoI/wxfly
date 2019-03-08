@@ -9,7 +9,6 @@
           class="textCont"
           :placeholder="tearPlaTxt"
           :focus="value"
-          @blur="blur"
         ></textarea>
         <span class="wc">{{ wordCount }}</span>
       </div>
@@ -30,9 +29,6 @@ export default {
     }
   },
   methods: {
-    blur() {
-      this.$emit('on-blur')
-    },
     hideBox() {
       this.$emit('input', false)
     },
