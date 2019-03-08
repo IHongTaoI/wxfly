@@ -178,10 +178,12 @@ export default {
   padding: 46px 4px 50px;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   background: #fff;
   .wrap {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
     padding: 6px 10px;
     .header {
       display: flex;

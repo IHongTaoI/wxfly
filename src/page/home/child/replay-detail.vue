@@ -12,7 +12,7 @@
 <script>
 export default {
   created() {
-    this.getList();
+    // this.getList();
   },
   data() {
     return {
