@@ -23,7 +23,8 @@ export default function() {
     store,
     template: '<App/>',
     async beforeCreate() {
-      let cookies = utils.getCookiesUserinfo();
+      // let cookies = utils.getCookiesUserinfo();
+      let cookies = JSON.parse(localStorage.getItem('seesionuser'))
       if (cookies) {
         store.commit('user/LOGIN_SUCCESS', cookies);
         socketInit();

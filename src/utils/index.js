@@ -88,7 +88,12 @@ const cookie = {
 
 function getCookiesUserinfo() {
   let ret = cookie.get('seesionuser');
-  return ret ? JSON.parse(ret) : false;
+  let retObj;
+  if (ret) {
+    retObj = JSON.parse(ret);
+    return retObj;
+  }
+  return false;
 }
 
 // 临时缓存

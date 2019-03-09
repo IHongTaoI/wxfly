@@ -47,6 +47,7 @@ export default {
       this.$utils.cookie.delete("seesionuser");
       this.$utils.cookie.set("seesionuser", JSON.stringify(ret), 1);
       this.$store.commit("user/LOGIN_SUCCESS", ret);
+      localStorage.setItem("seesionuser", JSON.stringify(ret));
       this.$router.replace({
         path: "/home"
       });
