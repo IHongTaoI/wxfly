@@ -88,6 +88,8 @@ export default {
 <style lang="less" scoped>
 .list-item {
   padding: 20px 20px 5px;
+  background: #fff;
+  margin-bottom: 12px;
   .header {
     display: flex;
     justify-content: space-between;

@@ -98,7 +98,6 @@ export default {
 </script>
 <style lang="less" scoped>
 #home {
-  background: #fff;
   width: 100%;
   min-height: 100%;
   padding-bottom: 100px;

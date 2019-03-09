@@ -104,7 +104,7 @@ export default {
       &.addS {
         position: absolute;
         left: 50%;
-        top: -40px;
+        top: -15px;
         transform: translateX(-50%);
       }
     }
