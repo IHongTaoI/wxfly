@@ -19,7 +19,7 @@
       <van-cell title="收藏" is-link to="/self/collection">
         <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
       </van-cell>
-      <van-cell title="动态" is-link to="/self/collection">
+      <van-cell title="动态" is-link to="/self/dynamic">
         <span slot="icon" class="iconfont iconfont icon-dongtai" style="color:#0078D7;"></span>
       </van-cell>
       <van-cell title="测试页面" is-link to="/self/test">

@@ -51,6 +51,11 @@ export default [
         path: 'replayDetail',
         name: '回复详情',
         component: () => import('../page/home/child/replay-detail.vue')
+      },
+      {
+        path: 'moreReplay',
+        name: 'moreReplay',
+        component: () => import('../page/home/child/more-replay.vue')
       }
     ]
   },
@@ -78,6 +83,11 @@ export default [
     path: '/self/collection',
     name: '收藏列表',
     component: () => import('../page/self/child/my-collection.vue')
+  },
+  {
+    path: '/self/dynamic',
+    name: '动态',
+    component: () => import('../page/self/child/my-dynamic.vue')
   },
   {
     path: '/login',

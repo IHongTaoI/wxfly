@@ -4,10 +4,7 @@
     <div class="wrap" v-if="shardData">
       <div class="header">
         <div class="info">
-          <img
-            class="userava"
-            :src="shardData.shareUserAvatar"
-          >
+          <img class="userava" :src="shardData.shareUserAvatar">
           <div class="titles">
             <p class="username">{{shardData.shareUserName}}</p>
             <!--发布时间-->
@@ -57,7 +54,11 @@
           v-for="(item, index) in replyList"
           :key="index"
         ></replyList>
-        <p class="more-replay" v-show="replyList.length && replyList.length >= 10">查看更多评论</p>
+        <p
+          class="more-replay"
+          v-show="replyList.length && replyList.length >= 10"
+          @click.stop="showMoreReplay"
+        >查看更多评论</p>
         <p class="no-more" v-show="replyList.length && replyList.length < 10">暂无更多评论</p>
         <p class="no-more" v-show="!replyList.length">来做第一个沙发吧</p>
       </div>
@@ -107,6 +108,12 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
+    // 查看更多评论
+    showMoreReplay() {
+      this.$router.push({
+        name: "moreReplay"
+      });
+    },
     async shareReplyAll(shareId) {
       let ret = await this.$utils.apiHelper.shareReplyAll({
         shareId,
@@ -149,7 +156,7 @@ export default {
       this.cacheObj = {
         commentId: arvg.id,
         shareId: this.shareId,
-        replyUserId: arvg.userId,
+        replyUserId: arvg.userId
       };
     },
     async sumbitReplay(replyCont) {
