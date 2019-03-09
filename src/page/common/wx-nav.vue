@@ -81,7 +81,7 @@ export default {
 
 <style lang="less" scoped>
 #wx-nav {
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -91,7 +91,7 @@ export default {
   bottom: 0;
   left: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
+  z-index: 1;
   .item {
     position: relative;
     width: 50%;
