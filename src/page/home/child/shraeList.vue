@@ -129,6 +129,7 @@ export default {
       .pic_item {
         display: inline-block;
         width: 50%;
+        margin: 0 4px;
         height: 100px;
         overflow: hidden;
         &.pic1 {

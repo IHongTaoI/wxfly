@@ -30,7 +30,7 @@ export default {
     // 保存滚动高度，暂时没有什么好的办法
     let _this = this;
     this.$nextTick(() => {
-      this.$refs.main.scrollTop = this.$utils.cache.homeScrool + "xp";
+      this.$refs.main.scrollTop = this.$utils.cache.homeScrool;
     });
     this.$refs.main.onscroll = function() {
       _this.$utils.cache.homeScrool = parseInt(this.scrollTop);
@@ -40,6 +40,7 @@ export default {
     }
   },
   deactivated() {
+    console.log(this.$refs.main.scrollTop)
     this.$refs.main.onscroll = null;
   },
   data() {

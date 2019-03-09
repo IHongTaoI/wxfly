@@ -24,15 +24,6 @@
 <script>
 export default {
   name: "App",
-  created() {
-    if (this.$utils.cookie.get("seesionuser")) {
-      // 手动设置登录成功
-      this.$store.commit(
-        "user/LOGIN_SUCCESS",
-        JSON.parse(this.$utils.cookie.get("seesionuser"))
-      );
-    }
-  },
   data() {
     return {
       enterAnimate: "",
