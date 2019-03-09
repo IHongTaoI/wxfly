@@ -43,7 +43,8 @@ export default async function() {
         // 点赞消息
         Vue.prototype.$notify({
           message: '有人给你点赞了',
-          duration: 1000,
+          duration: 2000,
+          className: 'notify',
           background: '#1989fa'
         });
         break;

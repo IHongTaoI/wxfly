@@ -8,16 +8,24 @@ axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
 axios.defaults.showErr = true;
 axios.defaults.timeout = 30000;
+
+const showNotify = function(txt) {
+  Vue.prototype.$notify({
+    message: txt,
+    className: 'notify'
+  });
+}
+
 const onerror = error => {
   Vue.prototype.$toast.clear();
   if (
     error.code === 'ECONNABORTED' &&
     error.message.indexOf('timeout') !== -1
   ) {
-    return error.config.showErr && Vue.prototype.$notify('请求超时');
+    return error.config.showErr && showNotify('请求超时')
   }
   let msg = error.response.data.msg || '请求失败';
-  error.config.showErr && Vue.prototype.$notify(msg);
+  error.config.showErr && showNotify(msg)
 };
 axios.interceptors.request.use(function(config) {
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
@@ -45,7 +53,7 @@ axios.interceptors.response.use(function(response) {
     if (res.status === '500004') {
       // 登录过期
       utils.cookie.delete('seesionuser');
-      Vue.prototype.$notify('登录过期，请重新登录');
+      showNotify('登录过期，请重新登录')
       setTimeout(() => {
         router.replace({
           path: 'login'
