@@ -193,7 +193,8 @@ export default {
   animation-duration: 0.8s;
 }
 #shard-detail {
-  padding: 46px 4px 50px;
+  position: relative;
+  padding: 46px 4px 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -203,6 +204,7 @@ export default {
     height: 100%;
     overflow-y: auto;
     padding: 6px 10px;
+    padding-bottom: 50px;
     .header {
       display: flex;
       justify-content: space-between;
@@ -249,7 +251,6 @@ export default {
       justify-content: space-around;
       align-items: center;
       box-shadow: 0 8px 22px #000;
-      z-index: 98;
       .action-item {
         text-align: center;
         flex: 1;
