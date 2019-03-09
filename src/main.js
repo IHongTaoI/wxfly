@@ -11,7 +11,7 @@ import FastClick from 'fastclick'
 FastClick.attach(document.body)
 filters(Vue);
 
-process.env.NODE_ENV === "development" && new Vconsole();
+// process.env.NODE_ENV === "development" && new Vconsole();
 if (store.state.platform.isApicloud) {
   window.apiready = NativeInit(vueInit);
 } else {

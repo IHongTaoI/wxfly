@@ -102,8 +102,8 @@ export default {
         pageSize: this.pageSize
       });
       this.isLoading = false;
-      this.loading = false;
       if (!ret) return;
+      this.loading = false;
       let data = ret.d.collectList;
       if (data.length < this.pageSize) this.finished = true;
       for (let v of data) {

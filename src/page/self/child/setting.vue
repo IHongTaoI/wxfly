@@ -1,6 +1,6 @@
 <template>
   <div id="self-setting" class="paddingTopNav">
-    <van-nav-bar title="设置" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
+    <van-nav-bar title="设置"  left-text="返回" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
     <div class="weui-cells" style="margin-top:0;">
       <div class="weui-cells" style="margin-top:0;">
         <div class="weui-cell weui-cell_access" @click="signOut">
