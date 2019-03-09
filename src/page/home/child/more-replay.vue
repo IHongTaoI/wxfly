@@ -8,20 +8,18 @@
       class="topNavBar"
     />
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <replyList
-        :reItem="item"
-        v-for="(item, index) in reList"
-        :key="index"
-      ></replyList>
+      <replyList :reItem="item" v-for="(item, index) in reList" :key="index"></replyList>
     </van-list>
   </div>
 </template>
 <script>
 import replyList from "./replay-list.vue";
+import replyEditBox from "./reply-edit-box.vue";
 
 export default {
   components: {
-    replyList
+    replyList,
+    replyEditBox
   },
   data() {
     return {
@@ -42,6 +40,7 @@ export default {
       });
       this.loading = false;
       if (!ret) return;
+      this.page++;
       let list = ret.d.replies;
       if (list.length < this.pageSize) {
         this.finished = true;

@@ -32,12 +32,15 @@ export default {
     this.$nextTick(() => {
       this.$refs.main.scrollTop = this.$utils.cache.homeScrool;
     });
+    this.$refs.main.onscroll = function() {
+      _this.$utils.cache.homeScrool = parseInt(this.scrollTop);
+    };
     if (!this.list.length || this.$route.params.reload) {
       this.getList(true);
     }
   },
   deactivated() {
-    this.$utils.cache.homeScrool = parseInt(this.$refs.main.scrollTop);
+    this.$refs.main.onscroll = null;
   },
   data() {
     return {

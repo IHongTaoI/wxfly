@@ -5,7 +5,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div
           class="list-item"
-          @click="gotoDetail(item.id)"
+          @click="gotoDetail(item.shareId)"
           v-for="(item, index) in list"
           :key="index"
         >
