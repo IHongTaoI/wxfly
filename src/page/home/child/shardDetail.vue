@@ -56,10 +56,10 @@
         ></replyList>
         <p
           class="more-replay"
-          v-show="replyList.length && replyList.length >= 10"
+          v-show="replyList.length && replyList.length >= 5"
           @click.stop="showMoreReplay"
         >查看更多评论</p>
-        <p class="no-more" v-show="replyList.length && replyList.length < 10">暂无更多评论</p>
+        <p class="no-more" v-show="replyList.length && replyList.length < 5">暂无更多评论</p>
         <p class="no-more" v-show="!replyList.length">来做第一个沙发吧</p>
       </div>
       <!-- 评论列表 -->
