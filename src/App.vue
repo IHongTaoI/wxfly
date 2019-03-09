@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="main">
     <transition
       :enter-active-class="'animated fadeInLeft'"
       :leave-active-class="'animated fadeOutLeft'"

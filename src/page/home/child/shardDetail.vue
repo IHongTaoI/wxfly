@@ -121,10 +121,12 @@ export default {
     async getDetil() {
       let ret = await this.$utils.apiHelper.getShardDetail(this.shareId);
       if (!ret) return;
-      this.shareReplyAll(this.shareId);
+      this.loading = false;
       ret.d.share.createTime = this.$utils.dateFromat(ret.d.share.createTime);
       ret.d.share.shareImg = ret.d.share.shareImg.split(",");
       this.shardData = ret.d.share;
+      // 获取回复
+      this.shareReplyAll(this.shareId);
     },
     previewImage(imgs, index) {
       this.$utils.imagePreview(imgs, index);
@@ -147,13 +149,7 @@ export default {
       this.cacheObj = {
         commentId: arvg.id,
         shareId: this.shareId,
-        uname: this.$store.state.user.userInfo.nickName || "",
-        uavatar:
-          this.$store.state.user.userInfo.avatarUrl ||
-          "http://img.hhooke.cn/wxfly/defualt-avar.png",
         replyUserId: arvg.userId,
-        replyUserName: arvg.userName,
-        replyUserAvatar: arvg.userAvatar
       };
     },
     async sumbitReplay(replyCont) {
@@ -291,6 +287,12 @@ export default {
       padding: 12px 0;
       text-align: center;
       color: cornflowerblue;
+    }
+    .no-more {
+      font-size: 16px;
+      padding: 12px 0;
+      text-align: center;
+      color: #ccc;
     }
   }
 }

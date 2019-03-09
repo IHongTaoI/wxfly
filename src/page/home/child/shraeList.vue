@@ -128,7 +128,7 @@ export default {
       overflow-x: auto;
       .pic_item {
         display: inline-block;
-        width: 45%;
+        width: 50%;
         height: 100px;
         overflow: hidden;
         &.pic1 {

@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" ref="main">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <shreaBox
@@ -27,9 +27,20 @@ export default {
     shreaBox
   },
   activated() {
+    // 保存滚动高度，暂时没有什么好的办法
+    let _this = this;
+    this.$nextTick(() => {
+      this.$refs.main.scrollTop = this.$utils.cache.homeScrool + "xp";
+    });
+    this.$refs.main.onscroll = function() {
+      _this.$utils.cache.homeScrool = parseInt(this.scrollTop);
+    };
     if (!this.list.length || this.$route.params.reload) {
       this.getList(true);
     }
+  },
+  deactivated() {
+    this.$refs.main.onscroll = null;
   },
   data() {
     return {
@@ -99,7 +110,8 @@ export default {
 <style lang="less" scoped>
 #home {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding-bottom: 100px;
+  overflow-y: auto;
 }
 </style>

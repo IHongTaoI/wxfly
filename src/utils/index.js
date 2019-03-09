@@ -91,11 +91,17 @@ function getCookiesUserinfo() {
   return ret ? JSON.parse(ret) : false;
 }
 
+// 临时缓存
+let cache = {
+  homeScrool: 0
+};
+
 export default {
   dateFromat,
   getPosition,
   apiHelper,
   imagePreview,
   cookie,
-  getCookiesUserinfo
+  getCookiesUserinfo,
+  cache
 };
