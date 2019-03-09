@@ -49,13 +49,20 @@ export default [
     children: [
       {
         path: 'replayDetail',
-        name: '回复详情',
+        name: 'shardDetailReplay',
         component: () => import('../page/home/child/replay-detail.vue')
       },
       {
         path: 'moreReplay',
         name: 'moreReplay',
-        component: () => import('../page/home/child/more-replay.vue')
+        component: () => import('../page/home/child/more-replay.vue'),
+        children: [
+          {
+            path: 'replayDetail',
+            name: 'moreReplayChild',
+            component: () => import('../page/home/child/replay-detail.vue')
+          }
+        ]
       }
     ]
   },

@@ -1,15 +1,54 @@
 <template>
-  <div class="more-replay paddingTopNav">
-    <van-nav-bar
-      title="评论列表"
-      left-text="返回"
-      left-arrow
-      @click-left="$router.back()"
-      class="topNavBar"
-    />
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <replyList :reItem="item" v-for="(item, index) in reList" :key="index"></replyList>
-    </van-list>
+  <div class="more-replay">
+    <div class="more-pos">
+      <div class="more-wrap paddingTopNav">
+        <van-nav-bar
+          title="评论列表"
+          left-text="返回"
+          left-arrow
+          @click-left="$router.back()"
+          class="topNavBar"
+        />
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <replyList
+            :reItem="item"
+            v-for="(item, index) in reList"
+            :key="index"
+            goType="mc"
+            @btnClick="replyChildBtn"
+          ></replyList>
+        </van-list>
+        <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
+        <div class="action-list">
+          <div class="edit" @click="handlerClick('replyBtn')">
+            <span class="iconfont icon-bianji" style="font-size: 20px;"></span>
+            <span>写评论</span>
+          </div>
+          <!-- <div class="action-item">
+          <p class="iconfont iconfont icon-shoucang"></p>
+          <p class="txt">收藏</p>
+          </div>-->
+          <div class="action-item">
+            <p class="iconfont icon-xihuancon"></p>
+            <p class="txt">1</p>
+          </div>
+          <div class="action-item">
+            <p class="iconfont icon-pinglun"></p>
+            <p class="txt">1</p>
+          </div>
+          <div class="action-item">
+            <p class="iconfont icon-zhuanfa"></p>
+            <p class="txt">1</p>
+          </div>
+        </div>
+        <transition
+          :enter-active-class="'animated fadeInRight'"
+          :leave-active-class="'animated fadeOutRight'"
+        >
+          <router-view class="app-content" style="z-index: 99"></router-view>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,10 +63,15 @@ export default {
   data() {
     return {
       loading: false,
+      showReplyBox: false,
       finished: false,
+      tearPlaTxt: "发表评论",
       page: 0,
       pageSize: 20,
-      reList: []
+      reList: [],
+      cacheObj: {},
+      isReplayChild: false,
+      shareId: this.$route.query.shareId
     };
   },
   methods: {
@@ -35,8 +79,8 @@ export default {
       let { shareId } = this.$route.query;
       let ret = await this.$utils.apiHelper.shareReplyAll({
         shareId,
-        page: 0,
-        pageSize: 10
+        page: this.page,
+        pageSize: this.pageSize
       });
       this.loading = false;
       if (!ret) return;
@@ -45,11 +89,65 @@ export default {
       if (list.length < this.pageSize) {
         this.finished = true;
       }
+      for (let v of list) {
+        v.replyTime = this.$utils.dateFromat(v.replyTime);
+      }
       if (isreload) {
+        this.page = 0;
         this.reList = list;
       } else {
         this.reList.push(...list);
       }
+    },
+    replyChildBtn(arvg) {
+      this.isReplayChild = true;
+      this.tearPlaTxt = `回复${arvg.userName}`;
+      this.showReplyBox = true;
+      this.cacheObj = {
+        commentId: arvg.id,
+        shareId: this.shareId,
+        replyUserId: arvg.userId
+      };
+    },
+    // 隐藏回复框
+    hidereplyBox() {
+      this.showReplyBox = false;
+      this.textareaBlur();
+    },
+    // 评论输入框失去焦点
+    textareaBlur() {
+      this.isReplayChild = false;
+      this.tearPlaTxt = "发表评论";
+    },
+    async sumbitReplay(replyCont) {
+      this.cacheObj.content = replyCont;
+      if (this.isReplayChild) {
+        // 二级评论
+        let ret = await this.$utils.apiHelper.shareReplyArticleChild(
+          this.cacheObj
+        );
+        console.log("回复二级评论", ret);
+        this.hidereplyBox();
+        this.getDetil();
+      } else {
+        let ret = await this.$utils.apiHelper.shareReplyArticle(this.cacheObj);
+        console.log("回复楼主", ret);
+        this.hidereplyBox();
+        this.getDetil();
+      }
+    },
+    handlerClick(type) {
+      return {
+        // 一级回复
+        replyBtn: () => {
+          this.showReplyBox = true;
+          this.cacheObj = {
+            shareId: this.shareId,
+            uname: this.$store.state.user.userInfo.nickName,
+            uavatar: this.$store.state.user.userInfo.avatarUrl
+          };
+        }
+      }[type]();
     },
     onLoad() {
       this.getList(false);
@@ -61,6 +159,56 @@ export default {
 .more-replay {
   width: 100%;
   height: 100%;
-  background: #fff;
+  .more-pos {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .more-wrap {
+      background: #fff;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 50px;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      .action-list {
+        position: fixed;
+        width: 100%;
+        height: 50px;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 8px 22px #000;
+        .action-item {
+          text-align: center;
+          flex: 1;
+        }
+        .edit {
+          text-align: center;
+          flex: 2;
+          margin-left: 12px;
+          background: #f1f3f6;
+          border-radius: 12px;
+          color: #8e8f91;
+        }
+        .iconfont {
+          font-size: 28px;
+          vertical-align: middle;
+          color: #7d7d7d;
+          height: 28px;
+        }
+        .txt {
+          font-size: 12px;
+          line-height: 28px;
+          vertical-align: middle;
+          color: #7d7d7d;
+        }
+      }
+    }
+  }
 }
 </style>
