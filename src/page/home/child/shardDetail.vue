@@ -111,7 +111,10 @@ export default {
     // 查看更多评论
     showMoreReplay() {
       this.$router.push({
-        name: "moreReplay"
+        name: "moreReplay",
+        query: {
+          shareId: this.shareId
+        }
       });
     },
     async shareReplyAll(shareId) {
