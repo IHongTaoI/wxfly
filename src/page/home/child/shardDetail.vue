@@ -117,26 +117,18 @@ export default {
         }
       });
     },
-    async shareReplyAll(shareId) {
-      let ret = await this.$utils.apiHelper.shareReplyAll({
-        shareId,
-        page: 0,
-        pageSize: 10
-      });
-      for (let v of ret.d.replies) {
-        v.replyTime = this.$utils.dateFromat(v.replyTime);
-      }
-      this.replyList = ret.d.replies;
-    },
     async getDetil() {
       let ret = await this.$utils.apiHelper.getShardDetail(this.shareId);
       if (!ret) return;
       this.loading = false;
       ret.d.share.createTime = this.$utils.dateFromat(ret.d.share.createTime);
       ret.d.share.shareImg = ret.d.share.shareImg.split(",");
+      for (let v of ret.d.replies) {
+        v.replyTime = this.$utils.dateFromat(v.replyTime);
+      }
       this.shardData = ret.d.share;
       // 获取回复
-      this.shareReplyAll(this.shareId);
+      this.replyList = ret.d.replies;
     },
     previewImage(imgs, index) {
       this.$utils.imagePreview(imgs, index);
