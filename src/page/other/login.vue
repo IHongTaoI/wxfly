@@ -44,9 +44,9 @@ export default {
         code: ""
       });
       if (!ret) return this.$toast.fail("登录失败");
+      this.$utils.cookie.delete("seesionuser");
       this.$utils.cookie.set("seesionuser", JSON.stringify(ret), 1);
       this.$store.commit("user/LOGIN_SUCCESS", ret);
-      // socketInit();
       this.$router.replace({
         path: "/home"
       });

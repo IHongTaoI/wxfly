@@ -76,12 +76,9 @@ async function post({
 }) {
   if (!config.files) {
     // 如果不是传文件
-    let seesionH = utils.getCookiesUserinfo(),
-      token = seesionH.h ? seesionH.h.token : '',
-      userId = seesionH.h ? seesionH.h.userId : '';
     let serviceHeader = {
-      token,
-      userId
+      token: store.state.user.token,
+      userId: store.state.user.userId
     };
     serviceHeader = Object.assign(serviceHeader, sheader);
     data = {

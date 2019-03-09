@@ -4,13 +4,13 @@
       <router-link to="/self/userinfo" class="weui-cell weui-cell_access">
         <div class="weui-cell__hd">
           <div class="self-header userava">
-            <img class="self-header" v-lazy="userInfo.d.userAvatar || ava">
+            <img class="self-header" v-lazy="userInfo.userAvatar || ava">
           </div>
         </div>
         <div class="weui-cell__bd">
-          <h4 class="self-nickname">{{userInfo.d.userName || '未设置用户名'}}</h4>
+          <h4 class="self-nickname">{{userInfo.userName || '未设置用户名'}}</h4>
 
-          <p class="self-wxid">用户id: {{userInfo.h.userId}}</p>
+          <p class="self-wxid">用户id: {{userId}}</p>
         </div>
         <div class="weui-cell__ft"></div>
       </router-link>
@@ -38,9 +38,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    userInfo() {
-      return this.$utils.getCookiesUserinfo();
-    }
+    ...mapState("user", ["userInfo", "userId"])
   },
   data() {
     return {

@@ -25,9 +25,9 @@ export default function() {
     async beforeCreate() {
       let cookies = utils.getCookiesUserinfo();
       if (cookies) {
+        store.commit('user/LOGIN_SUCCESS', cookies);
         socketInit();
       }
     }
   });
 }
-
