@@ -6,7 +6,7 @@
         <div class="info">
           <img
             class="userava"
-            src="https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoCCQA6BUhL2kqReaa9Gt8oMmFmSD7PjthlFtsubSlS6wy0JnpxCp7pkficp1fZ3BzuiaTc6gicl56gA/132"
+            :src="shardData.shareUserAvatar"
           >
           <div class="titles">
             <p class="username">{{shardData.shareUserName}}</p>
