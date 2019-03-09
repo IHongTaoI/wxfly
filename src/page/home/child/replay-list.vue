@@ -10,7 +10,7 @@
         </div>
         <div class="recont">{{reItem.content}}</div>
         <div class="rechild" v-if="reItem.replies.length">
-          <p class="rechild-item" v-for="(reChild, recind) in reItem.replies" :key="recind">
+          <p class="rechild-item" v-for="(reChild, recind) in reItem.replies" :key="recind" @click="showReplyBox(reChild)">
             <span>
               <span class="color_user">{{reChild.userName}}</span> 回复
               <span class="color_user">{{reChild.repltUserName}}</span>

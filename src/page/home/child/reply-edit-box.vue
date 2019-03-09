@@ -21,35 +21,36 @@
 </template>
 <script>
 export default {
-  props: ['value', 'tearPlaTxt'],
+  props: ["value", "tearPlaTxt"],
   data() {
     return {
-      replyCont: '',
+      replyCont: "",
       wordLimit: 100 // 字数限制
-    }
+    };
   },
   methods: {
     hideBox() {
-      this.$emit('input', false)
+      this.$emit("input", false);
     },
     submit() {
-      this.$emit('on-submit', this.replyCont)
+      this.$emit("on-submit", this.replyCont);
+      this.replyCont = "";
     }
   },
   watch: {
     replyCont(cur, old) {
       if (cur.length > this.wordLimit) {
-        this.replyCont = old
+        this.replyCont = old;
       }
     }
   },
   computed: {
     wordCount() {
-      let reLen = this.replyCont.length
-      return this.wordLimit - reLen
+      let reLen = this.replyCont.length;
+      return this.wordLimit - reLen;
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .replay-edit-box {
