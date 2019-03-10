@@ -67,6 +67,7 @@ export default {
   },
   computed: {
     // 是否是回复别人
+    // 组件传入pUserid这个参数则需要判断回复的内容是否显示 回复人的name，如果不想显示，则组件不要传入这个参数
     isReplayOhter() {
       if (this.pUserid && this.reItem.replyUserId !== this.pUserid) {
         // 回复别人
