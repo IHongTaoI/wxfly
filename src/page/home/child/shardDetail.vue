@@ -1,6 +1,8 @@
 <template>
   <div id="shard-detail">
-    <van-nav-bar title="详情页" left-text="返回" left-arrow @click-left="onClickLeft" class="topNavBar"/>
+    <van-nav-bar title="详情页" left-text="返回" left-arrow @click-left="onClickLeft" class="topNavBar">
+      <span slot="right" v-show="isMe" class="iconfont icon-shanchu" @click="deleteMyShrea"></span>
+    </van-nav-bar>
     <div class="wrap" v-if="shardData">
       <div class="header">
         <div class="info">
@@ -99,11 +101,9 @@ export default {
       showReplyBox: false,
       tearPlaTxt: "发表评论",
       cacheObj: null, // 缓存一些东西
-      sendObj: null,
       replyList: []
     };
   },
-
   methods: {
     onClickLeft() {
       this.$router.go(-1);
@@ -171,7 +171,29 @@ export default {
         this.getDetil();
       }
     },
-    handlerClick(type) {
+    // 删除我的分享
+    deleteMyShrea() {
+      this.$dialog.alert({
+        message: "确定删除吗",
+        showCancelButton: true,
+        callback: async msg => {
+          if (msg === "confirm") {
+            // 确定删除
+            let ret = await this.$utils.apiHelper.delectShare(
+              this.shardData.id
+            );
+            if (!ret) return;
+            this.$router.replace({
+              name: "home",
+              params: {
+                reload: true
+              }
+            });
+          }
+        }
+      });
+    },
+    ndlerClick(type) {
       return {
         // 一级回复
         replyBtn: () => {
@@ -185,6 +207,15 @@ export default {
       }[type]();
     }
   },
+  computed: {
+    // 是否是我发布的分享
+    isMe() {
+      return (
+        this.shardData &&
+        this.shardData.shareUserId === this.$store.state.user.userId
+      );
+    }
+  },
   onUnload() {
     Object.assign(this.$data, this.$options.data());
   }
@@ -193,6 +224,9 @@ export default {
 <style lang="less" scoped>
 .animated {
   animation-duration: 0.8s;
+}
+.icon-shanchu {
+  color: #d81e06;
 }
 #shard-detail {
   position: relative;

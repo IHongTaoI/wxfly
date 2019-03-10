@@ -142,5 +142,14 @@ export default {
     return await post({
       url: '/user/share/cencel'
     });
+  },
+  // 删除分享
+  async delectShare(shareId) {
+    return await post({
+      url: '/user/share/del',
+      data: {
+        shareId
+      }
+    });
   }
 };
