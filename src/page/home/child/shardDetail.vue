@@ -39,11 +39,11 @@
         </div>
         <div class="action-item">
           <p class="iconfont icon-pinglun"></p>
-          <p class="txt">1</p>
+          <p class="txt">{{shardData.shareReplyCount}}</p>
         </div>
         <div class="action-item">
           <p class="iconfont icon-zhuanfa"></p>
-          <p class="txt">1</p>
+          <p class="txt">{{shardData.shareTransmitCount}}</p>
         </div>
       </div>
       <div class="replay-list">
@@ -293,7 +293,8 @@ export default {
     }
     .no-more {
       font-size: 16px;
-      padding: 12px 0;
+      padding: 5px 0 20px;
+      line-height: 70px;
       text-align: center;
       color: #ccc;
     }

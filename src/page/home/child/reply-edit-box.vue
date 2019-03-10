@@ -8,7 +8,8 @@
           v-model="replyCont"
           class="textCont"
           :placeholder="tearPlaTxt"
-          :focus="value"
+          @keyup.enter="submit"
+          ref="textare"
         ></textarea>
         <span class="wc">{{ wordCount }}</span>
       </div>
@@ -42,6 +43,13 @@ export default {
       if (cur.length > this.wordLimit) {
         this.replyCont = old;
       }
+    },
+    value(cur) {
+      if (cur) {
+        this.$nextTick(() => {
+          this.$refs.textare.focus();
+        });
+      }
     }
   },
   computed: {
@@ -72,6 +80,7 @@ export default {
         height: 80px;
         border-radius: 16px;
         background: #f5f5f5;
+        border: none;
       }
       .wc {
         position: absolute;

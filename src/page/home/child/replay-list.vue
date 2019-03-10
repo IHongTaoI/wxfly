@@ -8,8 +8,14 @@
         <div class="re-h">
           <span class="uname">{{reItem.userName}}</span>
         </div>
-        <div class="recont">{{reItem.content}}</div>
-        <div class="rechild" v-if="reItem.replies.length">
+        <div class="recont">
+          <span v-if="isReplayOhter">
+            回复
+            <span class="color_user">{{reItem.repltUserName}}</span>
+          </span>
+          <span>{{reItem.content}}</span>
+        </div>
+        <div class="rechild" v-if="reItem.replies && reItem.replies.length">
           <p
             class="rechild-item"
             v-for="(reChild, recind) in reItem.replies"
@@ -40,22 +46,8 @@
 
 <script>
 export default {
-  props: ["reItem", "goType"],
+  props: ["reItem", "goType", "pUserid"],
   methods: {
-    // 设置发送参数
-    setSendObj(arvg) {
-      this.sendObj = {
-        commentId: arvg.id,
-        shareId: this.shareId,
-        uname: this.$store.state.user.userInfo.nickName || "",
-        uavatar:
-          this.$store.state.user.userInfo.avatarUrl ||
-          "http://img.hhooke.cn/wxfly/defualt-avar.png",
-        replyUserId: arvg.userId,
-        replyUserName: arvg.userName,
-        replyUserAvatar: arvg.userAvatar
-      };
-    },
     gotoDetail(item) {
       let name = "shardDetailReplay";
       if (this.goType === "mc") {
@@ -64,19 +56,23 @@ export default {
       this.$router.push({
         name,
         query: {
-          shareId: this.shareId,
+          shareId: item.shareId,
           replyId: item.id
         }
       });
     },
-    onLoad() {
-      console.log("执行了loding");
-      this.shareReplyAll(this.shareId);
-    },
-
     showReplyBox(reItem) {
-      this.setSendObj(reItem);
       this.$emit("btnClick", reItem);
+    }
+  },
+  computed: {
+    // 是否是回复别人
+    isReplayOhter() {
+      if (this.pUserid && this.reItem.replyUserId !== this.pUserid) {
+        // 回复别人
+        return true;
+      }
+      return false;
     }
   }
 };
