@@ -19,7 +19,9 @@ export default {
       this.$utils.cookie.delete("seesionuser");
       localStorage.setItem("seesionuser", "");
       await this.$utils.apiHelper.outLogin();
-      window.location.reload();
+      this.$router.replace({
+        path: "/login"
+      });
     }
   }
 };

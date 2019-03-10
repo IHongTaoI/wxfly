@@ -14,7 +14,7 @@ const showNotify = function(txt) {
     message: txt,
     className: 'notify'
   });
-}
+};
 
 const onerror = error => {
   Vue.prototype.$toast.clear();
@@ -22,10 +22,10 @@ const onerror = error => {
     error.code === 'ECONNABORTED' &&
     error.message.indexOf('timeout') !== -1
   ) {
-    return error.config.showErr && showNotify('请求超时')
+    return error.config.showErr && showNotify('请求超时');
   }
   let msg = error.response.data.msg || '请求失败';
-  error.config.showErr && showNotify(msg)
+  error.config.showErr && showNotify(msg);
 };
 axios.interceptors.request.use(function(config) {
   // config.headers['Content-Type'] = ' application/x-www-form-urlencoded'
@@ -53,7 +53,7 @@ axios.interceptors.response.use(function(response) {
     if (res.status === '500004') {
       // 登录过期
       utils.cookie.delete('seesionuser');
-      showNotify('登录过期，请重新登录')
+      showNotify('登录过期，请重新登录');
       setTimeout(() => {
         router.replace({
           path: 'login'
@@ -68,7 +68,7 @@ axios.interceptors.response.use(function(response) {
 
 async function post({
   url,
-  data,
+  data = {},
   config = {
     files: false
   },

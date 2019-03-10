@@ -37,25 +37,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (
-        !this.$utils.cookie.get("seesionuser") &&
-        to.name !== "login" &&
-        to.name !== "register"
-      ) {
-        this.$router.push({
-          name: "login"
-        });
-        return;
-      }
-      if (
-        this.$utils.cookie.get("seesionuser") &&
-        (to.name === "login" || to.name === "register")
-      ) {
-        this.$router.push({
-          name: "home"
-        });
-        return;
-      }
       this.$store.commit("setRoutePath", to.path);
       let isHome = ["/", "/read", "/message", "self"].includes(to.path); //如果是主页
       let hasPath = this.routerPathC.indexOf(to.path);

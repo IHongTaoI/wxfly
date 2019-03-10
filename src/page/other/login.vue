@@ -10,9 +10,7 @@
           required
           clearable
           label="邮箱"
-          right-icon="question-o"
           placeholder="请输入邮箱"
-          @click-right-icon="$toast('question')"
         />
 
         <van-field v-model="password" type="password" label="密码" placeholder="请输入密码" required/>

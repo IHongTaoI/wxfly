@@ -24,7 +24,8 @@ export default function() {
     template: '<App/>',
     async beforeCreate() {
       // let cookies = utils.getCookiesUserinfo();
-      let cookies = JSON.parse(localStorage.getItem('seesionuser'))
+      let seesionuser = localStorage.getItem('seesionuser');
+      let cookies = seesionuser ? JSON.parse(seesionuser) : false;
       if (cookies) {
         store.commit('user/LOGIN_SUCCESS', cookies);
         socketInit();
