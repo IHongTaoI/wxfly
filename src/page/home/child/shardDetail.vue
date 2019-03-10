@@ -193,7 +193,7 @@ export default {
         }
       });
     },
-    ndlerClick(type) {
+    handlerClick(type) {
       return {
         // 一级回复
         replyBtn: () => {
