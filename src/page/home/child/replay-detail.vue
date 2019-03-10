@@ -130,7 +130,6 @@ export default {
     replyChildBtn(arvg) {
       this.tearPlaTxt = `回复${arvg.userName}`;
       this.showReplyBox = true;
-      return console.log(arvg);
       this.cacheObj = {
         commentId: arvg.id,
         shareId: this.shareId,
