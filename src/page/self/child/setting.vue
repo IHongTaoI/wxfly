@@ -1,23 +1,24 @@
 <template>
   <div id="self-setting" class="paddingTopNav">
-    <van-nav-bar title="设置"  left-text="返回" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
-    <div class="weui-cells" style="margin-top:0;">
-      <div class="weui-cells" style="margin-top:0;">
-        <div class="weui-cell weui-cell_access" @click="signOut">
-          <div class="weui-cell__bd">
-            <p class="iconfrt">退出</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </div>
-      </div>
-    </div>
+    <van-nav-bar
+      title="设置"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.go(-1)"
+      class="topNavBar"
+    />
+    <van-cell-group class="mt20">
+      <van-cell title="退出" is-link @click.native="signOut"></van-cell>
+    </van-cell-group>
   </div>
 </template>
 <script>
 export default {
   methods: {
-    signOut() {
+    async signOut() {
       this.$utils.cookie.delete("seesionuser");
+      localStorage.setItem("seesionuser", "");
+      await this.$utils.apiHelper.outLogin();
       window.location.reload();
     }
   }

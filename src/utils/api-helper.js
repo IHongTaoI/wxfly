@@ -136,5 +136,11 @@ export default {
       url: '/user/collect/delect',
       data
     });
+  },
+  // 退出登录
+  async outLogin() {
+    return await post({
+      url: '/user/share/cencel'
+    });
   }
 };
