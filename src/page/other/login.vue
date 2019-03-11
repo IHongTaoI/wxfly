@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     async login() {
-      let ret = await this.$utils.apiHelper.mailLogin({
+      let ret = await this.$apihelper.mailLogin({
         mail: this.username,
         password: this.password,
         code: ""

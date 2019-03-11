@@ -151,5 +151,13 @@ export default {
         shareId
       }
     });
+  },
+  async parseLikeShare(shareId) {
+    return await post({
+      url: '/user/parse/share',
+      data: {
+        shareId
+      }
+    });
   }
 };

@@ -88,7 +88,7 @@ export default {
     },
     // 取消收藏
     async onSelect() {
-      let ret = await this.$utils.apiHelper.delectCollection({
+      let ret = await this.$apihelper.delectCollection({
         collectId: this.cacheCollectId
       });
       if (!ret) return;
@@ -97,7 +97,7 @@ export default {
       this.showActionsheetL = false;
     },
     async getList(isreload = true) {
-      let ret = await this.$utils.apiHelper.getCollectionList({
+      let ret = await this.$apihelper.getCollectionList({
         page: this.page,
         pageSize: this.pageSize
       });

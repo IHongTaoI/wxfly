@@ -118,7 +118,7 @@ export default {
       });
     },
     async getDetil() {
-      let ret = await this.$utils.apiHelper.getShardDetail(this.shareId);
+      let ret = await this.$apihelper.getShardDetail(this.shareId);
       if (!ret) return;
       this.loading = false;
       ret.d.share.createTime = this.$utils.dateFromat(ret.d.share.createTime);
@@ -158,14 +158,14 @@ export default {
       this.cacheObj.content = replyCont;
       if (this.isReplayChild) {
         // 二级评论
-        let ret = await this.$utils.apiHelper.shareReplyArticleChild(
+        let ret = await this.$apihelper.shareReplyArticleChild(
           this.cacheObj
         );
         console.log("回复二级评论", ret);
         this.hidereplyBox();
         this.getDetil();
       } else {
-        let ret = await this.$utils.apiHelper.shareReplyArticle(this.cacheObj);
+        let ret = await this.$apihelper.shareReplyArticle(this.cacheObj);
         console.log("回复楼主", ret);
         this.hidereplyBox();
         this.getDetil();
@@ -179,7 +179,7 @@ export default {
         callback: async msg => {
           if (msg === "confirm") {
             // 确定删除
-            let ret = await this.$utils.apiHelper.delectShare(
+            let ret = await this.$apihelper.delectShare(
               this.shardData.id
             );
             if (!ret) return;

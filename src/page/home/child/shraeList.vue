@@ -36,7 +36,7 @@
         <span class="count">{{item.shareBrowseCount | countFromat}}</span>
       </p>
       <p>
-        <span class="iconfont icon-xihuancon"></span>
+        <span class="iconfont icon-xihuancon" @click.stop="clickLike" :class="{c_red: like}"></span>
         <span class="count">{{item.shareLikeCount | countFromat}}</span>
       </p>
       <p>
@@ -52,40 +52,62 @@
 </template>
 <script>
 export default {
-  props: ['itemObj'],
+  props: ["itemObj", "index", "type"],
+  data() {
+    return {
+      like: false
+    };
+  },
   methods: {
     // 预览图片
     previewImage(imgs, index) {
-      this.$utils.imagePreview(imgs, index)
+      this.$utils.imagePreview(imgs, index);
     },
     gotoDetail() {
       this.$router.push({
-        path: '/home/shardDetail',
+        path: "/home/shardDetail",
         query: {
           id: this.itemObj.id
         }
-      })
+      });
+    },
+    //点赞
+    async clickLike() {
+      if (this.itemObj.like) {
+        return;
+      }
+      let ret = await this.$apihelper.parseLikeShare(this.itemObj.id);
+      if (!ret) return;
+      this.like = true;
+      // this.$store.commit("homeList/Like", {
+      //   index: this.index,
+      //   type: this.type
+      // });
     },
     caozuo() {
-      this.$emit('action', this.itemObj)
+      this.$emit("action", this.itemObj);
     }
   },
   computed: {
     item() {
-      let shareImg = []
-      if (this.itemObj.shareImg) {
-        shareImg = this.itemObj.shareImg.split(',')
-      }
-      return Object.assign(this.itemObj, {
-        createTime: this.$utils.dateFromat(this.itemObj.createTime),
-        shareImg
-      })
+      return this.itemObj;
+      // let shareImg = [];
+      // if (this.itemObj.shareImg && typeof this.itemObj.shareImg === "string") {
+      //   shareImg = this.itemObj.shareImg.split(",");
+      // }
+      // return Object.assign(this.itemObj, {
+      //   createTime: this.$utils.dateFromat(this.itemObj.createTime),
+      //   shareImg
+      // });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
+.c_red {
+  color: red !important;
+}
 .list-item {
   padding: 20px 20px 5px;
   background: #fff;

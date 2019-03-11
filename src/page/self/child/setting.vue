@@ -18,7 +18,7 @@ export default {
     async signOut() {
       this.$utils.cookie.delete("seesionuser");
       localStorage.setItem("seesionuser", "");
-      await this.$utils.apiHelper.outLogin();
+      await this.$apihelper.outLogin();
       this.$router.replace({
         path: "/login"
       });

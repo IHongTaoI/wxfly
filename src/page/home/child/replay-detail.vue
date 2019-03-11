@@ -99,7 +99,7 @@ export default {
   methods: {
     async getList(isreload = true) {
       let { shareId, replyId } = this.$route.query;
-      let ret = await this.$utils.apiHelper.getReplyDetail({
+      let ret = await this.$apihelper.getReplyDetail({
         shareId,
         replyId,
         page: this.page + "",
@@ -148,7 +148,7 @@ export default {
     async sumbitReplay(replyCont) {
       this.cacheObj.content = replyCont;
       // 二级评论
-      let ret = await this.$utils.apiHelper.shareReplyArticleChild(
+      let ret = await this.$apihelper.shareReplyArticleChild(
         this.cacheObj
       );
       console.log("回复二级评论", ret);

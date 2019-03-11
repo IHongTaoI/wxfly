@@ -77,7 +77,7 @@ export default {
   methods: {
     async getList(isreload = true) {
       let { shareId } = this.$route.query;
-      let ret = await this.$utils.apiHelper.shareReplyAll({
+      let ret = await this.$apihelper.shareReplyAll({
         shareId,
         page: this.page,
         pageSize: this.pageSize
@@ -123,14 +123,14 @@ export default {
       this.cacheObj.content = replyCont;
       if (this.isReplayChild) {
         // 二级评论
-        let ret = await this.$utils.apiHelper.shareReplyArticleChild(
+        let ret = await this.$apihelper.shareReplyArticleChild(
           this.cacheObj
         );
         console.log("回复二级评论", ret);
         this.hidereplyBox();
         this.getDetil();
       } else {
-        let ret = await this.$utils.apiHelper.shareReplyArticle(this.cacheObj);
+        let ret = await this.$apihelper.shareReplyArticle(this.cacheObj);
         console.log("回复楼主", ret);
         this.hidereplyBox();
         this.getDetil();

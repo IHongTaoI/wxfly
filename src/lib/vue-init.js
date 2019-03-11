@@ -5,6 +5,7 @@ import store from './../vuex/store';
 import axios from './http';
 import VueAxios from 'vue-axios';
 import utils from '../utils/index';
+import apiHelper from './../utils/api-helper';
 import Vant from 'vant';
 import { Lazyload } from 'vant';
 import 'vant/lib/index.css';
@@ -15,6 +16,7 @@ export default function() {
   Vue.use(Vant);
   Vue.use(Lazyload);
   Vue.prototype.$utils = utils;
+  Vue.prototype.$apihelper = apiHelper;
   Vue.config.productionTip = false;
   window.vueObj = new Vue({
     el: '#app',

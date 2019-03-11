@@ -1,4 +1,3 @@
-import apiHelper from './api-helper';
 import { ImagePreview } from 'vant';
 
 function dateFromat(date, text = '') {
@@ -104,7 +103,6 @@ let cache = {
 export default {
   dateFromat,
   getPosition,
-  apiHelper,
   imagePreview,
   cookie,
   getCookiesUserinfo,

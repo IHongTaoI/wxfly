@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async sendSms() {
-      let ret = await this.$utils.apiHelper.getMailSms({
+      let ret = await this.$apihelper.getMailSms({
         userName: "测试用户",
         userMail: this.email
       });
@@ -61,7 +61,7 @@ export default {
       }, 1000);
     },
     async register() {
-      let ret = await this.$utils.apiHelper.mailRegister({
+      let ret = await this.$apihelper.mailRegister({
         mail: this.email,
         nickName: "",
         password: this.password,

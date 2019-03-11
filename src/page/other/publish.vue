@@ -63,7 +63,7 @@ export default {
       let ImgRet = await this.uploadImg();
       if (!ImgRet) this.$toast.fail("图片上传失败");
       // 上传图片
-      let sendRet = await this.$utils.apiHelper.sendShare({
+      let sendRet = await this.$apihelper.sendShare({
         content: this.content,
         imgs: ImgRet.d.urls.join(","),
         tip: "&*asd1@213SAf",
@@ -84,7 +84,7 @@ export default {
       for (let v of this.cachefiles) {
         formData.append("imgs", v);
       }
-      return await this.$utils.apiHelper.uploadImg(formData);
+      return await this.$apihelper.uploadImg(formData);
     },
     // 谁可以开
     readcheck() {

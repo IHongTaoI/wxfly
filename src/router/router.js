@@ -4,40 +4,25 @@ export default [
     redirect: '/home',
     name: 'homeWrap',
     component: () => import('../page/wrap.vue'),
-    meta: {
-      keepAlive: true
-    },
     children: [
       {
         path: '/home',
         name: 'home',
-        meta: {
-          keepAlive: true
-        },
         component: () => import('../page/home/index.vue')
       },
       {
         path: '/read',
         name: 'read',
-        meta: {
-          keepAlive: true
-        },
         component: () => import('../page/read/index.vue')
       },
       {
         path: '/message',
         name: 'message',
-        meta: {
-          keepAlive: true
-        },
         component: () => import('../page/message/index.vue')
       },
       {
         path: '/self',
         name: 'self',
-        meta: {
-          keepAlive: true
-        },
         component: () => import('../page/self/index.vue')
       }
     ]
