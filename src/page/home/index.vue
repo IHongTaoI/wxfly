@@ -8,14 +8,14 @@
     </div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <shreaBox
-          :itemObj="item"
-          :index="index"
-          :type="type"
-          v-for="(item, index) in list"
-          :key="index"
-          @action="actionHandler"
-        ></shreaBox>
+        <DynamicScroller :items="list" :min-item-size="54" class="scroller">
+          <template v-slot="{ item, index, active }">
+            <DynamicScrollerItem :item="item" :active="active">
+              <shreaBox :itemObj="item" :index="index" :type="type" @action="actionHandler"></shreaBox>
+              <div class="splitBlock"></div>
+            </DynamicScrollerItem>
+          </template>
+        </DynamicScroller>
       </van-list>
     </van-pull-refresh>
     <van-actionsheet

@@ -1,45 +1,53 @@
 <template>
   <div class="my-collection-wrap paddingTopNav">
-    <van-nav-bar title="我的收藏" left-text="返回" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
+    <van-nav-bar
+      title="我的收藏"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.go(-1)"
+      class="topNavBar"
+    />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div
-          class="list-item"
-          @click="gotoDetail(item.shareId)"
-          v-for="(item, index) in list"
-          :key="index"
-        >
-          <div class="header">
-            <div class="info">
-              <img class="userava" :src="item.shareUserAvatar">
-              <div class="titles">
-                <p class="username">{{item.shareUserName}}</p>
-                <!--发布时间-->
-                <p class="time">{{item.createTime}}</p>
+        <DynamicScroller :items="list" :min-item-size="54" class="scroller">
+          <template v-slot="{ item, index, active }">
+            <DynamicScrollerItem :item="item" :active="active">
+              <div class="list-item" @click="gotoDetail(item.shareId)">
+                <div class="header">
+                  <div class="info">
+                    <img class="userava" :src="item.shareUserAvatar">
+                    <div class="titles">
+                      <p class="username">{{item.shareUserName}}</p>
+                      <!--发布时间-->
+                      <p class="time">{{item.createTime}}</p>
+                    </div>
+                  </div>
+                  <div class="opt" @click.stop="caozuo(item.id, index)">
+                    <span class="iconfont icon-caozuo"></span>
+                  </div>
+                </div>
+                <div class="content" v-if="item.shareImg && item.shareImg.length">
+                  <div class="imgs">
+                    <div
+                      :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
+                      v-for="(picItem, indx) in item.shareImg"
+                      :key="indx"
+                    >
+                      <img
+                        class="pic"
+                        mode="aspectFill"
+                        :src="picItem"
+                        @click.stop="previewImage(item.shareImg, indx)"
+                      >
+                    </div>
+                  </div>
+                  <p class="shareContent">{{item.shareContent}}</p>
+                </div>
               </div>
-            </div>
-            <div class="opt" @click.stop="caozuo(item.id, index)">
-              <span class="iconfont icon-caozuo"></span>
-            </div>
-          </div>
-          <div class="content" v-if="item.shareImg && item.shareImg.length">
-            <div class="imgs">
-              <div
-                :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
-                v-for="(picItem, indx) in item.shareImg"
-                :key="indx"
-              >
-                <img
-                  class="pic"
-                  mode="aspectFill"
-                  :src="picItem"
-                  @click.stop="previewImage(item.shareImg, indx)"
-                >
-              </div>
-            </div>
-            <p class="shareContent">{{item.shareContent}}</p>
-          </div>
-        </div>
+              <div class="scop"></div>
+            </DynamicScrollerItem>
+          </template>
+        </DynamicScroller>
       </van-list>
     </van-pull-refresh>
     <van-actionsheet
@@ -130,10 +138,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.scop {
+  width: 100%;
+  height: 18px;
+  background: #f2f2f2;
+}
 .my-collection-wrap {
   .list-item {
-    padding: 20px 20px 5px;
-    margin-bottom: 12px;
+    padding: 20px 20px 6px;
     background: #ffffff;
     .header {
       display: flex;

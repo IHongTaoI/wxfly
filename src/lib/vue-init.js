@@ -10,11 +10,15 @@ import Vant from 'vant';
 import { Lazyload } from 'vant';
 import 'vant/lib/index.css';
 import socketInit from './../utils/socket-init';
+import VirtualScroller from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 export default function() {
   Vue.use(VueAxios, axios);
   Vue.use(Vant);
   Vue.use(Lazyload);
+  Vue.use(VirtualScroller);
+
   Vue.prototype.$utils = utils;
   Vue.prototype.$apihelper = apiHelper;
   Vue.config.productionTip = false;
