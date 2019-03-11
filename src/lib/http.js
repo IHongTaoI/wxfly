@@ -53,6 +53,7 @@ axios.interceptors.response.use(function(response) {
     if (res.status === '500004') {
       // 登录过期
       utils.cookie.delete('seesionuser');
+      localStorage.setItem('seesionuser', '');
       showNotify('登录过期，请重新登录');
       setTimeout(() => {
         router.replace({

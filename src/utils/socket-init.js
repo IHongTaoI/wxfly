@@ -3,7 +3,8 @@ import store from './../vuex/store';
 import utils from './index';
 
 function connection() {
-  let token = utils.getCookiesUserinfo().h.token;
+  // let token = utils.getCookiesUserinfo().h.token;
+  let token = JSON.parse(localStorage.getItem('seesionuser')).h.token;
   return new WebSocket(`ws://134.175.16.212:2019/webSocket?token=${token}`);
 }
 

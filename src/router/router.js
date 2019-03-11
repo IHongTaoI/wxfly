@@ -58,7 +58,7 @@ export default [
   },
   {
     path: '/self/test',
-    name: 'publish',
+    name: '测试页面',
     component: () => import('../page/self/child/test.vue')
   },
   {
@@ -90,5 +90,10 @@ export default [
     path: '/register',
     name: 'register',
     component: () => import('../page/other/register.vue')
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../page/other/test.vue')
   }
 ];
