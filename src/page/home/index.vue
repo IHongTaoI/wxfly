@@ -70,12 +70,12 @@ export default {
   methods: {
     ...mapActions("homeList", ["getHomeList"]),
     onLoad() {
-      this.getList();
+      this.getList(false);
     },
     onRefresh() {
       this.getList(true);
     },
-    getList(isreload) {
+    getList(isreload = true) {
       this.getHomeList({
         isreload,
         type: this.type,
