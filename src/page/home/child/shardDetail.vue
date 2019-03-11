@@ -223,7 +223,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .animated {
-  animation-duration: 0.8s;
+  animation-duration: 0.5s;
 }
 .icon-shanchu {
   color: #d81e06;
