@@ -37,6 +37,9 @@
       @select="onSelect"
       cancel-text="取消"
     />
+    <div class="go-top" v-show="showGotoTop">
+      <span class="iconfont icon-dingbu" @click="gotoTop"></span>
+    </div>
   </div>
 </template>
 <script>
@@ -53,7 +56,7 @@ export default {
     let _this = this;
     this.type = this.$utils.cache["homeType"] || "newest";
     let actindex = this.$utils.cache["homeActive"];
-    if(!this.$utils.isNull(actindex)) this.active = actindex
+    if (!this.$utils.isNull(actindex)) this.active = actindex;
     this.$nextTick(() => {
       this.setScrollT();
       document.querySelector(".van-pull-refresh__track").style.height = "100%";
@@ -74,6 +77,7 @@ export default {
       isreload: false,
       diseRefresh: false, // 是否禁用下拉刷新
       type: "newest",
+      showGotoTop: true, // 是否显示去顶部
       active: 1,
       page: 0,
       pageSize: 10,
@@ -98,12 +102,21 @@ export default {
       this.$utils.cache["homeActive"] = index;
     },
     onscroll(e, { offset }) {
-      if (offset < 10) this.diseRefresh = false;
-      else this.diseRefresh = true;
+      if (offset < 10) {
+        this.diseRefresh = false;
+        this.showGotoTop = false;
+      } else {
+        this.showGotoTop = true;
+        this.diseRefresh = true;
+      }
       this.$utils.cache[this.type + "scroll"] = offset;
     },
     onRefresh() {
       this.getList(true);
+    },
+    // 去顶部
+    gotoTop() {
+      this.setScrollT(0);
     },
     getList(isreload = true) {
       this.getHomeList({
@@ -120,11 +133,15 @@ export default {
       this.showActionsheetL = true;
     },
     // 设置滚动高度
-    setScrollT() {
+    setScrollT(val) {
       this.$nextTick(() => {
-        this.$refs.scrollBox.$el.scrollTop = this.$utils.cache[
-          this.type + "scroll"
-        ];
+        let target;
+        if (this.$utils.isNull(val)) {
+          target = this.$utils.cache[this.type + "scroll"];
+        } else {
+          target = val;
+        }
+        this.$refs.scrollBox.$el.scrollTop = target;
       });
     },
     async onSelect(msg, item) {
@@ -172,6 +189,15 @@ export default {
   height: 100%;
   padding-top: 44px;
   overflow-y: auto;
+  .go-top {
+    position: absolute;
+    bottom: 65px;
+    right: 12px;
+    .iconfont {
+      font-size: 50px;
+      color: rgba(254, 90, 96, 0.7);
+    }
+  }
   .refreshBox {
     height: 100%;
   }
