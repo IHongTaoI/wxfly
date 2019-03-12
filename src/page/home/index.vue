@@ -113,7 +113,6 @@ export default {
         this.$refs.scrollBox.$el.scrollTop = this.$utils.cache[
           this.type + "scroll"
         ];
-        console.log(this.$refs.scrollBox.$el.scrollTop = 214124)
       });
     },
     async onSelect(msg, item) {
