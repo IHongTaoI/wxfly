@@ -53,6 +53,7 @@
         <replyList
           :reItem="item"
           @btnClick="replyChildBtn"
+          :index="index"
           v-for="(item, index) in replyList"
           :key="index"
         ></replyList>
@@ -101,7 +102,9 @@ export default {
       showReplyBox: false,
       tearPlaTxt: "发表评论",
       cacheObj: null, // 缓存一些东西
-      replyList: []
+      replyList: [],
+      cIndex: -1,
+      pIndex: -1
     };
   },
   methods: {
@@ -128,7 +131,7 @@ export default {
       }
       this.shardData = ret.d.share;
       // 获取回复
-      this.replyList = ret.d.replies;
+      this.replyList = ret.d.replies || [];
     },
     previewImage(imgs, index) {
       this.$utils.imagePreview(imgs, index);
@@ -144,31 +147,51 @@ export default {
       this.textareaBlur();
     },
     // 二级回复的按钮
-    replyChildBtn(arvg) {
+    replyChildBtn(obj) {
+      let { item, pIndex, cIndex } = obj;
+      this.cIndex = cIndex;
+      this.pIndex = pIndex;
       this.isReplayChild = true;
-      this.tearPlaTxt = `回复${arvg.userName}`;
+      this.tearPlaTxt = `回复${item.userName}`;
       this.showReplyBox = true;
       this.cacheObj = {
-        commentId: arvg.id,
+        commentId: item.id,
         shareId: this.shareId,
-        replyUserId: arvg.userId
+        replyUserId: item.userId
       };
     },
     async sumbitReplay(replyCont) {
       this.cacheObj.content = replyCont;
       if (this.isReplayChild) {
         // 二级评论
-        let ret = await this.$apihelper.shareReplyArticleChild(
-          this.cacheObj
-        );
+        let ret = await this.$apihelper.shareReplyArticleChild(this.cacheObj);
         console.log("回复二级评论", ret);
+        // 如果回复的是二级回复的子回复
+        let pReplies = this.replyList[this.pIndex];
+        let cReplies = this.replyList[this.pIndex].replies;
+        if (!cReplies) {
+          this.replyList[this.pIndex].replies = [];
+          cReplies = this.replyList[this.pIndex].replies;
+        }
+        if (cReplies && cReplies.length >= 2) {
+          pReplies.replyCount += 1;
+        } else {
+          ret.d.repltUserName = this.replyList[this.pIndex].userName;
+          ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+          ret.d.userName = this.$store.state.user.userInfo.userName;
+          cReplies.push(ret.d);
+        }
         this.hidereplyBox();
-        this.getDetil();
+        // this.getDetil();
       } else {
         let ret = await this.$apihelper.shareReplyArticle(this.cacheObj);
         console.log("回复楼主", ret);
+        ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+        ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
+        ret.d.userName = this.$store.state.user.userInfo.userName;
+        this.replyList.push(ret.d);
         this.hidereplyBox();
-        this.getDetil();
+        // this.getDetil();
       }
     },
     // 删除我的分享
@@ -179,9 +202,7 @@ export default {
         callback: async msg => {
           if (msg === "confirm") {
             // 确定删除
-            let ret = await this.$apihelper.delectShare(
-              this.shardData.id
-            );
+            let ret = await this.$apihelper.delectShare(this.shardData.id);
             if (!ret) return;
             this.$router.replace({
               name: "home",

@@ -20,7 +20,11 @@
             class="rechild-item"
             v-for="(reChild, recind) in reItem.replies"
             :key="recind"
-            @click="showReplyBox(reChild)"
+            @click="showReplyBox({
+              item: reChild,
+              pIndex: index,
+              cIndex: recind
+            })"
           >
             <span>
               <span class="color_user">{{reChild.userName}}</span> 回复
@@ -36,7 +40,14 @@
         </div>
         <div class="bottom">
           <span class="time">{{reItem.replyTime}}</span>
-          <span class="btn" @click="showReplyBox(reItem)">回复</span>
+          <span
+            class="btn"
+            @click="showReplyBox({
+            item: reItem,
+            pIndex: index,
+            cIndex: -1
+          })"
+          >回复</span>
         </div>
       </div>
     </div>
@@ -46,7 +57,7 @@
 
 <script>
 export default {
-  props: ["reItem", "goType", "pUserid"],
+  props: ["reItem", "goType", "pUserid", "index"],
   methods: {
     gotoDetail(item) {
       let name = "shardDetailReplay";
@@ -61,8 +72,8 @@ export default {
         }
       });
     },
-    showReplyBox(reItem) {
-      this.$emit("btnClick", reItem);
+    showReplyBox(obj) {
+      this.$emit("btnClick", obj);
     }
   },
   computed: {
@@ -80,6 +91,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.color_user {
+  color: #4777ac;
+}
 .re-item {
   .re-wrap {
     display: flex;
@@ -111,9 +125,6 @@ export default {
         padding: 4px;
         border-radius: 6px;
         .rechild-item {
-          .color_user {
-            color: #4777ac;
-          }
         }
         .more {
           color: #4777ac;

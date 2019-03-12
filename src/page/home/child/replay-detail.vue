@@ -36,6 +36,7 @@
             :reItem="item"
             v-for="(item, index) in reList"
             :key="index"
+            :index="index"
             :pUserid="replayParObj.userId"
             goType="mc"
             @btnClick="replyChildBtn"
@@ -93,7 +94,9 @@ export default {
       pageSize: 20,
       reList: [],
       cacheObj: {},
-      replayParObj: {} // 楼主的信息
+      replayParObj: {}, // 楼主的信息
+      cIndex: -1,
+      pIndex: -1
     };
   },
   methods: {
@@ -127,13 +130,18 @@ export default {
         this.reList.push(...list);
       }
     },
-    replyChildBtn(arvg) {
-      this.tearPlaTxt = `回复${arvg.userName}`;
+    replyChildBtn(obj) {
+      console.log(obj);
+      let { item, pIndex, cIndex } = obj;
+      this.cIndex = cIndex;
+      this.pIndex = pIndex;
+      this.isReplayChild = true;
+      this.tearPlaTxt = `回复${item.userName}`;
       this.showReplyBox = true;
       this.cacheObj = {
-        commentId: arvg.id,
+        commentId: item.id,
         shareId: this.shareId,
-        replyUserId: arvg.userId
+        replyUserId: item.userId
       };
     },
     // 隐藏回复框
@@ -148,12 +156,15 @@ export default {
     async sumbitReplay(replyCont) {
       this.cacheObj.content = replyCont;
       // 二级评论
-      let ret = await this.$apihelper.shareReplyArticleChild(
-        this.cacheObj
-      );
+      let ret = await this.$apihelper.shareReplyArticleChild(this.cacheObj);
       console.log("回复二级评论", ret);
+      ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
+      ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+      ret.d.userName = this.$store.state.user.userInfo.userName;
+      ret.d.repltUserName = this.reList[this.pIndex].userName;
+      this.reList.unshift(ret.d);
       this.hidereplyBox();
-      this.getList();
+      // this.getList();
     },
     handlerClick(type) {
       return {
