@@ -169,9 +169,8 @@ export default {
         // 如果回复的是二级回复的子回复
         let pReplies = this.replyList[this.pIndex];
         let cReplies = this.replyList[this.pIndex].replies;
-        if (cReplies && cReplies.length >= 2) {
-          pReplies.replyCount += 1;
-        } else {
+        pReplies.replyCount += 1;
+        if (cReplies && cReplies.length < 2) {
           ret.d.repltUserName = this.replyList[this.pIndex].userName;
           ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
           ret.d.userName = this.$store.state.user.userInfo.userName;
@@ -185,6 +184,7 @@ export default {
         ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
         ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
         ret.d.userName = this.$store.state.user.userInfo.userName;
+        ret.d.replyCount = 0;
         ret.d.replies = [];
         this.replyList.push(ret.d);
         this.hidereplyBox();

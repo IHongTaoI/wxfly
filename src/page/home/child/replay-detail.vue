@@ -161,7 +161,9 @@ export default {
       ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
       ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
       ret.d.userName = this.$store.state.user.userInfo.userName;
-      ret.d.repltUserName = this.reList[this.pIndex].userName;
+      if (~this.pIndex) {
+        ret.d.repltUserName = this.reList[this.pIndex].userName;
+      }
       this.reList.unshift(ret.d);
       this.hidereplyBox();
       // this.getList();
