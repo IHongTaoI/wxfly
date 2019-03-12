@@ -4,4 +4,6 @@
 
 let PAGE = 1
 
-export { PAGE }
+export default {
+  PAGE
+}

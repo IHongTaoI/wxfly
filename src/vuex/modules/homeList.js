@@ -1,4 +1,5 @@
 import utils from './../../utils/index'
+import global from './../../utils/global-const'
 
 export default {
   namespaced: true,
@@ -7,19 +8,19 @@ export default {
     pageSize: 20,
     newest: {
       list: [],
-      page: 1,
+      page: global.PAGE,
       finished: false
     },
 		// 附近的列表
     nearby: {
       list: [],
-      page: 1,
+      page: global.PAGE,
       finished: false
     },
 		// 动态列表
     dynamic: {
       list: [],
-      page: 1,
+      page: global.PAGE,
       finished: false
     }
   },
@@ -35,10 +36,11 @@ export default {
           if (isreload) {
             state.newest.list = list
             state.newest.finished = false
-            state.newest.page = 1
+            state.newest.page = global.PAGE
           } else {
             state.newest.list.push(...list)
           }
+          state.newest.page++
           if (list.length < 10) {
             state.newest.finished = true
           }
@@ -47,11 +49,11 @@ export default {
           if (isreload) {
             state.nearby.list = list
             state.nearby.finished = false
-            state.nearby.page = 1
+            state.nearby.page = global.PAGE
           } else {
-            console.log(state)
             state.nearby.list.push(...list)
           }
+          state.nearby.page++
           if (list.length < 10) {
             state.nearby.finished = true
           }
@@ -60,10 +62,11 @@ export default {
           if (isreload) {
             state.dynamic.list = list
             state.dynamic.finished = false
-            state.dynamic.page = 1
+            state.dynamic.page = global.PAGE
           } else {
             state.dynamic.list.push(...list)
           }
+          state.dynamic.page++
           if (list.length < 10) {
             state.dynamic.finished = true
           }
@@ -82,19 +85,19 @@ export default {
       let page, searchType
       switch (type) {
         case 'newest':
-          page = state.newest.page++
+          page = state.newest.page
           searchType = '2'
           break
         case 'nearby':
-          page = state.nearby.page++
+          page = state.nearby.page
           searchType = '1'
           break
         case 'dynamic':
-          page = state.dynamic.page++
+          page = state.dynamic.page
           searchType = '2'
           break
       }
-      isreload && (page = 1)
+      isreload && (page = global.PAGE)
       let ret = await this._vm.$apihelper.getShearList({
         lng: '0',
         lat: '0',
