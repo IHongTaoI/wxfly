@@ -1,12 +1,17 @@
 <template>
   <div id="home" ref="main">
     <div class="tabs">
-      <van-tabs v-model="active">
+      <van-tabs v-model="active" @click="tabsClick">
         <van-tab title="附近"></van-tab>
         <van-tab title="最新"></van-tab>
       </van-tabs>
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :disabled="diseRefresh" class="refreshBox">
+    <van-pull-refresh
+      v-model="isLoading"
+      @refresh="onRefresh"
+      :disabled="diseRefresh"
+      class="refreshBox"
+    >
       <virtual-list
         ref="scrollBox"
         :size="250"
@@ -46,15 +51,19 @@ export default {
   activated() {
     // 保存滚动高度，暂时没有什么好的办法
     let _this = this;
-    this.$nextTick(()=>{
-    this.setScrollT();
-      document.querySelector('.van-pull-refresh__track').style.height = '100%';
-    })
+    this.type = this.$utils.cache["homeType"] || "newest";
+    let actindex = this.$utils.cache["homeActive"];
+    if(!this.$utils.isNull(actindex)) this.active = actindex
+    this.$nextTick(() => {
+      this.setScrollT();
+      document.querySelector(".van-pull-refresh__track").style.height = "100%";
+    });
     if (!this.list.length || this.$route.params.reload) {
       this.getList(true);
     }
   },
   deactivated() {
+    this.$utils.cache["homeType"] = this.type;
     this.$refs.main.onscroll = null;
   },
   data() {
@@ -63,7 +72,7 @@ export default {
       showActionsheetL: false,
       isLoading: false, // 是否在下拉刷新
       isreload: false,
-      diseRefresh: false, // 是否禁用下拉刷新 
+      diseRefresh: false, // 是否禁用下拉刷新
       type: "newest",
       active: 1,
       page: 0,
@@ -85,9 +94,12 @@ export default {
       this.loading = true;
       this.getList(false);
     },
+    tabsClick(index) {
+      this.$utils.cache["homeActive"] = index;
+    },
     onscroll(e, { offset }) {
-      if(offset < 10) this.diseRefresh = false
-      else this.diseRefresh = true
+      if (offset < 10) this.diseRefresh = false;
+      else this.diseRefresh = true;
       this.$utils.cache[this.type + "scroll"] = offset;
     },
     onRefresh() {

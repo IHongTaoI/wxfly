@@ -21,7 +21,7 @@ export default {}
   width: 20px;
   height: 20px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 40px;
   position: relative;
   animation: loadani 3s linear infinite;
   .d {

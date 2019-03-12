@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item" @click="gotoDetail">
+  <div class="list-item" @click="gotoDetail" :style="{height: '250px'}">
     <div class="header">
       <div class="info">
         <img class="userava" :src="item.shareUserAvatar">
@@ -111,7 +111,6 @@ export default {
 .list-item {
   box-sizing: border-box;
   padding: 20px 20px 5px;
-  height: 250px;
   margin-bottom: 20px;
   background: #fff;
   .header {
