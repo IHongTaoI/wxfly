@@ -1,5 +1,4 @@
 import utils from './../../utils/index'
-import { PAGE } from './../../utils/global-const'
 
 export default {
   namespaced: true,
@@ -8,19 +7,19 @@ export default {
     pageSize: 20,
     newest: {
       list: [],
-      page: PAGE,
+      page: 1,
       finished: false
     },
 		// 附近的列表
     nearby: {
       list: [],
-      page: PAGE,
+      page: 1,
       finished: false
     },
 		// 动态列表
     dynamic: {
       list: [],
-      page: PAGE,
+      page: 1,
       finished: false
     }
   },
@@ -36,7 +35,7 @@ export default {
           if (isreload) {
             state.newest.list = list
             state.newest.finished = false
-            state.newest.page = PAGE
+            state.newest.page = 1
           } else {
             state.newest.list.push(...list)
           }
@@ -48,7 +47,7 @@ export default {
           if (isreload) {
             state.nearby.list = list
             state.nearby.finished = false
-            state.nearby.page = PAGE
+            state.nearby.page = 1
           } else {
             console.log(state)
             state.nearby.list.push(...list)
@@ -61,7 +60,7 @@ export default {
           if (isreload) {
             state.dynamic.list = list
             state.dynamic.finished = false
-            state.dynamic.page = PAGE
+            state.dynamic.page = 1
           } else {
             state.dynamic.list.push(...list)
           }
@@ -95,7 +94,7 @@ export default {
           searchType = '2'
           break
       }
-      isreload && (page = PAGE)
+      isreload && (page = 1)
       let ret = await this._vm.$apihelper.getShearList({
         lng: '0',
         lat: '0',
