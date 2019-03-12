@@ -109,7 +109,10 @@ export default {
   color: red !important;
 }
 .list-item {
+  box-sizing: border-box;
   padding: 20px 20px 5px;
+  height: 250px;
+  margin-bottom: 20px;
   background: #fff;
   .header {
     display: flex;

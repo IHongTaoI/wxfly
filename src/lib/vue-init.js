@@ -10,14 +10,15 @@ import Vant from 'vant';
 import { Lazyload } from 'vant';
 import 'vant/lib/index.css';
 import socketInit from './../utils/socket-init';
-import VirtualScroller from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import virtualList from "vue-virtual-scroll-list";
+import loadinganite from "./../page/home/child/loading-animate.vue";
 
 export default function() {
   Vue.use(VueAxios, axios);
   Vue.use(Vant);
   Vue.use(Lazyload);
-  Vue.use(VirtualScroller);
+  Vue.component('virtual-list', virtualList)
+  Vue.component('loadinganite', loadinganite)
 
   Vue.prototype.$utils = utils;
   Vue.prototype.$apihelper = apiHelper;

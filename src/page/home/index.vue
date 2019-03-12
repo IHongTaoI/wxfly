@@ -6,15 +6,25 @@
         <van-tab title="最新"></van-tab>
       </van-tabs>
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :disabled="diseRefresh" class="refreshBox">
+      <virtual-list
+        ref="scrollBox"
+        :size="250"
+        :remain="6"
+        class="scrollist"
+        :tobottom="onLoad"
+        :onscroll="onscroll"
+      >
         <shreaBox
           :itemObj="item"
+          :index="index"
           v-for="(item, index) in list"
-          :key="index"
+          :key="item.id"
           @action="actionHandler"
         ></shreaBox>
-      </van-list>
+        <loadinganite v-show="loading || !list.length"></loadinganite>
+        <p v-show="finished" class="no-more">-------我也是有底线的-------</p>
+      </virtual-list>
     </van-pull-refresh>
     <van-actionsheet
       v-model="showActionsheetL"
@@ -36,11 +46,11 @@ export default {
   activated() {
     // 保存滚动高度，暂时没有什么好的办法
     let _this = this;
+    this.$nextTick(()=>{
     this.setScrollT();
-    this.$refs.main.onscroll = function() {
-      _this.$utils.cache[_this.type + "scroll"] = parseInt(this.scrollTop);
-    };
-    if (this.$route.params.reload) {
+      document.querySelector('.van-pull-refresh__track').style.height = '100%';
+    })
+    if (!this.list.length || this.$route.params.reload) {
       this.getList(true);
     }
   },
@@ -51,12 +61,14 @@ export default {
     return {
       selObj: null, // 正在操作的数据
       showActionsheetL: false,
+      isLoading: false, // 是否在下拉刷新
+      isreload: false,
+      diseRefresh: false, // 是否禁用下拉刷新 
       type: "newest",
       active: 1,
       page: 0,
       pageSize: 10,
       loading: false,
-      isLoading: false,
       actions: [
         {
           name: "收藏",
@@ -68,7 +80,15 @@ export default {
   methods: {
     ...mapActions("homeList", ["getHomeList"]),
     onLoad() {
+      if (this.finished) return;
+      if (this.loading) return;
+      this.loading = true;
       this.getList(false);
+    },
+    onscroll(e, { offset }) {
+      if(offset < 10) this.diseRefresh = false
+      else this.diseRefresh = true
+      this.$utils.cache[this.type + "scroll"] = offset;
     },
     onRefresh() {
       this.getList(true);
@@ -87,10 +107,13 @@ export default {
       this.selObj = selObj;
       this.showActionsheetL = true;
     },
+    // 设置滚动高度
     setScrollT() {
       this.$nextTick(() => {
-        this.$refs.main.scrollTop = this.$utils.cache[this.type + "scroll"];
-        console.log(this.$utils.cache);
+        this.$refs.scrollBox.$el.scrollTop = this.$utils.cache[
+          this.type + "scroll"
+        ];
+        console.log(this.$refs.scrollBox.$el.scrollTop = 214124)
       });
     },
     async onSelect(msg, item) {
@@ -137,8 +160,20 @@ export default {
   width: 100%;
   height: 100%;
   padding-top: 44px;
-  padding-bottom: 100px;
   overflow-y: auto;
+  .refreshBox {
+    height: 100%;
+  }
+  .scrollist {
+    height: 100% !important;
+    padding-bottom: 60px;
+  }
+  .no-more {
+    text-align: center;
+    line-height: 36px;
+    margin-bottom: 30px;
+    color: #ccc;
+  }
   .tabs {
     position: fixed;
     top: 0;

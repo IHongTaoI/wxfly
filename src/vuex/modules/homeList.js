@@ -4,22 +4,22 @@ export default {
   namespaced: true,
   state: {
     //最新的列表
-    pageSize: 10,
+    pageSize: 20,
     newest: {
       list: [],
-      page: 0,
+      page: 1,
       finished: false
     },
     //附近的列表
     nearby: {
       list: [],
-      page: 0,
+      page: 1,
       finished: false
     },
     //动态列表
     dynamic: {
       list: [],
-      page: 0,
+      page: 1,
       finished: false
     }
   },

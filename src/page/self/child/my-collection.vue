@@ -1,47 +1,55 @@
 <template>
   <div class="my-collection-wrap paddingTopNav">
-    <van-nav-bar title="我的收藏" left-text="返回" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div
-          class="list-item"
-          @click="gotoDetail(item.shareId)"
-          v-for="(item, index) in list"
-          :key="index"
-        >
-          <div class="header">
-            <div class="info">
-              <img class="userava" :src="item.shareUserAvatar">
-              <div class="titles">
-                <p class="username">{{item.shareUserName}}</p>
-                <!--发布时间-->
-                <p class="time">{{item.createTime}}</p>
-              </div>
-            </div>
-            <div class="opt" @click.stop="caozuo(item.id, index)">
-              <span class="iconfont icon-caozuo"></span>
+    <van-nav-bar
+      title="我的收藏"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.go(-1)"
+      class="topNavBar"
+    />
+    <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox"> -->
+    <!-- <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad"> -->
+    <virtual-list ref="vsl" :size="210" :remain="6" class="scrollist" :tobottom="onLoad">
+      <div
+        class="list-item"
+        @click="gotoDetail(item.shareId)"
+        v-for="(item, index) in list"
+        :key="index"
+      >
+        <div class="header">
+          <div class="info">
+            <img class="userava" :src="item.shareUserAvatar">
+            <div class="titles">
+              <p class="username">{{item.shareUserName}}</p>
+              <!--发布时间-->
+              <p class="time">{{item.createTime}}</p>
             </div>
           </div>
-          <div class="content" v-if="item.shareImg && item.shareImg.length">
-            <div class="imgs">
-              <div
-                :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
-                v-for="(picItem, indx) in item.shareImg"
-                :key="indx"
-              >
-                <img
-                  class="pic"
-                  mode="aspectFill"
-                  :src="picItem"
-                  @click.stop="previewImage(item.shareImg, indx)"
-                >
-              </div>
-            </div>
-            <p class="shareContent">{{item.shareContent}}</p>
+          <div class="opt" @click.stop="caozuo(item.id, index)">
+            <span class="iconfont icon-caozuo"></span>
           </div>
         </div>
-      </van-list>
-    </van-pull-refresh>
+        <div class="content" v-if="item.shareImg && item.shareImg.length">
+          <div class="imgs">
+            <div
+              :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
+              v-for="(picItem, indx) in item.shareImg"
+              :key="indx"
+            >
+              <img
+                class="pic"
+                mode="aspectFill"
+                :src="picItem"
+                @click.stop="previewImage(item.shareImg, indx)"
+              >
+            </div>
+          </div>
+          <p class="shareContent">{{item.shareContent}}</p>
+        </div>
+      </div>
+    </virtual-list>
+    <!-- </van-list> -->
+    <!-- </van-pull-refresh> -->
     <van-actionsheet
       v-model="showActionsheetL"
       :actions="actions"
@@ -52,6 +60,9 @@
 </template>
 <script>
 export default {
+  created() {
+    this.getList(false);
+  },
   data() {
     return {
       list: [],
@@ -60,7 +71,7 @@ export default {
       isLoading: false,
       finished: false,
       page: 0,
-      pageSize: 10,
+      pageSize: 30,
       cacheCollectId: -1,
       actions: [
         {
@@ -131,8 +142,13 @@ export default {
 
 <style lang="less" scoped>
 .my-collection-wrap {
+  .scrollist {
+    height: 100% !important;
+  }
   .list-item {
+    box-sizing: border-box;
     padding: 20px 20px 5px;
+    height: 210px;
     margin-bottom: 12px;
     background: #ffffff;
     .header {
