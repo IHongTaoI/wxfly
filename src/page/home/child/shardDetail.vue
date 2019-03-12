@@ -169,16 +169,13 @@ export default {
         // 如果回复的是二级回复的子回复
         let pReplies = this.replyList[this.pIndex];
         let cReplies = this.replyList[this.pIndex].replies;
-        if (!cReplies) {
-          this.replyList[this.pIndex].replies = [];
-          cReplies = this.replyList[this.pIndex].replies;
-        }
         if (cReplies && cReplies.length >= 2) {
           pReplies.replyCount += 1;
         } else {
           ret.d.repltUserName = this.replyList[this.pIndex].userName;
           ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
           ret.d.userName = this.$store.state.user.userInfo.userName;
+          ret.d.replies = [];
           cReplies.push(ret.d);
         }
         this.hidereplyBox();
