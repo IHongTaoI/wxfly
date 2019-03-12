@@ -79,8 +79,6 @@ export default {
       type: "newest",
       showGotoTop: true, // 是否显示去顶部
       active: 1,
-      page: 0,
-      pageSize: 10,
       loading: false,
       actions: [
         {
@@ -156,10 +154,12 @@ export default {
   watch: {
     active(cur) {
       if (cur === 1) {
+        // 最新
         this.type = "newest";
         !this.list.length && this.getList();
       }
       if (cur === 0) {
+        // 附近
         this.type = "nearby";
         !this.list.length && this.getList();
       }
