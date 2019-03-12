@@ -175,7 +175,6 @@ export default {
           ret.d.repltUserName = this.replyList[this.pIndex].userName;
           ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
           ret.d.userName = this.$store.state.user.userInfo.userName;
-          ret.d.replies = [];
           cReplies.push(ret.d);
         }
         this.hidereplyBox();
@@ -186,6 +185,7 @@ export default {
         ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
         ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
         ret.d.userName = this.$store.state.user.userInfo.userName;
+        ret.d.replies = [];
         this.replyList.push(ret.d);
         this.hidereplyBox();
         // this.getDetil();
