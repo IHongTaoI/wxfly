@@ -156,12 +156,12 @@ export default {
       if (cur === 1) {
         // 最新
         this.type = "newest";
-        this.list.length && this.getList();
+        !this.list.length && this.getList();
       }
       if (cur === 0) {
         // 附近
         this.type = "nearby";
-        this.list.length && this.getList();
+        !this.list.length && this.getList();
       }
       this.setScrollT();
     }
