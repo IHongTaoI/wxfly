@@ -40,6 +40,7 @@
             :pUserid="replayParObj.userId"
             goType="mc"
             @btnClick="replyChildBtn"
+            @likeClick="likeClick"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -92,6 +93,7 @@ export default {
       tearPlaTxt: "发表评论",
       page: 0,
       pageSize: 20,
+      shareId: '',
       reList: [],
       cacheObj: {},
       replayParObj: {}, // 楼主的信息
@@ -129,6 +131,18 @@ export default {
       } else {
         this.reList.push(...list);
       }
+    },
+    async likeClick(index) {
+      this.reList[index].parse = true;
+      this.reList[index].praseCount += 1;
+      let commentId = this.reList[index].id,
+        praseUserId = this.reList[index].userId;
+      let ret = await this.$apihelper.parseLikeReplay({
+        shareId: this.shareId,
+        praseUserId,
+        commentId,
+        type: "B"
+      });
     },
     replyChildBtn(obj) {
       console.log(obj);

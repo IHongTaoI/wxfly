@@ -56,6 +56,7 @@
           :index="index"
           v-for="(item, index) in replyList"
           :key="index"
+          @likeClick="likeClick"
         ></replyList>
         <p
           class="more-replay"
@@ -110,6 +111,19 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    // 评论点赞
+    async likeClick(index) {
+      this.replyList[index].parse = true;
+      this.replyList[index].praseCount += 1;
+      let commentId = this.replyList[index].id,
+      praseUserId = this.replyList[index].userId;
+      let ret = await this.$apihelper.parseLikeReplay({
+        shareId: this.shareId,
+        praseUserId,
+        commentId,
+        type: "A"
+      });
     },
     // 查看更多评论
     showMoreReplay() {

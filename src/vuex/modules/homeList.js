@@ -6,6 +6,7 @@ export default {
   state: {
 		// 最新的列表
     pageSize: 20,
+    activeType: 'newest', // 活动type
     newest: {
       list: [],
       page: global.PAGE,
@@ -76,7 +77,8 @@ export default {
 		// 点赞
     Like (state, msg) {
       let { index, type } = msg
-      state[type].list[index].like = true
+      state[type].list[index].parse = true
+      state[type].list[index].shareLikeCount += 1
     }
   },
   actions: {

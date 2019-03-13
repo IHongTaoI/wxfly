@@ -23,6 +23,7 @@
         <shreaBox
           :itemObj="item"
           :index="index"
+          :type="type"
           v-for="(item, index) in list"
           :key="item.id"
           @action="actionHandler"

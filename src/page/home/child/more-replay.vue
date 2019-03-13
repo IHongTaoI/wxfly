@@ -17,6 +17,7 @@
             :index="index"
             goType="mc"
             @btnClick="replyChildBtn"
+            @likeClick="likeClick"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -101,6 +102,18 @@ export default {
       } else {
         this.reList.push(...list);
       }
+    },
+    async likeClick(index) {
+      this.reList[index].parse = true;
+      this.reList[index].praseCount += 1;
+      let commentId = this.reList[index].id,
+        praseUserId = this.reList[index].userId;
+      let ret = await this.$apihelper.parseLikeReplay({
+        shareId: this.shareId,
+        praseUserId,
+        commentId,
+        type: "A"
+      });
     },
     replyChildBtn(obj) {
       let { item, pIndex, cIndex } = obj;

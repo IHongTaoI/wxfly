@@ -7,6 +7,9 @@
       <div class="content">
         <div class="re-h">
           <span class="uname">{{reItem.userName}}</span>
+          <span class="iconfont icon-dianzan00" :class="{like: reItem.parse}" @click="likeClick">
+            <i style="font-size: 12px;">{{reItem.praseCount}}</i>
+          </span>
         </div>
         <div class="recont">
           <span v-if="isReplayOhter">
@@ -72,13 +75,16 @@ export default {
         }
       });
     },
+    likeClick() {
+      this.$emit("likeClick", this.index);
+    },
     showReplyBox(obj) {
       this.$emit("btnClick", obj);
     }
   },
   computed: {
     // 是否是回复别人
-    // 组件传入pUserid这个参数则需要判断回复的内容是否显示 回复人的name，如果不想显示，则组件不要传入这个参数
+    // 如果没有传入pUserid，则显示的都是一级评论的样式，不显示回复谁谁谁
     isReplayOhter() {
       if (this.pUserid && this.reItem.replyUserId !== this.pUserid) {
         // 回复别人
@@ -109,11 +115,19 @@ export default {
     .content {
       flex: 1;
       .re-h {
+        display: flex;
+        justify-content: space-between;
         line-height: 40px;
         padding-top: 9px;
         .uname {
           font-size: 18px;
           color: #4d7caf;
+        }
+        .iconfont {
+          color: #a6a6a6;
+          &.like {
+            color: crimson;
+          }
         }
       }
       .recont {

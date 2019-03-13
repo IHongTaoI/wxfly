@@ -36,7 +36,11 @@
         <span class="count">{{item.shareBrowseCount | countFromat}}</span>
       </p>
       <p>
-        <span class="iconfont icon-xihuancon" @click.stop="clickLike" :class="{c_red: like}"></span>
+        <span
+          class="iconfont"
+          @click.stop="clickLike"
+          :class="{'icon-xihuancon': !itemObj.parse, 'icon-buoumaotubiao16': itemObj.parse}"
+        ></span>
         <span class="count">{{item.shareLikeCount | countFromat}}</span>
       </p>
       <p>
@@ -53,11 +57,6 @@
 <script>
 export default {
   props: ["itemObj", "index", "type"],
-  data() {
-    return {
-      like: false
-    };
-  },
   methods: {
     // 预览图片
     previewImage(imgs, index) {
@@ -73,16 +72,18 @@ export default {
     },
     //点赞
     async clickLike() {
-      if (this.itemObj.like) {
+      if (this.itemObj.parse) {
         return;
       }
-      let ret = await this.$apihelper.parseLikeShare(this.itemObj.id);
+      let ret = await this.$apihelper.parseLikeShare({
+        shareId: this.itemObj.id,
+        praseUserId: this.itemObj.shareUserId
+      });
       if (!ret) return;
-      this.like = true;
-      // this.$store.commit("homeList/Like", {
-      //   index: this.index,
-      //   type: this.type
-      // });
+      this.$store.commit("homeList/Like", {
+        index: this.index,
+        type: this.type
+      });
     },
     caozuo() {
       this.$emit("action", this.itemObj);
@@ -181,6 +182,9 @@ export default {
       vertical-align: middle;
       font-size: 24px;
       margin-right: 8px;
+    }
+    .icon-buoumaotubiao16 {
+      color: crimson;
     }
     .count {
       color: #878787;
