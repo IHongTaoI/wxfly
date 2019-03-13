@@ -88,6 +88,7 @@ export default {
       }
     })
   },
+	// 邮箱登陆
   async mailLogin (data) {
     return await post({
       url: '/user/share/mail/login',
@@ -163,6 +164,20 @@ export default {
   async parseLikeReplay (data) {
     return await post({
       url: '/user/parse/reply',
+      data
+    })
+  },
+	// 所有回复记录
+  async getReplyMeList (data) {
+    return await post({
+      url: '/search/reply/list',
+      data
+    })
+  },
+	// 点赞记录
+  async getLikeMeLogs (data) {
+    return await post({
+      url: '/search/parse/list',
       data
     })
   }

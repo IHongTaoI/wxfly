@@ -3,7 +3,7 @@
     <virtual-list ref="scrollBox" :size="250" :remain="6" class="scrollist">
       <list-item type="slot">
         <van-cell-group class="itemSys">
-          <van-cell is-link to="/self/collection" class="cell">
+          <van-cell is-link to="/message/replay-me-reply" class="cell">
             <div slot="icon" class="icon pinglun">
               <span class="iconfont icon-pinglun"></span>
             </div>
@@ -13,7 +13,7 @@
       </list-item>
       <list-item type="slot">
         <van-cell-group class="itemSys">
-          <van-cell is-link to="/self/collection" class="cell">
+          <van-cell is-link to="/message/dianzanlist" class="cell">
             <div slot="icon" class="icon dianzan">
               <span class="iconfont icon-dianzan00"></span>
             </div>
