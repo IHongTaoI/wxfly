@@ -100,7 +100,8 @@ function getCookiesUserinfo () {
 
 // 临时缓存
 let cache = {
-  homeScrool: 0
+  homeScrool: 0,
+  reMeListScroll: 0
 }
 
 export default {
