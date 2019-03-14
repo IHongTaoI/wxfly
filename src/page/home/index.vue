@@ -95,7 +95,7 @@ export default {
       if (this.finished) return;
       if (this.loading) return;
       this.loading = true;
-      this.getList(false);
+      this.list.length && this.getList(false);
     },
     tabsClick(index) {
       this.$utils.cache["homeActive"] = index;
