@@ -12,6 +12,7 @@ import 'vant/lib/index.css';
 import socketInit from './../utils/socket-init';
 import virtualList from "vue-virtual-scroll-list";
 import loadinganite from "./../page/home/child/loading-animate.vue";
+import baiduMap from './baiduMap'
 
 export default function() {
   Vue.use(VueAxios, axios);
@@ -19,7 +20,7 @@ export default function() {
   Vue.use(Lazyload);
   Vue.component('virtual-list', virtualList)
   Vue.component('loadinganite', loadinganite)
-
+  Vue.prototype.$BMap = baiduMap();
   Vue.prototype.$utils = utils;
   Vue.prototype.$apihelper = apiHelper;
   Vue.config.productionTip = false;

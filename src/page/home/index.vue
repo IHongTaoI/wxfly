@@ -23,6 +23,7 @@
         class="scrollist"
         :tobottom="onLoad"
         :onscroll="onscroll"
+        v-if="!noCanGetNearby"
       >
         <shreaBox
           :itemObj="item"
@@ -144,7 +145,9 @@ export default {
         } else {
           target = val;
         }
-        this.$refs.scrollBox.$el.scrollTop = target;
+        if(this.$refs.scrollBox) {
+          this.$refs.scrollBox.$el.scrollTop = target;
+        }
       });
     },
     async onSelect(msg, item) {
@@ -157,8 +160,9 @@ export default {
     },
     // 获取地理位置
     async GetNearby() {
-      let ret = await this.$utils.getPosition()
-      alert(ret)
+      let ret = await this.$BMap.getPosition()
+      if(!ret) this.$toast('获取地理位置失败')
+      console.log(ret)
     }
   },
   watch: {

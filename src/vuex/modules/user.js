@@ -6,7 +6,7 @@ export default {
     userId: '', // 请求头的userId  155082254078440
     hasLatLng: false, //是否获取了经纬度
     lat: '',
-    lon: '',
+    lng: '',
     userInfo: {
       // 用户信息
       country: '中国',

@@ -31,21 +31,6 @@ function isNull (val) {
   return val === undefined || val === '' || val === null
 }
 
-function getPosition () {
-  return new Promise(resolve => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let latitude = position.coords.latitude // 获取纬度
-        let longitude = position.coords.longitude // 获取经度
-				// alert(latitude + " " + longitude)
-        resolve(latitude, longitude) // 回调函数传入经度纬度
-      })
-    } else {
-      alert('您的设备不支持定位')
-    }
-  })
-}
-
 // 图片预览
 function imagePreview (urlList, index) {
   ImagePreview({
@@ -106,7 +91,6 @@ let cache = {
 
 export default {
   dateFromat,
-  getPosition,
   isNull,
   imagePreview,
   cookie,

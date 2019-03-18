@@ -123,8 +123,8 @@ export default {
       }
       isreload && (page = global.PAGE);
       let ret = await this._vm.$apihelper.getShearList({
-        lng: '0',
-        lat: '0',
+        lng: this.state.user.lng + '',
+        lat: this.state.user.lat + '',
         searchType,
         page: page + '',
         pageSize: state.pageSize + ''
