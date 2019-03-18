@@ -4,6 +4,9 @@ export default {
     islogin: false, // 是否登录
     token: '', // 请求用的token 155114907865244
     userId: '', // 请求头的userId  155082254078440
+    hasLatLng: false, //是否获取了经纬度
+    lat: '',
+    lon: '',
     userInfo: {
       // 用户信息
       country: '中国',
@@ -12,7 +15,8 @@ export default {
       userMail: '',
       userAvatar:
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551893841562&di=345411edc20bb9c87203881672904900&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F31%2F87%2F96573b585a7c9c4.jpg',
-      userName: '洪涛'
+      userName: '洪涛',
+      gender: '0'
     }
   },
   mutations: {

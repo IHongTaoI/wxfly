@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async submit() {
-      let ImgRet = [], sendRet;
+      let ImgRet = '', sendRet;
       if (this.isloading) return;
       this.isloading = true;
       if (this.stepCount === 0 && this.cachefiles.length) {
@@ -78,13 +78,14 @@ export default {
           this.$toast.fail("图片上传失败");
           return;
         }
+        ImgRet = ImgRet.d.urls.join(",")
       }
       this.stepCount = 1;
       if (this.stepCount === 1) {
         // 上传图片
         sendRet = await this.$apihelper.sendShare({
           content: this.content,
-          imgs: ImgRet.d.urls.join(","),
+          imgs: ImgRet,
           tip: "&*asd1@213SAf",
           isShowAdd: this.showAdd ? "1" : "0",
           lng: "0",

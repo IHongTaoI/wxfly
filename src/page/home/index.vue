@@ -9,9 +9,13 @@
     <van-pull-refresh
       v-model="isLoading"
       @refresh="onRefresh"
-      :disabled="diseRefresh"
+      :disabled="diseRefresh || noCanGetNearby"
       class="refreshBox"
     >
+      <p v-show="noCanGetNearby" class="noCanGetNearby">
+        抱歉未能获取您的位置信息<br/>
+        <span style="color: blue;">重新获取</span>
+      </p>
       <virtual-list
         ref="scrollBox"
         :size="250"
@@ -28,7 +32,7 @@
           :key="item.id"
           @action="actionHandler"
         ></shreaBox>
-        <loadinganite v-show="loading || !list.length"></loadinganite>
+        <loadinganite v-show="(loading || !list.length) && !noCanGetNearby"></loadinganite>
         <p v-show="finished" class="no-more">-------我也是有底线的-------</p>
       </virtual-list>
     </van-pull-refresh>
@@ -162,18 +166,24 @@ export default {
       if (cur === 0) {
         // 附近
         this.type = "nearby";
-        !this.list.length && this.getList();
+        !this.list.length && this.hasLatLng && this.getList();
       }
       this.setScrollT();
     }
   },
   computed: {
     ...mapState("homeList", ["newest", "nearby", "dynamic"]),
+    ...mapState("user", ["lat", "lng", "hasLatLng"]),
     list() {
       let type = this.type;
       if (type === "newest") return this.newest.list;
       if (type === "nearby") return this.nearby.list;
       if (type === "dynamic") return this.dynamic.list;
+    },
+    // 是否能获取附近的分享
+    noCanGetNearby() {
+      // 有地理位置就能
+      return !this.hasLatLng && this.type === "nearby";
     },
     finished() {
       let type = this.type;
@@ -190,6 +200,11 @@ export default {
   height: 100%;
   padding-top: 44px;
   overflow-y: auto;
+  .noCanGetNearby {
+    font-size: 18px;
+    text-align: center;
+    line-height: 40px;
+  }
   .go-top {
     position: absolute;
     bottom: 65px;
