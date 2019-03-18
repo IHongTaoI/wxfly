@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item" @click="gotoDetail" :style="{height: '250px'}">
+  <div class="list-item" @click="gotoDetail" :style="{height: itemHeight}">
     <div class="header">
       <div class="info">
         <img class="userava" :src="item.shareUserAvatar">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="content" v-if="item.shareImg && item.shareImg.length">
-      <div class="imgs">
+      <div class="imgs" v-show="item.shareImg[0]">
         <div
           :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
           v-for="(picItem, indx) in item.shareImg"
@@ -100,6 +100,13 @@ export default {
       //   createTime: this.$utils.dateFromat(this.itemObj.createTime),
       //   shareImg
       // });
+    },
+    itemHeight() {
+      if(this.itemObj.shareImg[0]) {
+        return '250px'
+      } else {
+        return '130px'
+      }
     }
   }
 };
@@ -140,6 +147,9 @@ export default {
   .content {
     .shareContent {
       font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .imgs {
       display: -webkit-box;

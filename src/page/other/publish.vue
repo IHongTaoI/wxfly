@@ -68,10 +68,10 @@ export default {
   },
   methods: {
     async submit() {
-      let ImgRet, sendRet;
+      let ImgRet = [], sendRet;
       if (this.isloading) return;
       this.isloading = true;
-      if (this.stepCount === 0) {
+      if (this.stepCount === 0 && this.cachefiles.length) {
         ImgRet = await this.uploadImg();
         if (!ImgRet) {
           this.isloading = false;
