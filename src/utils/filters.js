@@ -8,6 +8,9 @@ const filters = {
     if(val > 1000000) {
       return (val / 1000000).toFixed(1) + 'm'
     }
+  },
+  distanceFromat(distance) {
+    return distance < 1000 ? parseInt(distance) + "米" : Math.ceil(distance / 1000) + "公里"
   }
 };
 export default Vue => {

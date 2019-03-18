@@ -4,7 +4,10 @@
       <div class="info">
         <img class="userava" :src="item.shareUserAvatar">
         <div class="titles">
-          <p class="username">{{item.shareUserName}}</p>
+          <p class="username">
+            {{item.shareUserName}}
+            <span>距离{{item.distance}}</span>
+          </p>
           <!--发布时间-->
           <p class="time">{{item.createTime}}</p>
         </div>

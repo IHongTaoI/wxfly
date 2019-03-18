@@ -1,5 +1,6 @@
 import utils from './../../utils/index';
 import global from './../../utils/global-const';
+import vue from 'vue'
 
 export default {
   namespaced: true,
@@ -38,6 +39,9 @@ export default {
       for (let v of list) {
         v.shareImg = v.shareImg.split(',');
         v.createTime = utils.dateFromat(v.createTime);
+        v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
+        v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+        console.log('距离', v.distance)
       }
       switch (type) {
         case 'newest':
