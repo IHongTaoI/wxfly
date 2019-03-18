@@ -14,7 +14,7 @@
     >
       <p v-show="noCanGetNearby" class="noCanGetNearby">
         抱歉未能获取您的位置信息<br/>
-        <span style="color: blue;">重新获取</span>
+        <span style="color: blue;" @click="GetNearby">重新获取</span>
       </p>
       <virtual-list
         ref="scrollBox"
@@ -154,6 +154,11 @@ export default {
         if (ret) this.$toast.success("收藏成功");
       }
       this.showActionsheetL = false;
+    },
+    // 获取地理位置
+    async GetNearby() {
+      let ret = await this.$utils.getPosition()
+      alert(ret)
     }
   },
   watch: {
