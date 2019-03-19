@@ -7,6 +7,11 @@
       @click-left="$router.go(-1)"
       class="topNavBar"
     />
+    <ul class="wrap">
+      <li v-for="(item, i) in list" :key="i">
+        {{item.user.userName}}给你点赞了
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -18,7 +23,8 @@ export default {
   data() {
     return {
       page: GLOBAL.PAGE,
-      pageSize: 20
+      pageSize: 20,
+      list: []
     };
   },
   methods: {
@@ -28,7 +34,7 @@ export default {
         pageSize: this.pageSize + ""
       });
       if (!ret) return;
-      console.log(ret);
+      this.list = ret.d.parseList
     }
   }
 };
