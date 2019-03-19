@@ -169,7 +169,7 @@ export default {
       this.tearPlaTxt = `回复${item.userName}`;
       this.showReplyBox = true;
       this.cacheObj = {
-        commentId: item.id,
+        commentId: this.replyList[pIndex].id,
         shareId: this.shareId,
         replyUserId: item.userId
       };

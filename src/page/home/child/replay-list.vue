@@ -34,6 +34,7 @@
               <span class="color_user">{{reChild.repltUserName}}</span>
               : {{reChild.content}}
             </span>
+            <span class="iconfont icon-shanchu" v-show="reChild.userId === userId" @click="removeReply"></span>
           </p>
           <p
             v-if="reItem.replyCount > 2"
@@ -43,8 +44,10 @@
         </div>
         <div class="bottom">
           <span class="time">{{reItem.replyTime}}</span>
+          <span class="iconfont icon-shanchu" v-if="reItem.userId === userId" @click="removeReply"></span>
           <span
             class="btn"
+            v-else
             @click="showReplyBox({
             item: reItem,
             pIndex: index,
@@ -59,6 +62,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: ["reItem", "goType", "pUserid", "index"],
   methods: {
@@ -75,14 +80,30 @@ export default {
         }
       });
     },
+    // 删除回复
+    removeReply() {
+      this.$dialog.alert({
+        message: "确定删除吗",
+        showCancelButton: true,
+        callback: async msg => {
+          if (msg === "confirm") {
+            this.$toast('删除方法')
+          }
+        }
+      });
+    },
     likeClick() {
       this.$emit("likeClick", this.index);
     },
     showReplyBox(obj) {
+      if (this.userId === obj.item.userId) {
+        return;
+      }
       this.$emit("btnClick", obj);
     }
   },
   computed: {
+    ...mapState("user", ["userId"]),
     // 是否是回复别人
     // 如果没有传入pUserid，则显示的都是一级评论的样式，不显示回复谁谁谁
     isReplayOhter() {
@@ -99,6 +120,10 @@ export default {
 <style lang="less" scoped>
 .color_user {
   color: #4777ac;
+}
+.icon-shanchu {
+  color: red;
+  margin-left: 6px;
 }
 .re-item {
   .re-wrap {

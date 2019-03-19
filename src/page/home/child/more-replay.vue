@@ -154,7 +154,6 @@ export default {
           cReplies.push(ret.d);
         }
         this.hidereplyBox();
-        // this.getDetil();
       } else {
         let ret = await this.$apihelper.shareReplyArticle(this.cacheObj);
         console.log("回复楼主", ret);
@@ -172,9 +171,7 @@ export default {
         replyBtn: () => {
           this.showReplyBox = true;
           this.cacheObj = {
-            shareId: this.shareId,
-            uname: this.$store.state.user.userInfo.nickName,
-            uavatar: this.$store.state.user.userInfo.avatarUrl
+            shareId: this.shareId
           };
         }
       }[type]();
