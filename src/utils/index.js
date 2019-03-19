@@ -96,24 +96,15 @@ let cache = {
  * @param {Number} lng 维度
  */
 function getGreatCircleDistance (lat, lng) {
-  console.log(store.state.user)
-  var EARTH_RADIUS = 6378137.0 // 单位M
-  var PI = Math.PI
-  function getRad (d) {
-    return (d * PI) / 180.0
-  }
-  var radLat1 = getRad(store.state.user.lat)
-  var radLat2 = getRad(lat)
-  var a = radLat1 - radLat2
-  var b = getRad(store.state.user.lng) - getRad(lng)
-  var s =
-		2 *
-		Math.asin(
-			Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2))
-		)
-  s = s * EARTH_RADIUS
-  s = Math.round(s * 10000) / 10000.0
-  return s
+  var radLat1 = store.state.user.lat*Math.PI / 180.0;
+    var radLat2 = lat*Math.PI / 180.0;
+    var a = radLat1 - radLat2;
+    var  b = store.state.user.lng*Math.PI / 180.0 - lng*Math.PI / 180.0;
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
+    Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+    s = s *6378.137 ;// EARTH_RADIUS;
+    s = Math.round(s * 10000) / 10000;
+    return s;
 }
 export default {
   dateFromat,

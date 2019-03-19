@@ -41,7 +41,6 @@ export default {
         v.createTime = utils.dateFromat(v.createTime);
         v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
         v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
-        console.log('距离', v.distance)
       }
       switch (type) {
         case 'newest':
@@ -104,6 +103,16 @@ export default {
       }
       if (list.length < state.replyMeList.pageSize) {
         state.replyMeList.finished = true;
+      }
+    },
+    // 获取完位置之后要刷新列表的地理位置
+    updateList(state) {
+      let forArr = ['nearby', 'dynamic', 'newest']
+      for(let key of forArr) {
+        for(let v of state[key].list) {
+          v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
+          v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+        }
       }
     }
   },
