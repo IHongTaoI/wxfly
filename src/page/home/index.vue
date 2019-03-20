@@ -12,15 +12,15 @@
       :disabled="diseRefresh || noCanGetNearby"
       class="refreshBox"
     >
-      <p v-show="noCanGetNearby" class="noCanGetNearby">
-        抱歉未能获取您的位置信息<br/>
+      <p v-show="noCanGetNearby" class="noCanGetNearby">抱歉未能获取您的位置信息
+        <br>
         <span style="color: blue;" @click="GetNearby">重新获取</span>
       </p>
-      <virtual-list
+      <auto-virtual-list
         ref="scrollBox"
-        :size="250"
-        :remain="6"
-        class="scrollist"
+        :totalHeight="3000"
+        :defaultHeight="200"
+        style="width: 100%;height: 100%;padding-bottom: 60px;"
         :tobottom="onLoad"
         :onscroll="onscroll"
         v-if="!noCanGetNearby"
@@ -31,11 +31,12 @@
           :type="type"
           v-for="(item, index) in list"
           :key="item.id"
+          :style="{height: item.height}"
           @action="actionHandler"
         ></shreaBox>
         <loadinganite v-show="(loading || !list.length) && !noCanGetNearby"></loadinganite>
         <p v-show="finished" class="no-more">-------我也是有底线的-------</p>
-      </virtual-list>
+      </auto-virtual-list>
     </van-pull-refresh>
     <van-actionsheet
       v-model="showActionsheetL"
@@ -81,7 +82,7 @@ export default {
       showActionsheetL: false,
       isLoading: false, // 是否在下拉刷新
       isreload: false,
-      diseRefresh: false, // 是否禁用下拉刷新
+      diseRefresh: true, // 是否禁用下拉刷新
       type: "newest",
       showGotoTop: true, // 是否显示去顶部
       active: 1,
@@ -129,6 +130,7 @@ export default {
         cb: () => {
           this.isLoading = false;
           this.loading = false;
+          this.setScrollT();
         }
       });
     },
@@ -145,7 +147,7 @@ export default {
         } else {
           target = val;
         }
-        if(this.$refs.scrollBox) {
+        if (this.$refs.scrollBox) {
           this.$refs.scrollBox.$el.scrollTop = target;
         }
       });
@@ -160,9 +162,9 @@ export default {
     },
     // 获取地理位置
     async GetNearby() {
-      let ret = await this.$BMap.getPosition()
-      if(!ret) this.$toast('获取地理位置失败')
-      console.log(ret)
+      let ret = await this.$BMap.getPosition();
+      if (!ret) this.$toast("获取地理位置失败");
+      console.log(ret);
     }
   },
   watch: {

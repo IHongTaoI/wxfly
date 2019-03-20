@@ -1,60 +1,63 @@
 <template>
-  <div class="list-item" @click="gotoDetail" :style="{height: itemHeight}">
-    <div class="header">
-      <div class="info">
-        <img class="userava" :src="item.shareUserAvatar">
-        <div class="titles">
-          <p class="username">
-            {{item.shareUserName}}
-            <span>距离{{item.distance}}</span>
-          </p>
-          <!--发布时间-->
-          <p class="time">{{item.createTime}}</p>
+  <div class="list-item" @click="gotoDetail">
+    <div class="box">
+      <div class="header">
+        <div class="info">
+          <img class="userava" :src="item.shareUserAvatar">
+          <div class="titles">
+            <p class="username">
+              {{item.shareUserName}}
+              <span>距离{{item.distance}}</span>
+            </p>
+            <!--发布时间-->
+            <p class="time">{{item.createTime}}</p>
+          </div>
+        </div>
+        <div class="opt" @click.stop="caozuo">
+          <span class="iconfont icon-caozuo"></span>
         </div>
       </div>
-      <div class="opt" @click.stop="caozuo">
-        <span class="iconfont icon-caozuo"></span>
-      </div>
-    </div>
-    <div class="content" v-if="item.shareImg && item.shareImg.length">
-      <div class="imgs" v-show="item.shareImg[0]">
-        <div
-          :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
-          v-for="(picItem, indx) in item.shareImg"
-          :key="indx"
-        >
-          <img
-            class="pic"
-            mode="aspectFill"
-            :src="picItem"
-            @click.stop="previewImage(item.shareImg, indx)"
+      <div class="content" v-if="item.shareImg && item.shareImg.length">
+        <div class="imgs" v-show="item.shareImg[0]">
+          <div
+            :class="['pic_item',{pic1: item.shareImg.length == 1, pic3: item.shareImg.length >= 3}]"
+            v-for="(picItem, indx) in item.shareImg"
+            :key="indx"
           >
+            <img
+              class="pic"
+              mode="aspectFill"
+              :src="picItem"
+              @click.stop="previewImage(item.shareImg, indx)"
+            >
+          </div>
         </div>
+        <p class="shareContent">{{item.shareContent}}</p>
       </div>
-      <p class="shareContent">{{item.shareContent}}</p>
+      <div class="footer">
+        <p>
+          <span class="iconfont icon-liulan"></span>
+          <span class="count">{{item.shareBrowseCount | countFromat}}</span>
+        </p>
+        <p>
+          <span
+            class="iconfont"
+            @click.stop="clickLike"
+            :class="{'icon-xihuancon': !itemObj.parse, 'icon-buoumaotubiao16': itemObj.parse}"
+          ></span>
+          <span class="count">{{item.shareLikeCount | countFromat}}</span>
+        </p>
+        <p>
+          <span class="iconfont icon-pinglun"></span>
+          <span class="count">{{item.shareReplyCount | countFromat}}</span>
+        </p>
+        <p>
+          <span class="iconfont icon-zhuanfa"></span>
+          <span class="count">{{item.shareTransmitCount | countFromat}}</span>
+        </p>
+      </div>
     </div>
-    <div class="footer">
-      <p>
-        <span class="iconfont icon-liulan"></span>
-        <span class="count">{{item.shareBrowseCount | countFromat}}</span>
-      </p>
-      <p>
-        <span
-          class="iconfont"
-          @click.stop="clickLike"
-          :class="{'icon-xihuancon': !itemObj.parse, 'icon-buoumaotubiao16': itemObj.parse}"
-        ></span>
-        <span class="count">{{item.shareLikeCount | countFromat}}</span>
-      </p>
-      <p>
-        <span class="iconfont icon-pinglun"></span>
-        <span class="count">{{item.shareReplyCount | countFromat}}</span>
-      </p>
-      <p>
-        <span class="iconfont icon-zhuanfa"></span>
-        <span class="count">{{item.shareTransmitCount | countFromat}}</span>
-      </p>
-    </div>
+    <div style="height: 20px;background: #f2f2f2;"></div>
   </div>
 </template>
 <script>
@@ -105,10 +108,10 @@ export default {
       // });
     },
     itemHeight() {
-      if(this.itemObj.shareImg[0]) {
-        return '250px'
+      if (this.itemObj.shareImg[0]) {
+        return "270px";
       } else {
-        return '130px'
+        return "150px";
       }
     }
   }
@@ -121,9 +124,11 @@ export default {
 }
 .list-item {
   box-sizing: border-box;
-  padding: 20px 20px 5px;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   background: #fff;
+  .box {
+    padding: 20px 20px 5px;
+  }
   .header {
     display: flex;
     justify-content: space-between;

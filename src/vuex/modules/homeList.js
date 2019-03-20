@@ -1,6 +1,17 @@
 import utils from './../../utils/index';
 import global from './../../utils/global-const';
-import vue from 'vue'
+
+function listHelper(v) {
+  if (v.shareImg) {
+    v.height =  "260px";
+  } else {
+    v.height =  "150px";
+  }
+  v.shareImg = v.shareImg.split(',');
+  v.createTime = utils.dateFromat(v.createTime);
+  v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
+  v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+}
 
 export default {
   namespaced: true,
@@ -37,51 +48,18 @@ export default {
     setList(state, msg) {
       let { type, isreload, list } = msg;
       for (let v of list) {
-        v.shareImg = v.shareImg.split(',');
-        v.createTime = utils.dateFromat(v.createTime);
-        v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
-        v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+        listHelper(v)
       }
-      switch (type) {
-        case 'newest':
-          if (isreload) {
-            state.newest.list = list;
-            state.newest.finished = false;
-            state.newest.page = global.PAGE;
-          } else {
-            state.newest.list.push(...list);
-          }
-          state.newest.page++;
-          if (list.length < 10) {
-            state.newest.finished = true;
-          }
-          break;
-        case 'nearby':
-          if (isreload) {
-            state.nearby.list = list;
-            state.nearby.finished = false;
-            state.nearby.page = global.PAGE;
-          } else {
-            state.nearby.list.push(...list);
-          }
-          state.nearby.page++;
-          if (list.length < 10) {
-            state.nearby.finished = true;
-          }
-          break;
-        case 'dynamic':
-          if (isreload) {
-            state.dynamic.list = list;
-            state.dynamic.finished = false;
-            state.dynamic.page = global.PAGE;
-          } else {
-            state.dynamic.list.push(...list);
-          }
-          state.dynamic.page++;
-          if (list.length < 10) {
-            state.dynamic.finished = true;
-          }
-          break;
+      if (isreload) {
+        state[type].list = list;
+        state[type].finished = false;
+        state[type].page = global.PAGE;
+      } else {
+        state[type].list.push(...list);
+      }
+      state[type].page++;
+      if (list.length < 10) {
+        state[type].finished = true;
       }
     },
     // 点赞
