@@ -114,6 +114,7 @@ export default {
     },
     // 评论点赞
     async likeClick(index) {
+      if(this.replyList[index].parse) return;
       this.replyList[index].parse = true;
       this.replyList[index].praseCount += 1;
       let commentId = this.replyList[index].id,

@@ -75,6 +75,13 @@ export default [
 		path: '/self/userinfo',
 		name: '个人详情',
 		component: () => import('../page/self/child/userinfo.vue'),
+		children: [
+			{
+				path: 'modify',
+				name: 'userinfoModify',
+				component: () => import('../page/self/child/modify-info.vue'),
+			},
+		],
 	},
 	{
 		path: '/self/setting',

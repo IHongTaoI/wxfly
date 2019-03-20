@@ -133,6 +133,7 @@ export default {
       }
     },
     async likeClick(index) {
+      if(this.reList[index].parse) return;
       this.reList[index].parse = true;
       this.reList[index].praseCount += 1;
       let commentId = this.reList[index].id,
