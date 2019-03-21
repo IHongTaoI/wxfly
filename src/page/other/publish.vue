@@ -1,7 +1,13 @@
 <template>
   <div id="publish" class="paddingTopNav">
     <van-nav-bar title left-arrow @click-left="$router.go(-1)" class="topNavBar">
-      <van-button type="primary" slot="right" class="HBtn" @click.native="submit">发表</van-button>
+      <van-button
+        type="primary"
+        slot="right"
+        :loading="isloading"
+        class="HBtn"
+        @click.native="submit"
+      >发表</van-button>
     </van-nav-bar>
     <div class="line"></div>
     <div class="textare">
@@ -39,9 +45,11 @@ export default {
       content: "",
       imgs: "",
       showAdd: false,
+      isloading: false,
       cachefiles: [],
       cacheImgs: [], //还未上传的图片
-      wordLimit: 200 // 字数限制
+      wordLimit: 200, // 字数限制
+      stepCount: 0 // 记录步骤，如果图片上传成功，发布失败，则不需要重新上传图片
     };
   },
   watch: {
@@ -60,23 +68,40 @@ export default {
   },
   methods: {
     async submit() {
-      let ImgRet = await this.uploadImg();
-      if (!ImgRet) this.$toast.fail("图片上传失败");
-      // 上传图片
-      let sendRet = await this.$apihelper.sendShare({
-        content: this.content,
-        imgs: ImgRet.d.urls.join(","),
-        tip: "&*asd1@213SAf",
-        isShowAdd: this.showAdd ? "1" : "0",
-        lng: "0",
-        lat: "0"
-      });
-      if (!sendRet) this.$toast.fail("发布失败");
-      this.$router.replace({
-        path: "/home",
-        params: {
-          reload: true
+      let ImgRet = '', sendRet;
+      if (this.isloading) return;
+      this.isloading = true;
+      if (this.stepCount === 0 && this.cachefiles.length) {
+        ImgRet = await this.uploadImg();
+        if (!ImgRet) {
+          this.isloading = false;
+          this.$toast.fail("图片上传失败");
+          return;
         }
+        ImgRet = ImgRet.d.urls.join(",")
+      }
+      this.stepCount = 1;
+      if (this.stepCount === 1) {
+        // 上传图片
+        sendRet = await this.$apihelper.sendShare({
+          content: this.content,
+          imgs: ImgRet,
+          tip: "&*asd1@213SAf",
+          isShowAdd: this.showAdd ? "1" : "0",
+          lng: "0",
+          lat: "0"
+        });
+      }
+
+      if (!sendRet) {
+        this.isloading = false;
+        this.$toast.fail("发布失败");
+        return;
+      }
+      this.stepCount = -1;
+      // 发布完成
+      this.$router.replace({
+        path: "/home"
       });
     },
     async uploadImg() {
@@ -86,7 +111,7 @@ export default {
       }
       return await this.$apihelper.uploadImg(formData);
     },
-    // 谁可以开
+    // 谁可以看
     readcheck() {
       this.$toast("敬请期待!!");
     },

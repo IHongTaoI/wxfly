@@ -36,9 +36,11 @@
             :reItem="item"
             v-for="(item, index) in reList"
             :key="index"
+            :index="index"
             :pUserid="replayParObj.userId"
             goType="mc"
             @btnClick="replyChildBtn"
+            @likeClick="likeClick"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -91,9 +93,12 @@ export default {
       tearPlaTxt: "发表评论",
       page: 0,
       pageSize: 20,
+      shareId: '',
       reList: [],
       cacheObj: {},
-      replayParObj: {} // 楼主的信息
+      replayParObj: {}, // 楼主的信息
+      cIndex: -1,
+      pIndex: -1
     };
   },
   methods: {
@@ -127,13 +132,31 @@ export default {
         this.reList.push(...list);
       }
     },
-    replyChildBtn(arvg) {
-      this.tearPlaTxt = `回复${arvg.userName}`;
+    async likeClick(index) {
+      if(this.reList[index].parse) return;
+      this.reList[index].parse = true;
+      this.reList[index].praseCount += 1;
+      let commentId = this.reList[index].id,
+        praseUserId = this.reList[index].userId;
+      let ret = await this.$apihelper.parseLikeReplay({
+        shareId: this.shareId,
+        praseUserId,
+        commentId,
+        type: "B"
+      });
+    },
+    replyChildBtn(obj) {
+      console.log(obj);
+      let { item, pIndex, cIndex } = obj;
+      this.cIndex = cIndex;
+      this.pIndex = pIndex;
+      this.isReplayChild = true;
+      this.tearPlaTxt = `回复${item.userName}`;
       this.showReplyBox = true;
       this.cacheObj = {
-        commentId: arvg.id,
+        commentId: this.replayParObj.id,
         shareId: this.shareId,
-        replyUserId: arvg.userId
+        replyUserId: replayParObj.userId
       };
     },
     // 隐藏回复框
@@ -148,12 +171,17 @@ export default {
     async sumbitReplay(replyCont) {
       this.cacheObj.content = replyCont;
       // 二级评论
-      let ret = await this.$apihelper.shareReplyArticleChild(
-        this.cacheObj
-      );
+      let ret = await this.$apihelper.shareReplyArticleChild(this.cacheObj);
       console.log("回复二级评论", ret);
+      ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
+      ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+      ret.d.userName = this.$store.state.user.userInfo.userName;
+      if (~this.pIndex) {
+        ret.d.repltUserName = this.reList[this.pIndex].userName;
+      }
+      this.reList.unshift(ret.d);
       this.hidereplyBox();
-      this.getList();
+      // this.getList();
     },
     handlerClick(type) {
       return {

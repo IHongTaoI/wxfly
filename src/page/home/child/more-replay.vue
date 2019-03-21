@@ -14,8 +14,10 @@
             :reItem="item"
             v-for="(item, index) in reList"
             :key="index"
+            :index="index"
             goType="mc"
             @btnClick="replyChildBtn"
+            @likeClick="likeClick"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -71,7 +73,9 @@ export default {
       reList: [],
       cacheObj: {},
       isReplayChild: false,
-      shareId: this.$route.query.shareId
+      shareId: this.$route.query.shareId,
+      cIndex: -1,
+      pIndex: -1
     };
   },
   methods: {
@@ -99,14 +103,30 @@ export default {
         this.reList.push(...list);
       }
     },
-    replyChildBtn(arvg) {
+    async likeClick(index) {
+      if(this.reList[index].parse) return;
+      this.reList[index].parse = true;
+      this.reList[index].praseCount += 1;
+      let commentId = this.reList[index].id,
+        praseUserId = this.reList[index].userId;
+      let ret = await this.$apihelper.parseLikeReplay({
+        shareId: this.shareId,
+        praseUserId,
+        commentId,
+        type: "A"
+      });
+    },
+    replyChildBtn(obj) {
+      let { item, pIndex, cIndex } = obj;
+      this.cIndex = cIndex;
+      this.pIndex = pIndex;
       this.isReplayChild = true;
-      this.tearPlaTxt = `回复${arvg.userName}`;
+      this.tearPlaTxt = `回复${item.userName}`;
       this.showReplyBox = true;
       this.cacheObj = {
-        commentId: arvg.id,
+        commentId: item.id,
         shareId: this.shareId,
-        replyUserId: arvg.userId
+        replyUserId: item.userId
       };
     },
     // 隐藏回复框
@@ -123,17 +143,27 @@ export default {
       this.cacheObj.content = replyCont;
       if (this.isReplayChild) {
         // 二级评论
-        let ret = await this.$apihelper.shareReplyArticleChild(
-          this.cacheObj
-        );
+        let ret = await this.$apihelper.shareReplyArticleChild(this.cacheObj);
         console.log("回复二级评论", ret);
+        let pReplies = this.reList[this.pIndex];
+        let cReplies = this.reList[this.pIndex].replies;
+        if (cReplies.length >= 2) {
+          pReplies.replyCount += 1;
+        } else {
+          ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+          ret.d.userName = this.$store.state.user.userInfo.userName;
+          cReplies.push(ret.d);
+        }
         this.hidereplyBox();
-        this.getDetil();
       } else {
         let ret = await this.$apihelper.shareReplyArticle(this.cacheObj);
         console.log("回复楼主", ret);
+        ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
+        ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
+        ret.d.userName = this.$store.state.user.userInfo.userName;
+        this.reList.push(ret.d);
         this.hidereplyBox();
-        this.getDetil();
+        // this.getDetil();
       }
     },
     handlerClick(type) {
@@ -142,9 +172,7 @@ export default {
         replyBtn: () => {
           this.showReplyBox = true;
           this.cacheObj = {
-            shareId: this.shareId,
-            uname: this.$store.state.user.userInfo.nickName,
-            uavatar: this.$store.state.user.userInfo.avatarUrl
+            shareId: this.shareId
           };
         }
       }[type]();

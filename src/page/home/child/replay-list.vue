@@ -7,6 +7,9 @@
       <div class="content">
         <div class="re-h">
           <span class="uname">{{reItem.userName}}</span>
+          <span class="iconfont icon-dianzan00" :class="{like: reItem.parse}" @click="likeClick">
+            <i style="font-size: 12px;">{{reItem.praseCount}}</i>
+          </span>
         </div>
         <div class="recont">
           <span v-if="isReplayOhter">
@@ -20,13 +23,18 @@
             class="rechild-item"
             v-for="(reChild, recind) in reItem.replies"
             :key="recind"
-            @click="showReplyBox(reChild)"
+            @click="showReplyBox({
+              item: reChild,
+              pIndex: index,
+              cIndex: recind
+            })"
           >
             <span>
               <span class="color_user">{{reChild.userName}}</span> 回复
               <span class="color_user">{{reChild.repltUserName}}</span>
               : {{reChild.content}}
             </span>
+            <span class="iconfont icon-shanchu" v-show="reChild.userId === userId" @click="removeReply"></span>
           </p>
           <p
             v-if="reItem.replyCount > 2"
@@ -36,7 +44,16 @@
         </div>
         <div class="bottom">
           <span class="time">{{reItem.replyTime}}</span>
-          <span class="btn" @click="showReplyBox(reItem)">回复</span>
+          <span class="iconfont icon-shanchu" v-if="reItem.userId === userId" @click="removeReply"></span>
+          <span
+            class="btn"
+            v-else
+            @click="showReplyBox({
+            item: reItem,
+            pIndex: index,
+            cIndex: -1
+          })"
+          >回复</span>
         </div>
       </div>
     </div>
@@ -45,8 +62,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  props: ["reItem", "goType", "pUserid"],
+  props: ["reItem", "goType", "pUserid", "index"],
   methods: {
     gotoDetail(item) {
       let name = "shardDetailReplay";
@@ -61,13 +80,32 @@ export default {
         }
       });
     },
-    showReplyBox(reItem) {
-      this.$emit("btnClick", reItem);
+    // 删除回复
+    removeReply() {
+      this.$dialog.alert({
+        message: "确定删除吗",
+        showCancelButton: true,
+        callback: async msg => {
+          if (msg === "confirm") {
+            this.$toast('删除方法')
+          }
+        }
+      });
+    },
+    likeClick() {
+      this.$emit("likeClick", this.index);
+    },
+    showReplyBox(obj) {
+      if (this.userId === obj.item.userId) {
+        return;
+      }
+      this.$emit("btnClick", obj);
     }
   },
   computed: {
+    ...mapState("user", ["userId"]),
     // 是否是回复别人
-    // 组件传入pUserid这个参数则需要判断回复的内容是否显示 回复人的name，如果不想显示，则组件不要传入这个参数
+    // 如果没有传入pUserid，则显示的都是一级评论的样式，不显示回复谁谁谁
     isReplayOhter() {
       if (this.pUserid && this.reItem.replyUserId !== this.pUserid) {
         // 回复别人
@@ -80,6 +118,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.color_user {
+  color: #4777ac;
+}
+.icon-shanchu {
+  color: red;
+  margin-left: 6px;
+}
 .re-item {
   .re-wrap {
     display: flex;
@@ -95,11 +140,19 @@ export default {
     .content {
       flex: 1;
       .re-h {
+        display: flex;
+        justify-content: space-between;
         line-height: 40px;
         padding-top: 9px;
         .uname {
           font-size: 18px;
           color: #4d7caf;
+        }
+        .iconfont {
+          color: #a6a6a6;
+          &.like {
+            color: crimson;
+          }
         }
       }
       .recont {
@@ -111,9 +164,6 @@ export default {
         padding: 4px;
         border-radius: 6px;
         .rechild-item {
-          .color_user {
-            color: #4777ac;
-          }
         }
         .more {
           color: #4777ac;
