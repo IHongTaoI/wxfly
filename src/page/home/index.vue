@@ -19,8 +19,6 @@
       </p>
       <auto-virtual-list
         ref="scrollBox"
-        :totalHeight="3000"
-        :defaultHeight="200"
         style="width: 100%;height: 100%;padding-bottom: 60px;"
         @tobottom="onLoad"
         @onscroll="onscroll"
@@ -75,6 +73,7 @@ export default {
   },
   deactivated() {
     this.$utils.cache["homeType"] = this.type;
+    console.log('离开的', this.$utils.cache[this.type + "scroll"]);
     this.$refs.main.onscroll = null;
   },
   data() {

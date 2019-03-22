@@ -41,21 +41,6 @@ export default {
         }
       });
   },
-  updated() {
-    const offset = this.offset;
-    this.$nextTick(() => {
-      // const cDom = this.$el.children; // 之后再研究，真实计算dom
-      const cDom = this.$slots.default;
-      Array.prototype.forEach.call(cDom, (v, i) => {
-        const index = i + offset;
-        let H = 0;
-        if (v.data && v.data.style && v.data.style.height) {
-          H = parseInt(v.data.style.height);
-        }
-        if (!this.heights[index]) this.heights[index] = H;
-      });
-    });
-  },
   render(h) {
     const _solt = this.$slots.default;
     let listDom = [],
@@ -67,9 +52,19 @@ export default {
     let heightAll = 0,
       index = 0;
 
+    Array.prototype.forEach.call(_solt, (v, i) => {
+      const index = i;
+      let H = 0;
+      if (v.data && v.data.style && v.data.style.height) {
+        H = parseInt(v.data.style.height);
+      }
+      if (!this.heights[index]) this.heights[index] = H;
+    });
+
     while (true) {
+      if (!heights.length) break;
       let itemHeight = heights[index] || defaultHeight;
-      if (heightAll + itemHeight > scrollTop - 300) break;
+      if (heightAll + itemHeight > scrollTop - 700) break;
       index += 1;
       heightAll += itemHeight;
     }
@@ -82,7 +77,6 @@ export default {
     for (; index < _solt.length; index += 1) {
       paddingBottom += heights[index] || defaultHeight;
     }
-
     return h(
       'div',
       {
