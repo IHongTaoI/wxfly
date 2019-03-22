@@ -21,8 +21,8 @@
         :totalHeight="3000"
         :defaultHeight="200"
         style="width: 100%;height: 100%;padding-bottom: 60px;"
-        :tobottom="onLoad"
-        :onscroll="onscroll"
+        @tobottom="onLoad"
+        @onscroll="onscroll"
         v-if="!noCanGetNearby"
       >
         <shreaBox
