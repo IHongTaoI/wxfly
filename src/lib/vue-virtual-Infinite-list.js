@@ -43,6 +43,7 @@ export default {
   },
   render(h) {
     const _solt = this.$slots.default;
+    if (!_solt) return;
     let listDom = [],
       defaultHeight = this.defaultHeight,
       scrollTop = this.scrollTop,
