@@ -69,12 +69,12 @@ export default {
 
     while (true) {
       let itemHeight = heights[index] || defaultHeight;
-      if (heightAll + itemHeight > scrollTop) break;
+      if (heightAll + itemHeight > scrollTop - 300) break;
       index += 1;
       heightAll += itemHeight;
     }
     paddingTop = heightAll;
-    let Domend = index + 8;
+    let Domend = index + 13;
     for (; index < Domend; index++) {
       listDom.push(_solt[index]);
     }
@@ -90,13 +90,18 @@ export default {
         style: [styles.container]
       },
       [
-        h('div', {
-          style: [{ height: paddingTop + 'px' }]
-        }),
-        listDom,
-        h('div', {
-          style: [{ height: paddingBottom + 'px' }]
-        })
+        h(
+          'div',
+          {
+            style: [
+              {
+                paddingTop: paddingTop + 'px',
+                paddingBottom: paddingBottom + 'px'
+              }
+            ]
+          },
+          listDom
+        )
       ]
     );
   }

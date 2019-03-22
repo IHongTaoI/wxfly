@@ -12,7 +12,8 @@
       :disabled="diseRefresh || noCanGetNearby"
       class="refreshBox"
     >
-      <p v-show="noCanGetNearby" class="noCanGetNearby">抱歉未能获取您的位置信息
+      <p v-show="noCanGetNearby" class="noCanGetNearby">
+        抱歉未能获取您的位置信息
         <br>
         <span style="color: blue;" @click="GetNearby">重新获取</span>
       </p>
@@ -164,7 +165,6 @@ export default {
     async GetNearby() {
       let ret = await this.$BMap.getPosition();
       if (!ret) this.$toast("获取地理位置失败");
-      console.log(ret);
     }
   },
   watch: {
