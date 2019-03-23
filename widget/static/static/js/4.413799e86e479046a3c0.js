@@ -1,2 +1,0 @@
-webpackJsonp([4],{OC6q:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{attrs:{id:"home"}},[this._v("这是home页面")])},staticRenderFns:[]};var i=n("VU/8")({},r,!1,function(e){n("pSnt")},"data-v-6bef7859",null);t.default=i.exports},pSnt:function(e,t){}});
-//# sourceMappingURL=4.413799e86e479046a3c0.js.map

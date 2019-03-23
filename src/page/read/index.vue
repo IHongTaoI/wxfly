@@ -1,5 +1,5 @@
 <template>
-  <div id="home">这是read页面</div>
+  <div id="home">尚在研发</div>
 </template>
 <script>
 export default {}

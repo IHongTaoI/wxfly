@@ -1,2 +1,0 @@
-webpackJsonp([7],{s8IK:function(e,t){},wfRt:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{attrs:{id:"home"}},[this._v("这是read页面")])},staticRenderFns:[]};var s=n("VU/8")({},r,!1,function(e){n("s8IK")},"data-v-40278beb",null);t.default=s.exports}});
-//# sourceMappingURL=7.c925ff744fb72ecd3024.js.map

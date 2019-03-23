@@ -1,2 +1,0 @@
-webpackJsonp([3],{Fl22:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{attrs:{id:"home"}},[this._v("这是message页面")])},staticRenderFns:[]};var s=n("VU/8")({},r,!1,function(e){n("O32+")},"data-v-f9e241f2",null);t.default=s.exports},"O32+":function(e,t){}});
-//# sourceMappingURL=3.ca39eae00aa50668a5cb.js.map
