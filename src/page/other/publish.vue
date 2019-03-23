@@ -88,8 +88,8 @@ export default {
           imgs: ImgRet,
           tip: "&*asd1@213SAf",
           isShowAdd: this.showAdd ? "1" : "0",
-          lng: "0",
-          lat: "0"
+          lng: this.$store.state.user.lng,
+          lat: this.$store.state.user.lat
         });
       }
 
