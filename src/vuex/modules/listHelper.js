@@ -1,5 +1,5 @@
-import utils from './../../utils/index';
-import global from './../../utils/global-const';
+import utils from '../../utils/index';
+import global from '../../utils/global-const';
 
 function listHelper(v) {
   if (v.shareImg) {
@@ -42,6 +42,13 @@ export default {
       pageSize: 20,
       finished: false,
       list: []
+    },
+    // 点赞消息通知列表
+    dianzanList: {
+      page: global.PAGE,
+      pageSize: 20,
+      finished: false,
+      list: []
     }
   },
   mutations: {
@@ -68,20 +75,20 @@ export default {
       state[type].list[index].parse = true;
       state[type].list[index].shareLikeCount += 1;
     },
-    // 回复消息通知
-    setReplyMeList(state, msg) {
-      let { isreload, list } = msg;
+    // 主要针对回复和点赞的消息通知
+    setList2(state, msg) {
+      let { isreload, list, name } = msg;
 
       if (isreload) {
-        state.replyMeList.page = 0;
-        state.replyMeList.finished = false;
-        state.replyMeList.list = list;
+        state[name].page = 0;
+        state[name].finished = false;
+        state[name].list = list;
       } else {
-        state.replyMeList.page++;
-        state.replyMeList.list.push(...list);
+        state[name].page++;
+        state[name].list.push(...list);
       }
-      if (list.length < state.replyMeList.pageSize) {
-        state.replyMeList.finished = true;
+      if (list.length < state[name].pageSize) {
+        state[name].finished = true;
       }
     },
     // 获取完位置之后要刷新列表的地理位置
@@ -98,7 +105,7 @@ export default {
     }
   },
   actions: {
-    async getHomeList({ commit, state }, msg) {
+    async getlistHelper({ commit, state }, msg) {
       let { isreload, type, cb } = msg;
       let page, searchType;
       switch (type) {
@@ -155,10 +162,34 @@ export default {
           v.isChild = false;
         }
       }
-      console.log(ret.d.replyList);
-      commit('setReplyMeList', {
+      commit('setList2', {
         isreload,
-        list: ret.d.replyList
+        list: ret.d.replyList,
+        name: 'replyMeList'
+      });
+      cb && cb();
+    },
+    // 消息通知点赞
+    async dianzanList({ commit, state }, msg) {
+      let { isreload, cb } = msg;
+      let ret = await this._vm.$apihelper.getLikeMeLogs({
+        page: state.dianzanList.page + '',
+        pageSize: state.dianzanList.pageSize + ''
+      });
+      if (!ret) return;
+      for (let v of ret.d.parseList) {
+        if (v.comment) {
+          // 回复点赞
+          v.isComment = true;
+        } else {
+          // 文章点赞
+          v.isComment = false;
+        }
+      }
+      commit('setList2', {
+        isreload,
+        list: ret.d.parseList,
+        name: 'dianzanList'
       });
       cb && cb();
     }

@@ -86,7 +86,7 @@ export default {
         praseUserId: this.itemObj.shareUserId
       });
       if (!ret) return;
-      this.$store.commit("homeList/Like", {
+      this.$store.commit("listHelper/Like", {
         index: this.index,
         type: this.type
       });

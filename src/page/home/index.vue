@@ -33,7 +33,7 @@
           :style="{height: item.height}"
           @action="actionHandler"
         ></shreaBox>
-        <loadinganite v-show="(loading || !list.length) && !noCanGetNearby"></loadinganite>
+        <loadinganite v-show="loading && !noCanGetNearby"></loadinganite>
         <p v-show="finished" class="no-more">-------我也是有底线的-------</p>
       </auto-virtual-list>
     </van-pull-refresh>
@@ -73,7 +73,6 @@ export default {
   },
   deactivated() {
     this.$utils.cache["homeType"] = this.type;
-    console.log('离开的', this.$utils.cache[this.type + "scroll"]);
     this.$refs.main.onscroll = null;
   },
   data() {
@@ -96,7 +95,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("homeList", ["getHomeList"]),
+    ...mapActions("listHelper", ["getlistHelper"]),
     onLoad() {
       if (this.finished) return;
       if (this.loading) return;
@@ -124,7 +123,7 @@ export default {
       this.setScrollT(0);
     },
     getList(isreload = true) {
-      this.getHomeList({
+      this.getlistHelper({
         isreload,
         type: this.type,
         cb: () => {
@@ -182,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("homeList", ["newest", "nearby", "dynamic"]),
+    ...mapState("listHelper", ["newest", "nearby", "dynamic"]),
     ...mapState("user", ["lat", "lng", "hasLatLng"]),
     list() {
       let type = this.type;

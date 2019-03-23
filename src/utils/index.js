@@ -87,7 +87,8 @@ function getCookiesUserinfo () {
 // 临时缓存
 let cache = {
   homeScrool: 0,
-  reMeListScroll: 0
+  reMeListScroll: 0,
+  dianzanListScroll: 0, // 点赞消息通知的滚动条
 }
 
 /**

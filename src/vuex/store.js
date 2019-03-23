@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import user from './modules/user';
-import homeList from './modules/homeList';
+import listHelper from './modules/listHelper';
 
 Vue.use(Vuex);
 
@@ -36,6 +36,6 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     user,
-    homeList
+    listHelper
   }
 });

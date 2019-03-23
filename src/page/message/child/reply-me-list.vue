@@ -8,40 +8,41 @@
       class="topNavBar"
     />
     <div class="list-box">
-      <van-list
-        v-model="loading"
-        :finished="replyMeList.finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-        :immediate-check="false"
-      >
-        <div class="item" v-for="(item, index) in replyMeList.list" :key="index">
-          <div class="header">
-            <img :src="item.user.userAvatar" class="ava">
-            <h3 class="userinfo">
-              <p class="name">{{item.user.userName}}</p>
-              <p class="item">{{item.comment.replyTime}}</p>
-            </h3>
-          </div>
-          <div class="contBox">
-            <div class="cont">
-              <p class="des botline" v-if="item.child">回复我 : {{item.comment.replies.content}}</p>
-              <p class="des">{{item | commentFliter1}}</p>
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refreshBox">
+        <van-list
+          v-model="loading"
+          :finished="replyMeList.finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+          :immediate-check="false"
+        >
+          <div class="item" v-for="(item, index) in replyMeList.list" :key="index">
+            <div class="header">
+              <img :src="item.user.userAvatar" class="ava">
+              <h3 class="userinfo">
+                <p class="name">{{item.user.userName}}</p>
+                <p class="item">{{item.comment.replyTime}}</p>
+              </h3>
             </div>
-            <div class="share" @click="gotoDetail(item.share.id)">
-              <div class="img-box" v-if="item.share.shareImg[0]">
-                <img :src="item.share.shareImg[0]">
+            <div class="contBox">
+              <div class="cont">
+                <p class="des botline" v-if="item.child">回复我 : {{item.comment.replies.content}}</p>
+                <p class="des">{{item | commentFliter1}}</p>
               </div>
-              <p class="txt">{{item.user.userName}} : {{item.share.shareContent}}</p>
+              <div class="share" @click="gotoDetail(item.share.id)">
+                <div class="img-box" v-if="item.share.shareImg[0]">
+                  <img :src="item.share.shareImg[0]">
+                </div>
+                <p class="txt">{{item.user.userName}} : {{item.share.shareContent}}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </van-list>
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
 <script>
-import GLOBAL from "@/utils/global-const.js";
 import { mapState } from "vuex";
 export default {
   created() {
@@ -68,14 +69,16 @@ export default {
   },
   data() {
     return {
-      page: GLOBAL.PAGE,
-      pageSize: 20,
-      loading: false
+      loading: false,
+      isLoading: false
     };
   },
   methods: {
     onLoad() {
       this.getList(false);
+    },
+    onRefresh() {
+      this.getList(true);
     },
     gotoDetail(id) {
       this.$router.push({
@@ -86,16 +89,18 @@ export default {
       });
     },
     async getList(isreload = true) {
-      this.$store.dispatch("homeList/replyMeList", {
+      this.$store.dispatch("listHelper/replyMeList", {
         isreload,
-        cd: () => {
+        cb: () => {
           this.loading = false;
+          this.isLoading = false;
+          console.log("xialashuaxin");
         }
       });
     }
   },
   computed: {
-    ...mapState("homeList", ["replyMeList"])
+    ...mapState("listHelper", ["replyMeList"])
   }
 };
 </script>

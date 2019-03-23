@@ -30,7 +30,7 @@ export default function () {
     store.state.user.hasLatLng = true
     store.state.user.lat = ret.lat
     store.state.user.lng = ret.lng
-    store.commit('homeList/updateList')
+    store.commit('listHelper/updateList')
   })
   return {
     getPosition
