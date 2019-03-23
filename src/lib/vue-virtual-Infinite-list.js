@@ -1,6 +1,8 @@
 const styles = {
   container: {
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    width: '100%',
+    height: '100%'
   }
 };
 

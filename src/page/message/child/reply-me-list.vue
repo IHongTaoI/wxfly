@@ -25,13 +25,14 @@
           </div>
           <div class="contBox">
             <div class="cont">
-              <p class="des">回复我:{{item.comment.content}}</p>
+              <p class="des botline" v-if="item.child">回复我 : {{item.comment.replies.content}}</p>
+              <p class="des">{{item | commentFliter1}}</p>
             </div>
             <div class="share" @click="gotoDetail(item.share.id)">
-              <div class="img-box">
-                <img :src="item.share.shareImg[0]" v-if="item.share.shareImg">
+              <div class="img-box" v-if="item.share.shareImg[0]">
+                <img :src="item.share.shareImg[0]">
               </div>
-              <p class="txt">我 : {{item.share.shareContent}}</p>
+              <p class="txt">{{item.user.userName}} : {{item.share.shareContent}}</p>
             </div>
           </div>
         </div>
@@ -54,6 +55,16 @@ export default {
         _this.$utils.cache.reMeListScroll = parseInt(this.scrollTop);
       };
     });
+  },
+  filters: {
+    commentFliter1(v) {
+      if (v.child) {
+        // 二级回复
+        return `@某某人 : ${v.comment.content}`;
+      } else {
+        return `回复我 : ${v.comment.content}`;
+      }
+    }
   },
   data() {
     return {

@@ -23,7 +23,7 @@
             v-show="index === '/read'"
           >
         </div>
-        <p class="txt">阅读</p>
+        <p class="txt">官方</p>
       </div>
     </router-link>
     <router-link to="/other/publish" tag="div" class="item">

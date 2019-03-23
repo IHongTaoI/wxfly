@@ -156,7 +156,7 @@ export default {
       this.cacheObj = {
         commentId: this.replayParObj.id,
         shareId: this.shareId,
-        replyUserId: replayParObj.userId
+        replyUserId: this.replayParObj.userId
       };
     },
     // 隐藏回复框

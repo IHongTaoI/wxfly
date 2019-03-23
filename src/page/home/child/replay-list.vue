@@ -96,6 +96,7 @@ export default {
       this.$emit("likeClick", this.index);
     },
     showReplyBox(obj) {
+      console.log(obj)
       if (this.userId === obj.item.userId) {
         return;
       }

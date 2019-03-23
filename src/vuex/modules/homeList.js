@@ -3,14 +3,14 @@ import global from './../../utils/global-const';
 
 function listHelper(v) {
   if (v.shareImg) {
-    v.height =  "260px";
+    v.height = '260px';
   } else {
-    v.height =  "150px";
+    v.height = '150px';
   }
   v.shareImg = v.shareImg.split(',');
   v.createTime = utils.dateFromat(v.createTime);
-  v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
-  v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+  v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng);
+  v.distance = window.vueObj.$options.filters['distanceFromat'](v.distance);
 }
 
 export default {
@@ -48,7 +48,7 @@ export default {
     setList(state, msg) {
       let { type, isreload, list } = msg;
       for (let v of list) {
-        listHelper(v)
+        listHelper(v);
       }
       if (isreload) {
         state[type].list = list;
@@ -68,6 +68,7 @@ export default {
       state[type].list[index].parse = true;
       state[type].list[index].shareLikeCount += 1;
     },
+    // 回复消息通知
     setReplyMeList(state, msg) {
       let { isreload, list } = msg;
 
@@ -85,11 +86,13 @@ export default {
     },
     // 获取完位置之后要刷新列表的地理位置
     updateList(state) {
-      let forArr = ['nearby', 'dynamic', 'newest']
-      for(let key of forArr) {
-        for(let v of state[key].list) {
-          v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng)
-          v.distance = window.vueObj.$options.filters["distanceFromat"](v.distance)
+      let forArr = ['nearby', 'dynamic', 'newest'];
+      for (let key of forArr) {
+        for (let v of state[key].list) {
+          v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng);
+          v.distance = window.vueObj.$options.filters['distanceFromat'](
+            v.distance
+          );
         }
       }
     }
@@ -128,6 +131,7 @@ export default {
       });
       cb && cb();
     },
+    // 消息 -> 回复我的消息
     async replyMeList({ commit, state }, msg) {
       let { isreload, cb } = msg;
       let ret = await this._vm.$apihelper.getReplyMeList({
@@ -136,9 +140,22 @@ export default {
       });
       if (!ret) return;
       for (let v of ret.d.replyList) {
+        if (v.comment.replies) {
+          // 是二级回复的通知
+          v.child = true;
+        } else {
+          v.child = false;
+        }
         v.share.shareImg = v.share.shareImg.split(',');
         v.comment.replyTime = this._vm.$utils.dateFromat(v.comment.replyTime);
+        // 是否是二级评论
+        if (v.comment.replies) {
+          v.isChild = true;
+        } else {
+          v.isChild = false;
+        }
       }
+      console.log(ret.d.replyList);
       commit('setReplyMeList', {
         isreload,
         list: ret.d.replyList
