@@ -20,12 +20,15 @@
         <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
       </van-cell>
       <van-cell title="测试页面" is-link to="/self/test">
-        <span slot="icon" class="iconfont iconfont icon-dongtai" style="color:#0078D7;"></span>
+        <span slot="icon" class="iconfont icon-dongtai" style="color:#0078D7;"></span>
       </van-cell>
     </van-cell-group>
     <van-cell-group class="mt20">
       <van-cell title="设置" is-link to="/self/setting">
-        <span slot="icon" class="iconfont iconfont icon-shezhi" style="color:#666666;"></span>
+        <span slot="icon" class="iconfont icon-shezhi" style="color:#666666;"></span>
+      </van-cell>
+      <van-cell title="关于我们" is-link to="/aboutMe">
+        <span slot="icon" class="iconfont icon-icoguanyuwomen" style="color:#666666;"></span>
       </van-cell>
     </van-cell-group>
   </div>

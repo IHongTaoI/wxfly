@@ -99,6 +99,11 @@ export default [
 		component: () => import('../page/self/child/my-dynamic.vue'),
 	},
 	{
+		path: '/aboutMe',
+		name: '关于我们',
+		component: () => import('../page/self/child/about-me.vue'),
+	},
+	{
 		path: '/login',
 		name: 'login',
 		component: () => import('../page/other/login.vue'),

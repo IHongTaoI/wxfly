@@ -76,7 +76,7 @@ export default {
       display: -webkit-box;
       justify-content: flex-start;
       white-space: nowrap;
-      max-width: 40%;
+      max-width: 20%;
       padding: 5px;
       box-sizing: border-box;
       overflow-y: hidden;
