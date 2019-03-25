@@ -146,7 +146,6 @@ export default {
       });
     },
     replyChildBtn(obj) {
-      console.log(obj);
       let { item, pIndex, cIndex } = obj;
       this.cIndex = cIndex;
       this.pIndex = pIndex;
@@ -156,7 +155,8 @@ export default {
       this.cacheObj = {
         commentId: this.replayParObj.id,
         shareId: this.shareId,
-        replyUserId: this.replayParObj.userId
+        replyUserId: item.userId,
+        replyId: item.id
       };
     },
     // 隐藏回复框
@@ -189,7 +189,8 @@ export default {
           this.cacheObj = {
             commentId: this.replayParObj.id,
             shareId: this.shareId,
-            replyUserId: this.replayParObj.userId
+            replyUserId: this.replayParObj.userId,
+            replyId: this.replayParObj.id
           };
           this.showReplyBox = true;
         }

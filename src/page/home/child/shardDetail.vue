@@ -172,7 +172,8 @@ export default {
       this.cacheObj = {
         commentId: this.replyList[pIndex].id,
         shareId: this.shareId,
-        replyUserId: item.userId
+        replyUserId: item.userId,
+        replyId: item.id
       };
     },
     async sumbitReplay(replyCont) {
@@ -232,9 +233,7 @@ export default {
         replyBtn: () => {
           this.showReplyBox = true;
           this.cacheObj = {
-            shareId: this.shareId,
-            uname: this.$store.state.user.userInfo.nickName,
-            uavatar: this.$store.state.user.userInfo.avatarUrl
+            shareId: this.shareId
           };
         }
       }[type]();
