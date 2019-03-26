@@ -9,13 +9,20 @@
           <van-icon name="arrow" class="vtmiddle"/>
         </div>
       </van-cell>
-      <van-cell is-link title="昵称" :value="$store.state.user.userInfo.userName" :to="{name: 'userinfoModify'}"></van-cell>
+      <van-cell
+        is-link
+        title="昵称"
+        :value="$store.state.user.userInfo.userName"
+        :to="{name: 'userinfoModify',params: {
+          type: 'nikename'
+        }}"
+      ></van-cell>
       <van-cell is-link title="性别" :value="$store.state.user.userInfo.gender === '1' ? '男' : '女'"></van-cell>
       <van-cell is-link title="地址" :value="$store.state.user.userInfo.addRess"></van-cell>
     </van-cell-group>
     <transition
-      :enter-active-class="'animated zoomInRight'"
-      :leave-active-class="'animated zoomOutLeft'"
+      :enter-active-class="'animated fadeInRight'"
+      :leave-active-class="'animated fadeOutRight'"
     >
       <router-view class="app-content" style="z-index: 99"></router-view>
     </transition>

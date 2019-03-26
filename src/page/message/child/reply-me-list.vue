@@ -61,9 +61,9 @@ export default {
     commentFliter1(v) {
       if (v.child) {
         // 二级回复
-        return `@某某人 : ${v.comment.content}`;
-      } else {
         return `@我 : ${v.comment.content}`;
+      } else {
+        return `${v.comment.content}`;
       }
     }
   },
