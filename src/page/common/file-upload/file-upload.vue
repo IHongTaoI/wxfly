@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="file-upload-container">
   <div class="dest-image">
-    <img class="img" :src="destImg || proAva" @click="openFile" />
+    <img class="img" :src="destImg || proAva" @click="openFile" ref="avaImg"/>
     <input ref="input" type="file" accept="image/png,image/jpeg,image/gif" @change="change" class="input">
   </div>
   <div class="crop-container" v-show="openCrop">
@@ -21,7 +21,7 @@
         <span class="crop-corner crop-corner__right-bottom" ref="rightBottom"></span>
         <span class="crop-corner crop-corner__left-bottom" ref="leftBottom"></span>
         <!-- 防止图片被选中 -->
-        <div class="crop-inner-container" :style="selectPicStyle">
+        <div class="crop-inner-container" :style="selectPicStyle" ref="cropInnerCon">
           <img class="crop-container__source__image" :src="imgSrc" />
         </div>
         <!-- 盖上一层顶级元素，好让鼠标作为target方便拖动 -->
@@ -98,6 +98,11 @@ export default {
   mounted() {
     on(document, "mouseup", () => this.mouseup());
     this.canvas.ctx = this.$refs.canvas.getContext("2d");
+    let _this = this;
+    this.$refs.img.onload = function() {
+      _this.$refs.cropInnerCon.style.width = this.offsetWidth + 'px';
+      _this.$refs.cropInnerCon.style.height = this.offsetHeight + 'px';
+    }
   },
   computed: {
     cropBoxStyle: function() {
@@ -264,7 +269,6 @@ export default {
       };
     },
     mousedown: function(e) {
-      console.log(e)
       // 在鼠标按下之后到抬起之前都可以移动，按下只能是指定的元素，抬起是在crop-container__source内，或者移出crop-container__source则算做抬起
       this.isMousedown = true;
       this.enterPoint.x = e.touches[0].pageX;
@@ -272,7 +276,6 @@ export default {
       this.target = e.target;
     },
     mouseup: function(e) {
-      console.log(12312)
       if (this.isMousedown) {
         this.isMousedown = false;
         this.MoveType.current = "";
@@ -570,10 +573,7 @@ export default {
       user-select: none;
       position: relative;
       z-index: 1;
-      top: 50%;
-      transform: translateY(-50%);
-      max-height: 100%;
-      max-width: 100%;
+      width: 100%;
     }
 
     .crop-box {
