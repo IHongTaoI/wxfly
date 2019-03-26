@@ -41,13 +41,19 @@
       />
     </div>
     <div class="userava" v-if="type === 'userAvatar'">
-      <vueCropper ref="cropper" :img="userAvatar" outputType="png"></vueCropper>
+      <fileUpload class="usermodify" :proAva="userAvatar"></fileUpload>
+      <p class="tips">点击头像更改</p>
     </div>
   </div>
 </template>
 <script>
 import areaData from "./../../../lib/area-data.js";
+import fileUpload from "./../../common/file-upload/file-upload.vue";
+
 export default {
+  components: {
+    fileUpload
+  },
   data() {
     return {
       isloading: false,
@@ -90,5 +96,15 @@ export default {
 .userava {
   width: 100%;
   height: 100%;
+  padding-top: 24px;
+  .usermodify {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 6px;
+  }
+  .tips {
+    text-align: center;
+    color: skyblue;
+  }
 }
 </style>
