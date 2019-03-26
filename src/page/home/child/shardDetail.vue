@@ -16,7 +16,7 @@
       </div>
       <div class="conent">
         <p class="share-content">{{shardData.shareContent}}</p>
-        <div class="imgs">
+        <div class="imgs" v-show="shardData.shareImg[0]">
           <img
             class="img"
             :src="imgsrc"

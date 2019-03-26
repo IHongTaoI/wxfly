@@ -26,7 +26,7 @@
             </div>
             <div class="contBox">
               <div class="cont">
-                <p class="des botline" v-if="item.child">回复我 : {{item.comment.replies.content}}</p>
+                <p class="des botline" v-if="item.child">{{item.comment.replies.content}}</p>
                 <p class="des">{{item | commentFliter1}}</p>
               </div>
               <div class="share" @click="gotoDetail(item.share.id)">
@@ -63,7 +63,7 @@ export default {
         // 二级回复
         return `@某某人 : ${v.comment.content}`;
       } else {
-        return `回复我 : ${v.comment.content}`;
+        return `@我 : ${v.comment.content}`;
       }
     }
   },
