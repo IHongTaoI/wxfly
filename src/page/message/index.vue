@@ -1,6 +1,5 @@
 <template>
   <div id="message">
-    <virtual-list ref="scrollBox" :size="250" :remain="6" class="scrollist">
       <list-item type="slot">
         <van-cell-group class="itemSys">
           <van-cell is-link to="/message/replay-me-reply" class="cell">
@@ -21,7 +20,6 @@
           </van-cell>
         </van-cell-group>
       </list-item>
-    </virtual-list>
   </div>
 </template>
 <script>

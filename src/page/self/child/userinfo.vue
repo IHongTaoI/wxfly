@@ -2,7 +2,12 @@
   <div class="paddingTopNav userinfo">
     <van-nav-bar title="用户信息" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
     <van-cell-group>
-      <van-cell is-link>
+      <van-cell
+        is-link
+        :to="{name: 'userinfoModify',params: {
+          type: 'userAvatar'
+        }}"
+      >
         <p slot="title" class="avatxt">头像</p>
         <div slot="right-icon" class="cell-ava">
           <img :src="$store.state.user.userInfo.userAvatar" class="userava vtmiddle">
@@ -17,8 +22,22 @@
           type: 'nikename'
         }}"
       ></van-cell>
-      <van-cell is-link title="性别" :value="$store.state.user.userInfo.gender === '1' ? '男' : '女'"></van-cell>
-      <van-cell is-link title="地址" :value="$store.state.user.userInfo.addRess"></van-cell>
+      <van-cell
+        is-link
+        title="性别"
+        :value="$store.state.user.userInfo.gender === '1' ? '女' : '男'"
+        :to="{name: 'userinfoModify',params: {
+          type: 'gender'
+        }}"
+      ></van-cell>
+      <van-cell
+        is-link
+        title="地址"
+        :value="$store.state.user.userInfo.addRess"
+        :to="{name: 'userinfoModify',params: {
+          type: 'addRess'
+        }}"
+      ></van-cell>
     </van-cell-group>
     <transition
       :enter-active-class="'animated fadeInRight'"
