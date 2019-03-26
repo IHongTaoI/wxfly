@@ -12,10 +12,9 @@
           </span>
         </div>
         <div class="recont">
-          <span v-if="isReplayOhter">
-            回复
-            <span class="color_user">{{reItem.repltUserName}}</span>
-          </span>
+          <p v-if="reItem.parentContent">
+            <span class="pcontent">回复 @{{reItem.repltUserName}}: {{reItem.parentContent}}</span>
+          </p>
           <span>{{reItem.content}}</span>
         </div>
         <div class="rechild" v-if="reItem.replies && reItem.replies.length">
@@ -34,7 +33,11 @@
               <span class="color_user">{{reChild.repltUserName}}</span>
               : {{reChild.content}}
             </span>
-            <span class="iconfont icon-shanchu" v-show="reChild.userId === userId" @click="removeReply"></span>
+            <span
+              class="iconfont icon-shanchu"
+              v-show="reChild.userId === userId"
+              @click="removeReply"
+            ></span>
           </p>
           <p
             v-if="reItem.replyCount > 2"
@@ -87,7 +90,7 @@ export default {
         showCancelButton: true,
         callback: async msg => {
           if (msg === "confirm") {
-            this.$toast('删除方法')
+            this.$toast("删除方法");
           }
         }
       });
@@ -96,7 +99,7 @@ export default {
       this.$emit("likeClick", this.index);
     },
     showReplyBox(obj) {
-      console.log(obj)
+      console.log(obj);
       if (this.userId === obj.item.userId) {
         return;
       }
@@ -157,7 +160,14 @@ export default {
         }
       }
       .recont {
-        font-size: 18px;
+        .pcontent {
+          display: block;
+          font-size: 14px;
+          background: #f2f2f2;
+          padding: 2px 5px;
+          margin-bottom: 5px;
+        }
+        font-size: 16px;
       }
       .rechild {
         background: #f7f7f7;
