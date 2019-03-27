@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import routes from './router';
 import store from './../vuex/store';
+import utils from './../utils/index';
 import {
   exitApp,
   listenerKeyback,
@@ -24,14 +25,14 @@ const vuerouter = new Router({
 });
 
 vuerouter.beforeEach((to, from, next) => {
-  let seesionuser = localStorage.getItem('seesionuser');
-  if (!seesionuser && to.name !== 'login' && to.name !== 'register') {
+  let token = utils.cookie.get('token');
+  if (!token && to.name !== 'login' && to.name !== 'register') {
     vuerouter.push({
       name: 'login'
     });
     return;
   }
-  if (seesionuser && (to.name === 'login' || to.name === 'register')) {
+  if (token && (to.name === 'login' || to.name === 'register')) {
     vuerouter.push({
       name: 'home'
     });

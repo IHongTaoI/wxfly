@@ -36,7 +36,11 @@
             <span
               class="iconfont icon-shanchu"
               v-show="reChild.userId === userId"
-              @click="removeReply"
+              @click="removeReply(true, {
+                item: reChild,
+                pIndex: index,
+                cIndex: recind
+              })"
             ></span>
           </p>
           <p
@@ -47,7 +51,15 @@
         </div>
         <div class="bottom">
           <span class="time">{{reItem.replyTime}}</span>
-          <span class="iconfont icon-shanchu" v-if="reItem.userId === userId" @click="removeReply"></span>
+          <span
+            class="iconfont icon-shanchu"
+            v-if="reItem.userId === userId"
+            @click="removeReply(false, {
+              item: reItem,
+              pIndex: index,
+              cIndex: -1
+            })"
+          ></span>
           <span
             class="btn"
             v-else
@@ -68,7 +80,16 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["reItem", "goType", "pUserid", "index"],
+  props: {
+    reItem: Object,
+    goType: String,
+    pUserid: String,
+    index: Number,
+    isChild: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     gotoDetail(item) {
       let name = "shardDetailReplay";
@@ -84,13 +105,21 @@ export default {
       });
     },
     // 删除回复
-    removeReply() {
+    removeReply(lc, obj) {
+      let ischild = '1';
+      if (lc) {
+        ischild = '2';
+      }
+      this.isChild && (ischild = '2');
+      console.log(obj,123);
       this.$dialog.alert({
         message: "确定删除吗",
         showCancelButton: true,
         callback: async msg => {
           if (msg === "confirm") {
-            this.$toast("删除方法");
+            let ret = await this.$apihelper.delReply(obj.item.id, ischild);
+            console.log(ret)
+            this.$emit("removeReply", obj)
           }
         }
       });
@@ -99,7 +128,6 @@ export default {
       this.$emit("likeClick", this.index);
     },
     showReplyBox(obj) {
-      console.log(obj);
       if (this.userId === obj.item.userId) {
         return;
       }

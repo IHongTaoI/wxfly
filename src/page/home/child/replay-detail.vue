@@ -37,10 +37,12 @@
             v-for="(item, index) in reList"
             :key="index"
             :index="index"
-            :pUserid="replayParObj.userId"
+            :isChild="true"
+            :pUserid="replayParObj.userId || -1"
             goType="mc"
             @btnClick="replyChildBtn"
             @likeClick="likeClick"
+            @removeReply="removeReply"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -98,7 +100,8 @@ export default {
       cacheObj: {},
       replayParObj: {}, // 楼主的信息
       cIndex: -1,
-      pIndex: -1
+      pIndex: -1,
+      parentContent: '',
     };
   },
   methods: {
@@ -147,6 +150,7 @@ export default {
     },
     replyChildBtn(obj) {
       let { item, pIndex, cIndex } = obj;
+      this.parentContent = item.content;
       this.cIndex = cIndex;
       this.pIndex = pIndex;
       this.isReplayChild = true;
@@ -158,6 +162,10 @@ export default {
         replyUserId: item.userId,
         replyId: item.id
       };
+    },
+    // 删除评论
+    removeReply(){
+      let { item, pIndex, cIndex } = obj;
     },
     // 隐藏回复框
     hidereplyBox() {
@@ -176,6 +184,7 @@ export default {
       ret.d.userAvatar = this.$store.state.user.userInfo.userAvatar;
       ret.d.replyTime = this.$utils.dateFromat(ret.d.replyTime);
       ret.d.userName = this.$store.state.user.userInfo.userName;
+      ret.d.parentContent = this.parentContent;
       if (~this.pIndex) {
         ret.d.repltUserName = this.reList[this.pIndex].userName;
       }

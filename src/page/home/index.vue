@@ -34,7 +34,8 @@
           @action="actionHandler"
         ></shreaBox>
         <loadinganite v-show="loading && !noCanGetNearby"></loadinganite>
-        <p v-show="finished" class="no-more">-------我也是有底线的-------</p>
+        <p v-show="finished && list.length" class="no-more">-------我也是有底线的-------</p>
+        <p v-show="finished && !list.length" class="no-more">-------列表空空如也-------</p>
       </auto-virtual-list>
     </van-pull-refresh>
     <van-actionsheet
@@ -163,6 +164,7 @@ export default {
     async GetNearby() {
       let ret = await this.$BMap.getPosition();
       if (!ret) this.$toast("获取地理位置失败");
+      this.getList(true);
     }
   },
   watch: {

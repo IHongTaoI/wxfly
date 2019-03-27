@@ -159,7 +159,7 @@ export default {
       this.openCrop = false;
       this.$refs.input.value = "";
     },
-    change: function() {
+    change() {
       var file = this.$refs.input.files[0];
       // 限制容量
       if (file && file.size <= this.limit * 1024) {

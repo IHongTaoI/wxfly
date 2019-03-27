@@ -42,10 +42,9 @@ export default {
         code: ""
       });
       if (!ret) return this.$toast.fail("登录失败");
-      this.$utils.cookie.delete("seesionuser");
-      this.$utils.cookie.set("seesionuser", JSON.stringify(ret), 1);
-      this.$store.commit("user/LOGIN_SUCCESS", ret);
-      localStorage.setItem("seesionuser", JSON.stringify(ret));
+      this.$utils.cookie.delete("token");
+      this.$utils.cookie.set("token", ret.h.token, 1);
+      this.$store.dispatch("user/login_success", ret.h.token);
       this.$router.replace({
         path: "/home"
       });

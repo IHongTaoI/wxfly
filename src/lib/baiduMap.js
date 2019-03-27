@@ -12,10 +12,10 @@ export default function () {
       geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
           let pos = {
-            lng: parseInt(r.point.lng),
-            lat: parseInt(r.point.lat)
+            lng: r.point.lng,
+            lat: r.point.lat
           }
-          console.log(r)
+          store.commit('user/UPDATE_LOCATION', pos)
           resolve(pos)
         } else {
           resolve(false)
@@ -27,9 +27,7 @@ export default function () {
   getPosition().then(ret => {
     if (!ret) console.log('获取地理位置失败')
     console.log('获取地理位置成功', ret)
-    store.state.user.hasLatLng = true
-    store.state.user.lat = ret.lat
-    store.state.user.lng = ret.lng
+    store.commit('user/UPDATE_LOCATION', ret)
     store.commit('listHelper/updateList')
   })
   return {

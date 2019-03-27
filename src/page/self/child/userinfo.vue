@@ -19,7 +19,7 @@
         title="昵称"
         :value="$store.state.user.userInfo.userName"
         :to="{name: 'userinfoModify',params: {
-          type: 'nikename'
+          type: 'userName'
         }}"
       ></van-cell>
       <van-cell

@@ -16,8 +16,8 @@
         @click.native="submit"
       >修改</van-button>
     </van-nav-bar>
-    <div class="modify-text" v-if="type === 'nikename'">
-      <van-field v-model="nikename" placeholder="请输入昵称"/>
+    <div class="modify-text" v-if="type === 'userName'">
+      <van-field v-model="userName" placeholder="请输入昵称"/>
     </div>
     <div class="gender" v-if="type === 'gender'">
       <van-radio-group v-model="gender">
@@ -49,6 +49,7 @@
 <script>
 import areaData from "./../../../lib/area-data.js";
 import fileUpload from "./../../common/file-upload/file-upload.vue";
+import { debug } from "util";
 
 export default {
   components: {
@@ -57,7 +58,7 @@ export default {
   data() {
     return {
       isloading: false,
-      nikename: this.$store.state.user.userInfo.userName,
+      userName: this.$store.state.user.userInfo.userName,
       gender: this.$store.state.user.userInfo.gender,
       userAvatar: this.$store.state.user.userInfo.userAvatar,
       type: this.$route.params.type,
@@ -68,7 +69,7 @@ export default {
     title() {
       let type = this.$route.params.type;
       return {
-        nikename: "修改昵称",
+        userName: "修改昵称",
         userAvatar: "取消",
         gender: "修改性别(只能修改一次)",
         addRess: "修改地址"
@@ -76,7 +77,19 @@ export default {
     }
   },
   methods: {
-    submit() {},
+    async submit() {
+      if (this.type === "userName") {
+        if (this.userName.gblen() > 16) return this.$toast("名字太长拉");
+      }
+      let value = {
+        userName: this.userName,
+        gender: this.gender,
+        addRess: "",
+        avatar: "http://img.wuxfly.com/1552029040043447"
+      }[this.type];
+      let ret = await this.$apihelper.editUserInfo(this.type, value);
+      this.$store.commit("user/UPDATE_USERDATA", ret.d);
+    },
     adddChange(vm, index) {},
     addrConfirm(arr) {
       console.log(arr);

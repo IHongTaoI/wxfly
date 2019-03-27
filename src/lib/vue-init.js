@@ -13,8 +13,10 @@ import socketInit from './../utils/socket-init';
 import VueAutoVirtualScrollList from './vue-virtual-Infinite-list';
 import loadinganite from './../page/home/child/loading-animate.vue';
 import baiduMap from './baiduMap';
+import initProto from './init-proto';
 
 export default function() {
+  initProto();
   Vue.use(VueAxios, axios);
   Vue.use(Vant);
   Vue.use(Lazyload);
@@ -31,12 +33,14 @@ export default function() {
     store,
     template: '<App/>',
     async beforeCreate() {
-      // let cookies = utils.getCookiesUserinfo();
-      let seesionuser = localStorage.getItem('seesionuser');
-      let cookies = seesionuser ? JSON.parse(seesionuser) : false;
-      if (cookies) {
-        store.commit('user/LOGIN_SUCCESS', cookies);
+      let token = utils.cookie.get('token');
+      if (token) {
+        store.dispatch('user/login_success', token);
         socketInit();
+      } else {
+        this.$router.replace({
+          path: '/login'
+        });
       }
     }
   });
