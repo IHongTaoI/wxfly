@@ -95,14 +95,18 @@ export default {
       tearPlaTxt: "发表评论",
       page: 0,
       pageSize: 20,
-      shareId: '',
+      shareId: "",
       reList: [],
       cacheObj: {},
       replayParObj: {}, // 楼主的信息
       cIndex: -1,
       pIndex: -1,
-      parentContent: '',
+      parentContent: ""
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    this.getList();
+    next();
   },
   methods: {
     async getList(isreload = true) {
@@ -136,7 +140,7 @@ export default {
       }
     },
     async likeClick(index) {
-      if(this.reList[index].parse) return;
+      if (this.reList[index].parse) return;
       this.reList[index].parse = true;
       this.reList[index].praseCount += 1;
       let commentId = this.reList[index].id,
@@ -162,10 +166,6 @@ export default {
         replyUserId: item.userId,
         replyId: item.id
       };
-    },
-    // 删除评论
-    removeReply(){
-      let { item, pIndex, cIndex } = obj;
     },
     // 隐藏回复框
     hidereplyBox() {
@@ -204,6 +204,15 @@ export default {
           this.showReplyBox = true;
         }
       }[type]();
+    },
+    removeReply(obj) {
+      let { cIndex, pIndex } = obj;
+      if (!~cIndex) {
+        // 删除一级回复
+        this.reList.splice(pIndex, 1);
+      } else {
+        this.reList[pIndex].replies.splice(cIndex, 1);
+      }
     },
     onLoad() {
       this.getList(false);

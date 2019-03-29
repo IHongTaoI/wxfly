@@ -18,6 +18,7 @@
             goType="mc"
             @btnClick="replyChildBtn"
             @likeClick="likeClick"
+            @removeReply="removeReply"
           ></replyList>
         </van-list>
         <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
@@ -134,6 +135,15 @@ export default {
     hidereplyBox() {
       this.showReplyBox = false;
       this.textareaBlur();
+    },
+    removeReply(obj) {
+      let { cIndex, pIndex } = obj;
+      if (!~cIndex) {
+        // 删除一级回复
+        this.reList.splice(pIndex, 1);
+      } else {
+        this.reList[pIndex].replies.splice(cIndex, 1);
+      }
     },
     // 评论输入框失去焦点
     textareaBlur() {

@@ -57,6 +57,7 @@
           v-for="(item, index) in replyList"
           :key="index"
           @likeClick="likeClick"
+          @removeReply="removeReply"
         ></replyList>
         <p
           class="more-replay"
@@ -114,11 +115,11 @@ export default {
     },
     // 评论点赞
     async likeClick(index) {
-      if(this.replyList[index].parse) return;
+      if (this.replyList[index].parse) return;
       this.replyList[index].parse = true;
       this.replyList[index].praseCount += 1;
       let commentId = this.replyList[index].id,
-      praseUserId = this.replyList[index].userId;
+        praseUserId = this.replyList[index].userId;
       let ret = await this.$apihelper.parseLikeReplay({
         shareId: this.shareId,
         praseUserId,
@@ -175,6 +176,15 @@ export default {
         replyUserId: item.userId,
         replyId: item.id
       };
+    },
+    removeReply(obj) {
+      let { cIndex, pIndex } = obj;
+      if (!~cIndex) {
+        // 删除一级回复
+        this.replyList.splice(pIndex, 1);
+      } else {
+        this.replyList[pIndex].replies.splice(cIndex, 1);
+      }
     },
     async sumbitReplay(replyCont) {
       this.cacheObj.content = replyCont;
