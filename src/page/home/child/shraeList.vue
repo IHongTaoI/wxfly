@@ -7,10 +7,16 @@
           <div class="titles">
             <p class="username">
               {{item.shareUserName}}
-              <span>距离{{item.distance}}</span>
+              <span class="addr">
+                <i class="iconfont icon-weizhi vtmiddle"></i>
+                <span class="vtmiddle">{{item.distance}}</span>
+              </span>
             </p>
             <!--发布时间-->
-            <p class="time">{{item.createTime}}</p>
+            <p class="time">
+              {{item.createTime}}
+              <span class="addr">{{item.shareAddress}}</span>
+            </p>
           </div>
         </div>
         <div class="opt" @click.stop="caozuo">
@@ -144,10 +150,21 @@ export default {
         padding-left: 15px;
         .username {
           font-size: 14px;
+          .addr {
+            font-size: 12px;
+            color: #bababa;
+          }
         }
         .time {
           font-size: 14px;
           color: #bababa;
+          .addr {
+            font-size: 12px;
+            padding-left: 8px;
+            .iconfont {
+              font-size: 12px;
+            }
+          }
         }
       }
     }

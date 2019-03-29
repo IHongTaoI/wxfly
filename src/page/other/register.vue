@@ -71,7 +71,7 @@ export default {
       if (!ret) return;
       this.$utils.cookie.delete("token");
       this.$utils.cookie.set("token", ret.h.token, 1);
-      this.$store.dispatch("user/login_success", ret.h.token);
+      this.$store.commit("user/LOGIN_SUCCESS", ret.d);
       this.$router.replace({
         path: "/home"
       });

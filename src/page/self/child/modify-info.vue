@@ -89,6 +89,10 @@ export default {
       }[this.type];
       let ret = await this.$apihelper.editUserInfo(this.type, value);
       this.$store.commit("user/UPDATE_USERDATA", ret.d);
+      this.$toast("修改成功");
+      setTimeout(() => {
+        this.$router.back();
+      }, 300);
     },
     adddChange(vm, index) {},
     addrConfirm(arr) {

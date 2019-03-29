@@ -176,7 +176,7 @@ export default {
         page: state.dianzanList.page + '',
         pageSize: state.dianzanList.pageSize + ''
       });
-      if (!ret) return;
+      if (!ret) return cb && cb(false);
       for (let v of ret.d.parseList) {
         if (v.comment) {
           // 回复点赞
