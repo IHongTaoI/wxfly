@@ -92,7 +92,11 @@ export default {
   },
   created() {
     this.shareId = this.$route.query.id;
-    this.getDetil(this.shareId);
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getDetil();
+    });
   },
   data() {
     return {

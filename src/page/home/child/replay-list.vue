@@ -106,20 +106,19 @@ export default {
     },
     // 删除回复
     removeReply(lc, obj) {
-      let ischild = '1';
+      let ischild = "1";
       if (lc) {
-        ischild = '2';
+        ischild = "2";
       }
-      this.isChild && (ischild = '2');
-      console.log(obj,123);
+      this.isChild && (ischild = "2");
       this.$dialog.alert({
         message: "确定删除吗",
         showCancelButton: true,
         callback: async msg => {
           if (msg === "confirm") {
             let ret = await this.$apihelper.delReply(obj.item.id, ischild);
-            console.log(ret)
-            this.$emit("removeReply", obj)
+            this.$toast("删除成功");
+            this.$emit("removeReply", obj);
           }
         }
       });

@@ -104,10 +104,6 @@ export default {
       parentContent: ""
     };
   },
-  beforeRouteEnter(to, from, next) {
-    this.getList();
-    next();
-  },
   methods: {
     async getList(isreload = true) {
       let { shareId, replyId } = this.$route.query;

@@ -9,6 +9,7 @@ export default function () {
 
   function getPosition () {
     return new Promise((resolve, reject) => {
+      geolocation.enableSDKLocation();
       geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
           let pos = {
