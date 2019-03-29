@@ -141,7 +141,12 @@ export default {
   // 退出登录
   async outLogin() {
     return await post({
-      url: '/user/share/cencel'
+      url: '/user/share/cencel',
+      config: {
+        headers: {
+          login: 'login'
+        }
+      }
     });
   },
   // 删除分享

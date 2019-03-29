@@ -52,8 +52,7 @@ axios.interceptors.response.use(function(response) {
   } else {
     if (res.status === '500004') {
       // 登录过期
-      utils.cookie.delete('seesionuser');
-      localStorage.setItem('seesionuser', '');
+      utils.cookie.delete('token');
       showNotify('登录过期，请重新登录');
       setTimeout(() => {
         router.replace({
@@ -78,7 +77,7 @@ async function post({
   if (!config.files) {
     // 如果不是传文件
     let serviceHeader = {
-      token: store.state.user.token,
+      token: utils.cookie.get('token'),
       userId: store.state.user.userId
     };
     serviceHeader = Object.assign(serviceHeader, sheader);
