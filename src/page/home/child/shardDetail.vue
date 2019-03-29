@@ -92,11 +92,8 @@ export default {
   },
   created() {
     this.shareId = this.$route.query.id;
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.getDetil();
-    });
+    this.$utils.cache.shardDetailVue = this;
+    this.getDetil();
   },
   data() {
     return {

@@ -203,10 +203,15 @@ export default {
     },
     removeReply(obj) {
       let { cIndex, pIndex } = obj;
+      let changePpage = false; // 是否更改父级页面
+      if (pIndex < 10) changePpage = true;
+      let vm = this.$utils.cache.shardDetailVue;
       if (!~cIndex) {
         // 删除一级回复
         this.reList.splice(pIndex, 1);
+        changePpage && vm && vm.replyList.splice(pIndex, 1);
       } else {
+        changePpage && vm && vm.replyList[pIndex].replies.splice(cIndex, 1);
         this.reList[pIndex].replies.splice(cIndex, 1);
       }
     },
