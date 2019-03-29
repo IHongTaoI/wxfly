@@ -10,17 +10,7 @@ import {
 } from './../lib/jsBridge/EVENT';
 Vue.use(Router);
 
-function scrollBehavior(to, from, savedPosition) {
-  if (to.hash) {
-    return {
-      selector: to.hash
-    };
-  }
-}
-
 const vuerouter = new Router({
-  mode: 'history',
-  scrollBehavior,
   routes
 });
 
