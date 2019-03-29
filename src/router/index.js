@@ -16,13 +16,14 @@ const vuerouter = new Router({
 
 vuerouter.beforeEach((to, from, next) => {
   let token = utils.cookie.get('token');
-  if (!token && to.name !== 'login' && to.name !== 'register') {
+  let userId = utils.cookie.get('userId');
+  if ((!token || !userId) && to.name !== 'login' && to.name !== 'register') {
     vuerouter.push({
       name: 'login'
     });
     return;
   }
-  if (token && (to.name === 'login' || to.name === 'register')) {
+  if ((!token || userId) && (to.name === 'login' || to.name === 'register')) {
     vuerouter.push({
       name: 'home'
     });

@@ -78,7 +78,7 @@ async function post({
     // 如果不是传文件
     let serviceHeader = {
       token: utils.cookie.get('token'),
-      userId: store.state.user.userId
+      userId: utils.cookie.get('userId')
     };
     serviceHeader = Object.assign(serviceHeader, sheader);
     data = {

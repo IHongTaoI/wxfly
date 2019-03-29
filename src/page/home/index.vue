@@ -82,7 +82,7 @@ export default {
       showActionsheetL: false,
       isLoading: false, // 是否在下拉刷新
       isreload: false,
-      diseRefresh: true, // 是否禁用下拉刷新
+      diseRefresh: false, // 是否禁用下拉刷新
       type: "newest",
       showGotoTop: true, // 是否显示去顶部
       active: 1,

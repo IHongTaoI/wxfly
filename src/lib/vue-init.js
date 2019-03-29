@@ -34,7 +34,8 @@ export default function() {
     template: '<App/>',
     async beforeCreate() {
       let token = utils.cookie.get('token');
-      if (token) {
+      let userId = utils.cookie.get('userId');
+      if (token && userId) {
         store.dispatch('user/login_success', token);
         socketInit();
       } else {
