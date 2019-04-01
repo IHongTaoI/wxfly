@@ -82,16 +82,17 @@ let cache = {
   dianzanListScroll: 0 // 点赞消息通知的滚动条
 };
 
-/**
- * 计算距离
- * @param {Number} lat 经度
- * @param {Number} lng 维度
- */
-function getGreatCircleDistance(lat, lng) {
-  var radLat1 = (store.state.user.lat * Math.PI) / 180.0;
-  var radLat2 = (lat * Math.PI) / 180.0;
+//计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
+function getGreatCircleDistance(lat1, lng1, lat2, lng2) {
+  debugger
+  function Rad(d) {
+    return (d * Math.PI) / 180.0; //经纬度转换成三角函数中度分表形式。
+  }
+
+  var radLat1 = Rad(lat1);
+  var radLat2 = Rad(lat2);
   var a = radLat1 - radLat2;
-  var b = (store.state.user.lng * Math.PI) / 180.0 - (lng * Math.PI) / 180.0;
+  var b = Rad(lng1) - Rad(lng2);
   var s =
     2 *
     Math.asin(
@@ -101,7 +102,8 @@ function getGreatCircleDistance(lat, lng) {
       )
     );
   s = s * 6378.137; // EARTH_RADIUS;
-  s = Math.round(s * 10000) / 10000;
+  s = Math.round(s * 10000) / 10000; //输出为公里
+  //s=s.toFixed(4);
   return s;
 }
 

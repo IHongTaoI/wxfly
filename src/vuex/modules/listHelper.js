@@ -1,7 +1,7 @@
 import utils from '../../utils/index';
 import global from '../../utils/global-const';
 
-function listHelper(v) {
+function listHelper(v, lat, lng) {
   if (v.shareImg) {
     v.height = '260px';
   } else {
@@ -9,7 +9,7 @@ function listHelper(v) {
   }
   v.shareImg = v.shareImg.split(',');
   v.createTime = utils.dateFromat(v.createTime);
-  v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng);
+  v.distance = utils.getGreatCircleDistance(lat, lng, v.shareLat, v.shareLng);
   v.distance = window.vueObj.$options.filters['distanceFromat'](v.distance);
 }
 
@@ -54,8 +54,10 @@ export default {
   mutations: {
     setList(state, msg) {
       let { type, isreload, list } = msg;
+      let lat = this.state.user.lat,
+        lng = this.state.user.lng;
       for (let v of list) {
-        listHelper(v);
+        listHelper(v, lat, lng);
       }
       if (isreload) {
         state[type].list = list;
@@ -96,7 +98,14 @@ export default {
       let forArr = ['nearby', 'dynamic', 'newest'];
       for (let key of forArr) {
         for (let v of state[key].list) {
-          v.distance = utils.getGreatCircleDistance(v.shareLat, v.shareLng);
+          let lat = this.state.user.lat,
+            lng = this.state.user.lng;
+          v.distance = utils.getGreatCircleDistance(
+            lat,
+            lng,
+            v.shareLat,
+            v.shareLng
+          );
           v.distance = window.vueObj.$options.filters['distanceFromat'](
             v.distance
           );

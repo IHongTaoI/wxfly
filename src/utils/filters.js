@@ -1,16 +1,18 @@
 const filters = {
   // 次数格式化
   countFromat(val) {
-    if (val < 1000) return val
+    if (val < 1000) return val;
     if (val > 1000) {
-      return (val / 1000).toFixed(1) + 'k'
+      return (val / 1000).toFixed(1) + 'k';
     }
-    if(val > 1000000) {
-      return (val / 1000000).toFixed(1) + 'm'
+    if (val > 1000000) {
+      return (val / 1000000).toFixed(1) + 'm';
     }
   },
   distanceFromat(distance) {
-    return distance < 1000 ? parseInt(distance) + "米" : Math.ceil(distance / 1000) + "公里"
+    return distance < 1
+      ? parseInt(distance * 1000) + '米'
+      : Math.ceil(distance) + '公里';
   }
 };
 export default Vue => {
