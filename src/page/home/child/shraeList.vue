@@ -84,10 +84,11 @@ export default {
     },
     goUserinfo() {
       if (!this.itemObj) return;
-      let { shareUserName, shareUserAvatar } = this.itemObj;
+      let { shareUserName, shareUserAvatar, shareUserId } = this.itemObj;
       this.$myplug.info.show({
         username: shareUserName,
-        userava: shareUserAvatar
+        userava: shareUserAvatar,
+        userid: shareUserId
       });
     },
     //点赞
