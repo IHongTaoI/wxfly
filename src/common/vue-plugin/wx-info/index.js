@@ -44,7 +44,7 @@ const plugin = {
 
     vue.mixin({
       created: function() {
-        this.$wechat = vue.$wechat;
+        this.$myplug = vue.$myplug;
       }
     });
   }

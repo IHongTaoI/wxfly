@@ -1,9 +1,56 @@
 .wx-info {
   .mask {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     background: rgba(0, 0, 0, 0.7);
+    z-index: 9998;
+  }
+  .wrap {
+    position: fixed;
+    width: 90%;
+    height: 85%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+    border-radius: 20px;
+    text-align: center;
     z-index: 9999;
+    padding: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .closeBnt {
+      position: absolute;
+      right: -2px;
+      top: -14px;
+      font-size: 43px;
+      color: red;
+    }
+    .username {
+      line-height: 32px;
+      font-size: 14px;
+    }
+    .userAva {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .msgBtn {
+      height: 24px;
+      line-height: 24px;
+    }
+    .content {
+      margin-top: 20px;
+      .title {
+        text-align: left;
+        font-size: 20px;
+      }
+    }
   }
 }

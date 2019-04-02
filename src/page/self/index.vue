@@ -19,7 +19,7 @@
       <van-cell title="收藏" is-link to="/self/collection">
         <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
       </van-cell>
-      <van-cell title="下载app" is-link to="/self/collection" v-show="redDot.downloadApp">
+      <van-cell title="下载app" is-link url="http://www.hhooke.cn/wxfly.apk" v-show="redDot.downloadApp">
         <span class="iconfont icon-xiazai" style="color:#f43531;" slot="icon">
           <i class="new-msg-dot"></i>
         </span>

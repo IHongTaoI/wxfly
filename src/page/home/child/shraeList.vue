@@ -3,7 +3,7 @@
     <div class="box">
       <div class="header">
         <div class="info">
-          <img class="userava" :src="item.shareUserAvatar">
+          <img class="userava" :src="item.shareUserAvatar" @click.stop="goUserinfo">
           <div class="titles">
             <p class="username">
               {{item.shareUserName}}
@@ -80,6 +80,14 @@ export default {
         query: {
           id: this.itemObj.id
         }
+      });
+    },
+    goUserinfo() {
+      if (!this.itemObj) return;
+      let { shareUserName, shareUserAvatar } = this.itemObj;
+      this.$myplug.info.show({
+        username: shareUserName,
+        userava: shareUserAvatar
       });
     },
     //点赞

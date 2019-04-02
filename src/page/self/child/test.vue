@@ -3,6 +3,7 @@
     <van-nav-bar title="测试页面" left-arrow @click-left="$router.go(-1)" class="topNavBar"/>
     <van-cell-group class="mt20">
       <van-cell title="发送socket消息" is-link @click.native="sendSocketMsg"></van-cell>
+      <van-cell title="打开用户信息弹窗" is-link @click.native="openUserinfoPop"></van-cell>
     </van-cell-group>
   </div>
 </template>
@@ -13,6 +14,9 @@ export default {
   methods: {
     sendSocketMsg() {
       this.$wsHelper.like(this.$store.state.user.token);
+    },
+    openUserinfoPop() {
+      this.$myplug.info.show();
     }
   }
 };
