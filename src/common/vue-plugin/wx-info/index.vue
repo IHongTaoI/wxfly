@@ -1,6 +1,8 @@
 <template>
   <div class="wx-info">
-    <div class="mask" v-show="show" @click="close"></div>
+    <transition :enter-active-class="'animated fadeIn'" :leave-active-class="'animated fadeOut'">
+      <div class="mask" v-show="show" @click="close"></div>
+    </transition>
     <transition
       :enter-active-class="'animated bounceIn'"
       :leave-active-class="'animated bounceOut'"
@@ -13,7 +15,8 @@
         <div class="content">
           <h3 class="title">他的动态</h3>
           <div class="cont">
-            <loadinganite></loadinganite>
+            <loadinganite v-show="loading"></loadinganite>
+            <div class="shearItem" v-for="(item, index) in list" :key="index">{{item.shareContent}}</div>
           </div>
         </div>
       </div>
@@ -22,6 +25,7 @@
 </template>
 <script>
 import loadinganite from "./../../../page/home/child/loading-animate.vue";
+import { getuserInfoShear } from "./../../../utils/api-helper.js";
 
 export default {
   components: {
@@ -29,7 +33,9 @@ export default {
   },
   data() {
     return {
-      show: false
+      show: false,
+      loading: true,
+      list: []
     };
   },
   props: {
@@ -38,6 +44,10 @@ export default {
       default: ""
     },
     username: {
+      type: String,
+      default: ""
+    },
+    userid: {
       type: String,
       default: ""
     }
@@ -50,11 +60,19 @@ export default {
     gotoDiloag() {
       this.close();
       console.log("去私聊页面");
+    },
+    async getShear() {
+      console.log(this.userid);
+      let ret = await getuserInfoShear(this.userid, 1, 10);
+      this.list = ret.d.shares;
+      this.loading = false;
     }
   },
   watch: {
-    value(val) {
-      this.show = val;
+    show(val) {
+      if (val) {
+        this.getShear();
+      }
     }
   }
 };

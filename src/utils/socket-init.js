@@ -2,8 +2,8 @@ import Vue from 'vue';
 import utils from './index';
 
 function connection() {
-  let token = utils.cookie.get('token');
-  return new WebSocket(`ws://134.175.16.212:2019/webSocket?token=${token}`);
+  let userId = utils.cookie.get('userId');
+  return new WebSocket(`ws://134.175.16.212:8764/webSocket?userId=${userId}`);
 }
 
 const sendMsg = function(ws) {
@@ -19,7 +19,7 @@ const sendMsg = function(ws) {
   };
 };
 
-export default async function() {
+function initSocket() {
   var ws;
   ws = connection();
   ws.onopen = function() {
@@ -27,7 +27,10 @@ export default async function() {
   };
 
   ws.onclose = function() {
-    console.log('socket断开');
+    setTimeout(() => {
+      console.log('socket断开,尝试重连');
+      initSocket();
+    }, 3000);
   };
   ws.onerror = function() {
     setTimeout(() => {
@@ -37,21 +40,23 @@ export default async function() {
 
   ws.onmessage = function(evt) {
     let data = evt.data;
-    switch (data) {
-      case 'like':
+    console.log(JSON.parse(evt.data));
+    Vue.prototype.$notify({
+      message: evt.data,
+      duration: 2000,
+      className: 'notify',
+      background: '#1989fa'
+    });
+    let retFn = {
+      like() {
         // 点赞消息
-        Vue.prototype.$notify({
-          message: '有人给你点赞了',
-          duration: 2000,
-          className: 'notify',
-          background: '#1989fa'
-        });
-        break;
-
-      default:
-        break;
-    }
+      }
+    };
+    retFn[data] && retFn[data]();
   };
   Vue.prototype.$wsHelper = sendMsg(ws);
-  return ws;
+}
+
+export default async function() {
+  initSocket();
 }

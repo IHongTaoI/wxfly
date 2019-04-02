@@ -1,6 +1,17 @@
 import store from './../vuex/store';
 import { post } from './../lib/http';
 
+export const getuserInfoShear = async function(userId, page, pageSize) {
+  return await post({
+    url: '/search/share/byId',
+    data: {
+      userId,
+      page,
+      pageSize
+    }
+  });
+};
+
 export default {
   async getShearList(data) {
     return await post({
@@ -225,5 +236,17 @@ export default {
         replyType
       }
     });
-  }
+  },
+  // 发送socekt消息
+  async sendSocketMsg(msgType, option) {
+    return await post({
+      url: '/push/socket',
+      data: {
+        msgType,
+        socketMsg: option
+      }
+    });
+  },
+  // 查询用户分享
+  getuserInfoShear
 };
