@@ -14,12 +14,14 @@ import VueAutoVirtualScrollList from './vue-virtual-Infinite-list';
 import loadinganite from './../page/home/child/loading-animate.vue';
 import baiduMap from './baiduMap';
 import initProto from './init-proto';
+import wxInfo from './../common/vue-plugin/wx-info/index'
 
 export default function() {
   initProto();
   Vue.use(VueAxios, axios);
   Vue.use(Vant);
   Vue.use(Lazyload);
+  Vue.use(wxInfo);
   Vue.component('auto-virtual-list', VueAutoVirtualScrollList);
   Vue.component('loadinganite', loadinganite);
   Vue.prototype.$BMap = baiduMap();
