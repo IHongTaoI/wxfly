@@ -37,6 +37,9 @@
 import { mapState } from "vuex";
 
 export default {
+  created() {
+    console.log(this.$store.state.platform)
+  },
   computed: {
     ...mapState("user", ["userInfo", "userId"])
   },

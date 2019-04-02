@@ -84,7 +84,6 @@ let cache = {
 
 //计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
 function getGreatCircleDistance(lat1, lng1, lat2, lng2) {
-  debugger
   function Rad(d) {
     return (d * Math.PI) / 180.0; //经纬度转换成三角函数中度分表形式。
   }
