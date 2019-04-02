@@ -4,7 +4,11 @@
       <div class="flexBox">
         <div class="imgbox">
           <img class="svg" src="./../../assets/images/icon/index.png" v-show="index !== '/home'">
-          <img class="svg" src="./../../assets/images/icon/indexSelect.png" v-show="index === '/home'">
+          <img
+            class="svg"
+            src="./../../assets/images/icon/indexSelect.png"
+            v-show="index === '/home'"
+          >
         </div>
         <p class="txt">广场</p>
       </div>
@@ -52,6 +56,7 @@
     </router-link>
     <router-link to="/self" tag="div" class="item">
       <div class="flexBox">
+        <i class="new-msg-dot" v-show="redDot.self"></i>
         <div class="imgbox">
           <img class="svg" src="./../../assets/images/icon/mine.png" v-show="index !== '/self'">
           <img
@@ -66,12 +71,15 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: ["acIndex"],
   data() {
     return {};
   },
   computed: {
+    ...mapState("common", ["redDot"]),
     index() {
       return this.$store.state.curRoutePath;
     }
@@ -101,6 +109,7 @@ export default {
     align-items: center;
     text-align: center;
     .flexBox {
+      position: relative;
       &.addS {
         position: absolute;
         left: 50%;

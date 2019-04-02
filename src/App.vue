@@ -30,6 +30,9 @@ export default {
       leaveAnimate: ""
     };
   },
+  created() {
+    this.$store.dispatch("common/initRedDot");
+  },
   computed: {
     routerPathC() {
       return this.$store.state.routerPathC;

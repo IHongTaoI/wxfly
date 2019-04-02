@@ -19,6 +19,11 @@
       <van-cell title="收藏" is-link to="/self/collection">
         <span slot="icon" class="iconfont icon-icon_save" style="color:#0078D7;"></span>
       </van-cell>
+      <van-cell title="下载app" is-link to="/self/collection" v-show="redDot.downloadApp">
+        <span class="iconfont icon-xiazai" style="color:#f43531;" slot="icon">
+          <i class="new-msg-dot"></i>
+        </span>
+      </van-cell>
       <van-cell title="测试页面" is-link to="/self/test">
         <span slot="icon" class="iconfont icon-dongtai" style="color:#0078D7;"></span>
       </van-cell>
@@ -38,10 +43,11 @@ import { mapState } from "vuex";
 
 export default {
   created() {
-    console.log(this.$store.state.platform)
+    console.log(this.$store.state.platform);
   },
   computed: {
-    ...mapState("user", ["userInfo", "userId"])
+    ...mapState("user", ["userInfo", "userId"]),
+    ...mapState("common", ["redDot"])
   },
   data() {
     return {
