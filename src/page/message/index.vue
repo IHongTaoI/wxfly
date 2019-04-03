@@ -29,8 +29,8 @@
           v-for="(item, index) in dialogList"
           :key="index"
         >
-          <div slot="icon" class="icon dianzan">
-            <span class="iconfont icon-dianzan00"></span>
+          <div slot="icon" class="icon ava">
+            <img :src="item.userAvatar" class="img">
           </div>
           <div slot="title">{{item.username}}</div>
         </van-cell>
@@ -66,6 +66,13 @@ export default {
       height: 100%;
       display: flex;
       align-items: center;
+      .ava {
+        .img {
+          width: 43px;
+          height: 43px;
+          border-radius: 50%;
+        }
+      }
       .icon {
         display: flex;
         justify-content: center;

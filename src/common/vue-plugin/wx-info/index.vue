@@ -3,10 +3,7 @@
     <transition :enter-active-class="'animated fadeIn'" :leave-active-class="'animated fadeOut'">
       <div class="mask" v-show="show" @click="close"></div>
     </transition>
-    <transition
-      :enter-active-class="'animated bounceIn'"
-      :leave-active-class="'animated bounceOut'"
-    >
+    <transition :enter-active-class="animiteEnt" :leave-active-class="animateLev">
       <div class="wrap" v-show="show">
         <span class="closeBnt iconfont icon-guanbi" @click="close"></span>
         <img class="userAva" :src="userava" alt>
@@ -35,7 +32,9 @@ export default {
     return {
       show: false,
       loading: true,
-      list: []
+      list: [],
+      animiteEnt: "animated bounceIn",
+      animateLev: "animated bounceOut"
     };
   },
   props: {
@@ -54,11 +53,17 @@ export default {
   },
   methods: {
     close() {
+      this.animateLev = "animated bounceOut";
+      this.show = false;
+      this.$emit("input", false);
+    },
+    close2() {
+      this.animateLev = "";
       this.show = false;
       this.$emit("input", false);
     },
     gotoDiloag() {
-      this.close();
+      this.close2();
       console.log("去私聊页面");
       window.vueObj.$router.push({
         name: "dialog",
@@ -87,5 +92,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.animated2 {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
 @import "./index.less";
 </style>

@@ -2,7 +2,7 @@
   <div class="re-item">
     <div class="re-wrap">
       <div class="left">
-        <img :src="reItem.userAvatar" class="ava">
+        <img :src="reItem.userAvatar" class="ava" @click.stop="goUserinfo">
       </div>
       <div class="content">
         <div class="re-h">
@@ -131,7 +131,16 @@ export default {
         return;
       }
       this.$emit("btnClick", obj);
-    }
+    },
+    goUserinfo() {
+      if (!this.reItem) return;
+      let { userName, userAvatar, userId } = this.reItem;
+      this.$myplug.info.show({
+        username: userName,
+        userava: userAvatar,
+        userid: userId
+      });
+    },
   },
   computed: {
     ...mapState("user", ["userId"]),

@@ -6,7 +6,7 @@
     <div class="wrap" v-if="shardData">
       <div class="header">
         <div class="info">
-          <img class="userava" :src="shardData.shareUserAvatar">
+          <img class="userava" :src="shardData.shareUserAvatar" @click="goUserinfo">
           <div class="titles">
             <p class="username">{{shardData.shareUserName}}</p>
             <!--发布时间-->
@@ -217,6 +217,15 @@ export default {
         this.hidereplyBox();
         // this.getDetil();
       }
+    },
+    goUserinfo() {
+      if (!this.shardData) return;
+      let { shareUserName, shareUserAvatar, shareUserId } = this.shardData;
+      this.$myplug.info.show({
+        username: shareUserName,
+        userava: shareUserAvatar,
+        userid: shareUserId
+      });
     },
     // 删除我的分享
     deleteMyShrea() {

@@ -46,6 +46,12 @@ function initSocket() {
         // 点赞消息
       },
       CHAT() {
+        Vue.prototype.$notify({
+          message: '您有新的消息',
+          duration: 2000,
+          className: 'notify',
+          background: '#1989fa'
+        });
         store.commit('message/updateMsg', data);
       }
     };
