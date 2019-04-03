@@ -60,6 +60,14 @@ export default {
     gotoDiloag() {
       this.close();
       console.log("去私聊页面");
+      window.vueObj.$router.push({
+        name: "dialog",
+        params: {
+          username: this.username,
+          userId: this.userid,
+          userava: this.userava
+        }
+      });
     },
     async getShear() {
       console.log(this.userid);

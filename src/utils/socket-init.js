@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import utils from './index';
+import store from './../vuex/store';
 
 function connection() {
   let userId = utils.cookie.get('userId');
@@ -39,20 +40,16 @@ function initSocket() {
   };
 
   ws.onmessage = function(evt) {
-    let data = evt.data;
-    console.log(JSON.parse(evt.data));
-    Vue.prototype.$notify({
-      message: evt.data,
-      duration: 2000,
-      className: 'notify',
-      background: '#1989fa'
-    });
+    let data = JSON.parse(evt.data);
     let retFn = {
       like() {
         // 点赞消息
+      },
+      CHAT() {
+        store.commit('message/updateMsg', data);
       }
     };
-    retFn[data] && retFn[data]();
+    retFn[data.msgType] && retFn[data.msgType]();
   };
   Vue.prototype.$wsHelper = sendMsg(ws);
 }

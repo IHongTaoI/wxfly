@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import user from './modules/user';
 import listHelper from './modules/listHelper';
 import common from './modules/common';
+import message from './modules/message';
 
 Vue.use(Vuex);
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
   modules: {
     user,
     listHelper,
-    common
+    common,
+    message
   }
 });

@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import socketInit from "./../../utils/socket-init.js";
 export default {
   data() {
     return {
@@ -73,6 +74,7 @@ export default {
       this.$utils.cookie.set("token", ret.h.token, 1);
       this.$utils.cookie.set("userId", ret.h.userId, 1);
       this.$store.commit("user/LOGIN_SUCCESS", ret.d);
+      socketInit();
       this.$router.replace({
         path: "/home"
       });

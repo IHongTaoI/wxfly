@@ -1,32 +1,52 @@
 <template>
   <div id="message">
-      <list-item type="slot">
-        <van-cell-group class="itemSys">
-          <van-cell is-link to="/message/replay-me-reply" class="cell">
-            <div slot="icon" class="icon pinglun">
-              <span class="iconfont icon-pinglun"></span>
-            </div>
-            <div slot="title" class="title">评论</div>
-          </van-cell>
-        </van-cell-group>
-      </list-item>
-      <list-item type="slot">
-        <van-cell-group class="itemSys">
-          <van-cell is-link to="/message/dianzanlist" class="cell">
-            <div slot="icon" class="icon dianzan">
-              <span class="iconfont icon-dianzan00"></span>
-            </div>
-            <div slot="title" class="title">点赞</div>
-          </van-cell>
-        </van-cell-group>
-      </list-item>
+    <list-item type="slot">
+      <van-cell-group class="itemSys">
+        <van-cell is-link to="/message/replay-me-reply" class="cell">
+          <div slot="icon" class="icon pinglun">
+            <span class="iconfont icon-pinglun"></span>
+          </div>
+          <div slot="title" class="title">评论</div>
+        </van-cell>
+      </van-cell-group>
+    </list-item>
+    <list-item type="slot">
+      <van-cell-group class="itemSys">
+        <van-cell is-link to="/message/dianzanlist" class="cell">
+          <div slot="icon" class="icon dianzan">
+            <span class="iconfont icon-dianzan00"></span>
+          </div>
+          <div slot="title" class="title">点赞</div>
+        </van-cell>
+      </van-cell-group>
+    </list-item>
+    <list-item type="slot" v-if="dialogList.length">
+      <van-cell-group class="itemSys">
+        <van-cell
+          :to="{name: 'dialog'}"
+          class="cell"
+          label="消息消息"
+          v-for="(item, index) in dialogList"
+          :key="index"
+        >
+          <div slot="icon" class="icon dianzan">
+            <span class="iconfont icon-dianzan00"></span>
+          </div>
+          <div slot="title">{{item.username}}</div>
+        </van-cell>
+      </van-cell-group>
+    </list-item>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import listItem from "./child/meg-list-item";
 export default {
   components: {
     listItem
+  },
+  computed: {
+    ...mapState("message", ["dialogList"])
   }
 };
 </script>

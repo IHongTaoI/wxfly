@@ -104,6 +104,11 @@ export default [
 		component: () => import('../page/self/child/about-me.vue'),
 	},
 	{
+		path: '/dialog',
+		name: 'dialog',
+		component: () => import('../page/other/dialog/index.vue'),
+	},
+	{
 		path: '/login',
 		name: 'login',
 		component: () => import('../page/other/login.vue'),
