@@ -120,15 +120,15 @@ export default {
       switch (type) {
         case 'newest':
           page = state.newest.page;
-          searchType = '2';
+          searchType = 'B';
           break;
         case 'nearby':
           page = state.nearby.page;
-          searchType = '1';
+          searchType = 'A';
           break;
         case 'dynamic':
           page = state.dynamic.page;
-          searchType = '2';
+          searchType = 'C';
           break;
       }
       isreload && (page = global.PAGE);

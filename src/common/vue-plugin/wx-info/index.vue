@@ -64,7 +64,6 @@ export default {
     },
     gotoDiloag() {
       this.close2();
-      console.log("去私聊页面");
       window.vueObj.$router.push({
         name: "dialog",
         params: {
@@ -75,7 +74,6 @@ export default {
       });
     },
     async getShear() {
-      console.log(this.userid);
       let ret = await getuserInfoShear(this.userid, 1, 10);
       this.list = ret.d.shares;
       this.loading = false;

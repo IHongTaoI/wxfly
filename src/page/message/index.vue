@@ -23,9 +23,9 @@
     <list-item type="slot" v-if="dialogList.length">
       <van-cell-group class="itemSys">
         <van-cell
-          :to="{name: 'dialog'}"
+          :to="{name: 'dialog',params: {username: item.username,userId: item.userId,userava: item.userAvatar}}"
           class="cell"
-          label="消息消息"
+          :label="item.msgList[0]"
           v-for="(item, index) in dialogList"
           :key="index"
         >

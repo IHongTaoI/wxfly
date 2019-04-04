@@ -1,3 +1,14 @@
+function formatMsg(msg) {
+  let { id, userName, userAvatar } = msg.fromUser;
+  return {
+    userId: id,
+    username: userName,
+    userAvatar: userAvatar,
+    conversationID: msg.conversationID,
+    msgList: [msg.msg]
+  };
+}
+
 export default {
   namespaced: true,
   state: {
@@ -7,17 +18,12 @@ export default {
   mutations: {
     updateMsg(state, msg) {
       let hasIndex = state.dialogList.findIndex(v => {
-        return v.id === msg.id;
+        return v.conversationID === msg.conversationID;
       });
       if (~hasIndex) {
         state.dialogList[hasIndex].msgList.push(msg.msg);
       } else {
-        state.dialogList.push({
-          userId: msg.fromUser.id,
-          username: msg.fromUser.userName,
-          userAvatar: msg.fromUser.userAvatar,
-          msgList: [msg.msg]
-        });
+        state.dialogList.push(formatMsg(msg));
       }
     }
   },

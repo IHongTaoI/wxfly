@@ -238,15 +238,26 @@ export default {
     });
   },
   // 发送socekt消息
-  async sendSocketMsg(msgType, option) {
+  async sendSocketMsg(msgType, option, conversationID) {
     return await post({
       url: '/push/socket',
       data: {
         msgType,
+        conversationID,
         socketMsg: option
       }
     });
   },
   // 查询用户分享
-  getuserInfoShear
+  getuserInfoShear,
+  // 创建会话
+  async setChatId(oneUserId, twoUserId) {
+    return await post({
+      url: '/push/get/conversation',
+      data: {
+        oneUserId,
+        twoUserId
+      }
+    });
+  }
 };

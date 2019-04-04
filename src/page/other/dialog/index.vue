@@ -21,22 +21,29 @@ import { mapState } from "vuex";
 export default {
   created() {
     console.log(this.$route);
+    this.setChatId();
   },
   data() {
     return {
       username: this.$route.params.username,
       userId: this.$route.params.userId,
       userAvatar: this.$route.params.userava,
+      conversationID: "",
       msg: ""
     };
   },
   methods: {
     async sendDialogMsg() {
-      let ret = await this.$apihelper.sendSocketMsg("CHAT", {
-        userId: this.userId,
-        text: this.msg
-      });
+      let ret = await this.$apihelper.sendSocketMsg(
+        "CHAT",
+        {
+          userId: this.userId,
+          text: this.msg
+        },
+        this.conversationID
+      );
       this.$store.commit("message/updateMsg", {
+        conversationID: this.conversationID,
         fromUser: {
           id: this.userId,
           userName: this.username,
@@ -45,6 +52,19 @@ export default {
         msg: this.msg
       });
       this.msg = "";
+    },
+    async setChatId() {
+      let msgChatIdMap = this.$utils.global.msgChatIdMap;
+      let ChatId = msgChatIdMap.get(this.userId);
+      if (!ChatId) {
+        let ret = await this.$apihelper.setChatId(
+          this.$store.state.user.userId,
+          this.userId
+        );
+        msgChatIdMap.set(this.userId, ret.d.conversationID);
+        ChatId = ret.d.conversationID;
+      }
+      this.conversationID = ChatId;
     }
   },
   computed: {

@@ -72,8 +72,8 @@
     <loadinganite v-if="loading"></loadinganite>
     <replyEditBox v-model="showReplyBox" :tearPlaTxt="tearPlaTxt" @on-submit="sumbitReplay"></replyEditBox>
     <transition
-      :enter-active-class="'animated zoomInRight'"
-      :leave-active-class="'animated zoomOutLeft'"
+      :enter-active-class="'animated fadeRight'"
+      :leave-active-class="'animated fadeOutLeft'"
     >
       <router-view class="app-content" style="z-index: 99"></router-view>
     </transition>

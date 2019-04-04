@@ -98,9 +98,6 @@ export default {
     addrConfirm(arr) {
       console.log(arr);
     }
-  },
-  created() {
-    console.log(this.$route.params);
   }
 };
 </script>

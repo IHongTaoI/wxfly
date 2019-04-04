@@ -1,4 +1,5 @@
 import { ImagePreview } from 'vant';
+import global from './global-const';
 import store from './../vuex/store';
 
 function dateFromat(date, text = '') {
@@ -113,5 +114,6 @@ export default {
   imagePreview,
   cookie,
   cache,
-  getGreatCircleDistance
+  getGreatCircleDistance,
+  global
 };

@@ -52,6 +52,7 @@ function initSocket() {
           className: 'notify',
           background: '#1989fa'
         });
+        console.log(data)
         store.commit('message/updateMsg', data);
       }
     };
