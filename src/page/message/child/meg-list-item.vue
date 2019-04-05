@@ -1,5 +1,5 @@
 <template>
-  <div class="msg-list-item" :style="{height: '65px'}">
+  <div class="msg-list-item">
     <slot v-if="type === 'slot'"></slot>
   </div>
 </template>

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     ajaxUrl: 'http://www.wuxfly.com:2019',
     routerPathC: [], // 路由缓存
     curRoutePath: '/',
+    isMock: process.env.MOCK,
     platform: {
       isApicloud: navigator.userAgent.toLowerCase().includes('apicloud'),
       isWx: navigator.userAgent.toLowerCase().includes('micromessenger'),

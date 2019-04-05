@@ -14,7 +14,7 @@ import VueAutoVirtualScrollList from './vue-virtual-Infinite-list';
 import loadinganite from './../page/home/child/loading-animate.vue';
 import baiduMap from './baiduMap';
 import initProto from './init-proto';
-import wxInfo from './../common/vue-plugin/wx-info/index'
+import wxInfo from './../common/vue-plugin/wx-info/index';
 
 export default function() {
   initProto();
@@ -38,6 +38,7 @@ export default function() {
       let token = utils.cookie.get('token');
       let userId = utils.cookie.get('userId');
       if (token && userId) {
+        this.$store.dispatch('message/loadDialogList');
         store.dispatch('user/login_success', token);
         socketInit();
       } else {

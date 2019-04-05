@@ -259,5 +259,16 @@ export default {
         twoUserId
       }
     });
+  },
+  // 查看消息列表
+  async getChatList(page, pageSize) {
+    let ret = await post({
+      url: '/search/chat/conversations',
+      data: {
+        page,
+        pageSize
+      }
+    });
+    return ret;
   }
 };

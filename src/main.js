@@ -5,13 +5,14 @@ import store from './vuex/store';
 import vueInit from './lib/vue-init';
 import NativeInit from './lib/jsBridge/init';
 import Vconsole from 'vconsole';
-import filters from './utils/filters'
-import FastClick from 'fastclick'
+import filters from './utils/filters';
+import FastClick from 'fastclick';
+import mock from './mock/mock';
 
-FastClick.attach(document.body)
+FastClick.attach(document.body);
 filters(Vue);
 
-// has
+process.env.MOCK && mock();
 // process.env.NODE_ENV === "development" && new Vconsole();
 if (store.state.platform.isApicloud) {
   window.apiready = NativeInit(vueInit);

@@ -1,41 +1,43 @@
 <template>
   <div id="message">
-    <list-item type="slot">
-      <van-cell-group class="itemSys">
-        <van-cell is-link to="/message/replay-me-reply" class="cell">
-          <div slot="icon" class="icon pinglun">
-            <span class="iconfont icon-pinglun"></span>
-          </div>
-          <div slot="title" class="title">评论</div>
-        </van-cell>
-      </van-cell-group>
-    </list-item>
-    <list-item type="slot">
-      <van-cell-group class="itemSys">
-        <van-cell is-link to="/message/dianzanlist" class="cell">
-          <div slot="icon" class="icon dianzan">
-            <span class="iconfont icon-dianzan00"></span>
-          </div>
-          <div slot="title" class="title">点赞</div>
-        </van-cell>
-      </van-cell-group>
-    </list-item>
-    <list-item type="slot" v-if="dialogList.length">
-      <van-cell-group class="itemSys">
-        <van-cell
-          :to="{name: 'dialog',params: {username: item.username,userId: item.userId,userava: item.userAvatar}}"
-          class="cell"
-          :label="item.msgList[0]"
-          v-for="(item, index) in dialogList"
-          :key="index"
-        >
-          <div slot="icon" class="icon ava">
-            <img :src="item.userAvatar" class="img">
-          </div>
-          <div slot="title">{{item.username}}</div>
-        </van-cell>
-      </van-cell-group>
-    </list-item>
+    <van-list finished-text="没有更多了" :immediate-check="false">
+      <list-item type="slot">
+        <van-cell-group class="itemSys">
+          <van-cell is-link to="/message/replay-me-reply" class="cell">
+            <div slot="icon" class="icon pinglun">
+              <span class="iconfont icon-pinglun"></span>
+            </div>
+            <div slot="title" class="title">评论</div>
+          </van-cell>
+        </van-cell-group>
+      </list-item>
+      <list-item type="slot">
+        <van-cell-group class="itemSys">
+          <van-cell is-link to="/message/dianzanlist" class="cell">
+            <div slot="icon" class="icon dianzan">
+              <span class="iconfont icon-dianzan00"></span>
+            </div>
+            <div slot="title" class="title">点赞</div>
+          </van-cell>
+        </van-cell-group>
+      </list-item>
+      <list-item type="slot" v-if="dialogList.length">
+        <van-cell-group class="itemSys">
+          <van-cell
+            :to="{name: 'dialog',params: {username: item.info.name,userId: item.toId,userava: item.info.ava}}"
+            class="cell"
+            :label="item.msgList[0]"
+            v-for="(item, index) in dialogList"
+            :key="index"
+          >
+            <div slot="icon" class="icon ava">
+              <img :src="item.info.ava" class="img">
+            </div>
+            <div slot="title">{{item.info.name}}</div>
+          </van-cell>
+        </van-cell-group>
+      </list-item>
+    </van-list>
   </div>
 </template>
 <script>
@@ -52,6 +54,7 @@ export default {
 </script>
 <style lang="less" scoped>
 #message {
+  padding-bottom: 66px;
   .scrollist {
     height: 100% !important;
   }

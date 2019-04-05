@@ -3,6 +3,8 @@ import Vue from 'vue';
 import store from './../vuex/store';
 import utils from './../utils/index';
 import router from './../router/index';
+
+const isMock = store.state.isMock;
 // 默认值配置
 axios.defaults.baseURL = store.state.ajaxUrl;
 axios.defaults.showLoading = true;
@@ -42,7 +44,7 @@ axios.interceptors.response.use(function(response) {
   Vue.prototype.$toast.clear();
   let res = response.data;
   if (res.status === '200000') {
-    if (res.data && res.data.serviceHeader) {
+    if (res.data && res.data.serviceBody) {
       return {
         h: res.data.serviceHeader,
         d: res.data.serviceBody
