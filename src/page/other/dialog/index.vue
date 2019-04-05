@@ -71,7 +71,7 @@ export default {
     ...mapState("message", ["dialogList"]),
     msgInfo() {
       let msginfo = this.dialogList.find(v => {
-        return v.userId === this.userId;
+        return v.conversationID === this.conversationID;
       });
       if (msginfo) {
         return msginfo.msgList || [];
