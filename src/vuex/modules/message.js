@@ -1,12 +1,6 @@
 function formatMsg(msg) {
-  let { id, userName, userAvatar } = msg.fromUser;
-  return {
-    userId: id,
-    username: userName,
-    userAvatar: userAvatar,
-    conversationID: msg.conversationID,
-    msgList: [msg.msg]
-  };
+  msg.msgList = [msg.msg];
+  return msg;
 }
 
 export default {
@@ -25,7 +19,8 @@ export default {
       if (~hasIndex) {
         state.dialogList[hasIndex].msgList.push(msg.msg);
       } else {
-        state.dialogList.push(formatMsg(msg));
+        let data = formatMsg(msg);
+        state.dialogList.push(data);
       }
     },
     loadDialogList(state, msg) {
@@ -43,19 +38,25 @@ export default {
         state.pageSize
       );
       let arr = ret.d.conversations;
-      arr = arr.map(v => {
-        let isMe = v.userIdOne === this.state.user.userId;
-        return {
-          conversationID: v.conversationID,
-          info: {
-            ava: isMe ? v.userAvatarTwo : v.userAvatarOne,
-            name: isMe ? v.userNameTwo : v.userNameOne
-          },
-          msgList: [],
-          meId: isMe ? v.userIdOne : v.userIdTwo,
-          toId: isMe ? v.userIdTwo : v.userIdOne
-        };
-      });
+      if (!this.state.isMock) {
+        arr = arr.map(v => {
+          let isMe = v.userIdOne === this.state.user.userId;
+          return {
+            conversationID: v.conversationID,
+            info: {
+              ava: isMe ? v.userAvatarTwo : v.userAvatarOne,
+              name: isMe ? v.userNameTwo : v.userNameOne
+            },
+            msgList: [],
+            meId: isMe ? v.userIdOne : v.userIdTwo,
+            toId: isMe ? v.userIdTwo : v.userIdOne
+          };
+        });
+      }
+      let chatIdMap = this._vm.$utils.global.msgChatIdMap;
+      for (let v of arr) {
+        chatIdMap.set(v.toId, v.conversationID);
+      }
       commit('loadDialogList', {
         list: arr,
         isload

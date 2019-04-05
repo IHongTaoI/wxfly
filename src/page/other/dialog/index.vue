@@ -7,9 +7,17 @@
       @click-left="$router.go(-1)"
       class="topNavBar"
     />
-    <div class="conte">
-      <p v-for="(item, index) in msgInfo" :key="index">{{item}}</p>
-    </div>
+    <ul class="conte">
+      <li
+        v-for="(item, index) in msgInfo"
+        :key="index"
+        class="itemBox"
+        :class="{isMe: item.userid === meUid}"
+      >
+        <img class="userava" :src="userAva(item)">
+        <p class="text">{{item.text}}</p>
+      </li>
+    </ul>
     <div class="footer">
       <van-field v-model="msg"/>
       <van-button class="btn" type="info" @click="sendDialogMsg">发送</van-button>
@@ -28,12 +36,32 @@ export default {
       username: this.$route.params.username,
       userId: this.$route.params.userId,
       userAvatar: this.$route.params.userava,
+      meUid: this.$store.state.user.userId,
       conversationID: "",
       msg: ""
     };
   },
   methods: {
     async sendDialogMsg() {
+      let sendData = {
+        conversationID: this.conversationID,
+        info: {
+          ava: this.userAvatar,
+          name: this.username
+        },
+        meId: this.meUid,
+        toId: this.userId,
+        msg: {
+          text: this.msg,
+          userid: this.meUid
+        }
+      };
+      if (this.$store.state.isMock) {
+        console.log(sendData, "sendData");
+        this.$store.commit("message/updateMsg", sendData);
+        this.msg = "";
+        return;
+      }
       let ret = await this.$apihelper.sendSocketMsg(
         "CHAT",
         {
@@ -42,15 +70,17 @@ export default {
         },
         this.conversationID
       );
-      this.$store.commit("message/updateMsg", {
+      sendData = {
         conversationID: this.conversationID,
-        fromUser: {
-          id: this.userId,
-          userName: this.username,
-          userAvatar: this.userAvatar
+        info: {
+          ava: this.userAvatar,
+          name: this.username
         },
+        meId: this.meUid,
+        toId: this.userId,
         msg: this.msg
-      });
+      };
+      this.$store.commit("message/updateMsg", sendData);
       this.msg = "";
     },
     async setChatId() {
@@ -65,6 +95,13 @@ export default {
         ChatId = ret.d.conversationID;
       }
       this.conversationID = ChatId;
+    },
+    userAva(item) {
+      if (item.userid === this.meUid) {
+        return this.$store.state.user.userInfo.userAvatar;
+      } else {
+        return this.userAvatar;
+      }
     }
   },
   computed: {

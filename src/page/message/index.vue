@@ -26,7 +26,7 @@
           <van-cell
             :to="{name: 'dialog',params: {username: item.info.name,userId: item.toId,userava: item.info.ava}}"
             class="cell"
-            :label="item.msgList[0]"
+            :label="item.msgList.length && item.msgList[item.msgList.length - 1].text"
             v-for="(item, index) in dialogList"
             :key="index"
           >
