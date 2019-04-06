@@ -119,6 +119,11 @@ export default [
 		component: () => import('../page/other/register.vue'),
 	},
 	{
+		path: '/iframe',
+		name: 'iframe',
+		component: () => import('../page/read/child/iframe.vue'),
+	},
+	{
 		path: '/test',
 		name: 'test',
 		component: () => import('../page/other/test.vue'),
