@@ -31,6 +31,10 @@ export default {
     console.log(this.$route);
     this.setChatId();
   },
+  beforeRouteLeave(to, from, next) {
+    this.$store.commit("message/setSeesionId", -1);
+    next();
+  },
   data() {
     return {
       username: this.$route.params.username,
@@ -78,7 +82,10 @@ export default {
         },
         meId: this.meUid,
         toId: this.userId,
-        msg: this.msg
+        msg: {
+          text: this.msg,
+          userid: this.meUid
+        }
       };
       this.$store.commit("message/updateMsg", sendData);
       this.msg = "";
@@ -95,6 +102,7 @@ export default {
         ChatId = ret.d.conversationID;
       }
       this.conversationID = ChatId;
+      this.$store.commit("message/setSeesionId", ChatId);
     },
     userAva(item) {
       if (item.userid === this.meUid) {

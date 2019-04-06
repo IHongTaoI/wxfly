@@ -80,7 +80,8 @@ const cookie = {
 let cache = {
   homeScrool: 0,
   reMeListScroll: 0,
-  dianzanListScroll: 0 // 点赞消息通知的滚动条
+  dianzanListScroll: 0, // 点赞消息通知的滚动条
+  messageScroll: 0, //消息列表的滚动高度
 };
 
 //计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度

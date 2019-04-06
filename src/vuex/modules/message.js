@@ -28,6 +28,9 @@ export default {
       isload && state.dialogList.splice(0);
       state.dialogList.push(...list);
       console.log('消息列表', list);
+    },
+    setSeesionId(state, id) {
+      state.sessionId = id;
     }
   },
   actions: {
@@ -41,6 +44,7 @@ export default {
       if (!this.state.isMock) {
         arr = arr.map(v => {
           let isMe = v.userIdOne === this.state.user.userId;
+          console.log(isMe ? v.userNameTwo : v.userNameOne);
           return {
             conversationID: v.conversationID,
             info: {

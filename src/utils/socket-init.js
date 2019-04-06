@@ -46,13 +46,28 @@ function initSocket() {
         // 点赞消息
       },
       CHAT() {
-        Vue.prototype.$notify({
-          message: '您有新的消息',
-          duration: 2000,
-          className: 'notify',
-          background: '#1989fa'
-        });
-        console.log(data)
+        if(store.state.message.sessionId !== data.conversationID) {
+          Vue.prototype.$notify({
+            message: `${data.fromUser.userName}给你发了一条消息`,
+            duration: 2000,
+            className: 'notify',
+            background: '#1989fa'
+          });
+        }
+        console.log(data);
+        data = {
+          conversationID: data.conversationID,
+          info: {
+            ava: data.fromUser.userAvatar,
+            name: data.fromUser.userName
+          },
+          msg: {
+            text: data.msg,
+            userid: data.fromUser.id
+          },
+          meId: store.state.user.userId,
+          toId: data.fromUser.id
+        };
         store.commit('message/updateMsg', data);
       }
     };

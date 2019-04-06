@@ -1,6 +1,6 @@
 <template>
-  <div id="message">
-    <van-list finished-text="没有更多了" :immediate-check="false">
+  <div id="message" ref="warp">
+    <van-list finished-text="没有更多了" :immediate-check="false" class="vantList">
       <list-item type="slot">
         <van-cell-group class="itemSys">
           <van-cell is-link to="/message/replay-me-reply" class="cell">
@@ -25,8 +25,8 @@
         <van-cell-group class="itemSys">
           <van-cell
             :to="{name: 'dialog',params: {username: item.info.name,userId: item.toId,userava: item.info.ava}}"
-            class="cell"
-            :label="item.msgList.length && item.msgList[item.msgList.length - 1].text"
+            class="cell usermsg"
+            :label="item.msgList.length ? item.msgList[item.msgList.length - 1].text : ''"
             v-for="(item, index) in dialogList"
             :key="index"
           >
@@ -47,6 +47,13 @@ export default {
   components: {
     listItem
   },
+  beforeRouteLeave(to, from, next) {
+    this.$utils.cache.messageScroll = this.$refs.warp.scrollTop;
+    next();
+  },
+  activated() {
+    this.$refs.warp.scrollTop = this.$utils.cache.messageScroll;
+  },
   computed: {
     ...mapState("message", ["dialogList"])
   }
@@ -54,7 +61,13 @@ export default {
 </script>
 <style lang="less" scoped>
 #message {
-  padding-bottom: 66px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  .vantList {
+    padding-bottom: 66px;
+  }
   .scrollist {
     height: 100% !important;
   }
@@ -69,7 +82,11 @@ export default {
       height: 100%;
       display: flex;
       align-items: center;
+      &.usermsg {
+        align-items: flex-start;
+      }
       .ava {
+        margin-right: 12px;
         .img {
           width: 43px;
           height: 43px;
